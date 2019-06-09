@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  // styleUrls: ['./app.component.css'] <- External styling
-  styles: [
-    ` h5 {color: tomato} `
-  ]
+  styleUrls: ['./app.component.css']
+  // styles: [
+  //   ` h3 {color: tomato} `
+  // ]
 })
 export class AppComponent {
   name = "Duzinho's app";
