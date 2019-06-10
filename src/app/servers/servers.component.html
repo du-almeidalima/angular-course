@@ -8,7 +8,8 @@
 <!--  </div>-->
   <div class="col-12">
     <div class="input-group mb-3">
-      <input type="text" class="form-control" id="server-name" placeholder="Server Name" (input)="onUpdateServerName($event)">
+    <!-- <input type="text" class="form-control" id="server-name" placeholder="Server Name" (input)="onUpdateServerName($event)"> <- Using Event Binding and then displaying the data using String Interpolation -->
+      <input type="text" class="form-control" id="server-name" placeholder="Server Name" [(ngModel)]="serverName">
       <div class="input-group-append">
         <button class="btn btn-outline-primary btn-block"
                 [disabled]="!allowServers"
@@ -23,7 +24,8 @@
 </div>
 
 <!--
- Event Binding : It's basically attaching a event to a function defined in the component class
-  - Syntax: ( [event] ) = "[expression to be executed]"
-  - $event : Basically the same as the "event" parameter in JavaScript
+ Two-Way Data Binding: Basically a join of String Interpolation / Data Binding with Event Binding
+ - Syntax: [(ngModel)]= "[component attribute]"
+ - This will trigger on the input event and update the value of "serverName" in our component automatically
+ - Note: Using the String Interpolation / Data Binding will not update the value on template automatically
 -->
