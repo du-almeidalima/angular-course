@@ -1,0 +1,10 @@
+.online{
+  text-decoration: underline;
+  animation:blinkingText 3s infinite;
+}
+
+@keyframes blinkingText {
+  50% {
+    opacity: 0;
+  }
+}

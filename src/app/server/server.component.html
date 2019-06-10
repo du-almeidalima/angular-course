@@ -1,4 +1,7 @@
-<li [ngStyle]="{color: getColor()}">
+<li
+  [ngStyle]="{color: getColor()}"
+  [ngClass]="{online : serverStatus === 'Online'}"
+>
   {{ 'Server' }} {{ serverId }}: | Status: {{ getServerStatus() }}
 </li>
 
@@ -6,4 +9,6 @@
   The Attribute Directive "ngStyle" is a built in directive.
   What we are doing is: We are saying that we want to bind to some property on this directive an this property name happens
   to also be ngStyle. Remember the Property Binding, that's not it
+
+  "ngClass" accepts a object with the "key" being the class and the "value" the condition of applying this class
 -->
