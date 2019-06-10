@@ -1,7 +1,9 @@
-<li>
+<li [ngStyle]="{color: getColor()}">
   {{ 'Server' }} {{ serverId }}: | Status: {{ getServerStatus() }}
 </li>
 
-<!-- String Interpolation : Syntax: {{ [expression] }}
-  It accepts any expression that can be resolved to a string, even a hardcoded string  e.g. {{ UspServer }}
+<!--
+  The Attribute Directive "ngStyle" is a built in directive.
+  What we are doing is: We are saying that we want to bind to some property on this directive an this property name happens
+  to also be ngStyle. Remember the Property Binding, that's not it
 -->
