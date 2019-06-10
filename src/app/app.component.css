@@ -1,8 +1,3 @@
-h5{
+h3{
   text-shadow: 2px 2px lightgray;
-}
-
-.alerts{
-  display: flex;
-  justify-content: space-around;
 }

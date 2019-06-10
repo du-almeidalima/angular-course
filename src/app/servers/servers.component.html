@@ -1,20 +1,29 @@
 <div class="row">
+<!--  <div class="col-12 mb-5">-->
+<!--    <ul>-->
+<!--      <app-server></app-server>-->
+<!--      <app-server></app-server>-->
+<!--      <app-server></app-server>-->
+<!--    </ul>-->
+<!--  </div>-->
   <div class="col-12">
-    <ul>
-      <app-server></app-server>
-      <app-server></app-server>
-      <app-server></app-server>
-    </ul>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" id="server-name" placeholder="Server Name" (input)="onUpdateServerName($event)">
+      <div class="input-group-append">
+        <button class="btn btn-outline-primary btn-block"
+                [disabled]="!allowServers"
+                (click)="onCreateServer()">Add Server</button>
+      </div>
+    </div>
   </div>
-  <div class="col-6 offset-6 mt-3">
-    <button class="btn btn-outline-primary btn-block"
-      [disabled]="!allowServers"
-      (click)="onCreateServer()">Add Server</button>
-  </div>
-  <div class="col-12"><p class="lead">{{ serverCreationStatus }}</p></div>
+
+  <div class="col-12"><p>{{serverName}}</p></div>
+
+  <div class="col-12 mt-3"><p class="lead">{{ serverCreationStatus }}</p></div>
 </div>
 
 <!--
  Event Binding : It's basically attaching a event to a function defined in the component class
   - Syntax: ( [event] ) = "[expression to be executed]"
+  - $event : Basically the same as the "event" parameter in JavaScript
 -->
