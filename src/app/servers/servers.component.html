@@ -9,13 +9,12 @@
   <div class="col-6 offset-6 mt-3">
     <button class="btn btn-outline-primary btn-block"
       [disabled]="!allowServers"
-    >Add Server</button>
+      (click)="onCreateServer()">Add Server</button>
   </div>
+  <div class="col-12"><p class="lead">{{ serverCreationStatus }}</p></div>
 </div>
 
-<!-- Imagine if we didn't want the user to be able to add a server for a period of time, we could use the "disabled" html attribute
-  But we could also se it on the component that holds the button (ServersComponent).
-  For that we could make use of "Property Binding", which make it possible to dynamically bind data to the html attributes
-
-  Therefore, "Property Binding" can be used to dynamically bind data to a html attribute
+<!--
+ Event Binding : It's basically attaching a event to a function defined in the component class
+  - Syntax: ( [event] ) = "[expression to be executed]"
 -->

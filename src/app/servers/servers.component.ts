@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class ServersComponent implements OnInit {
 
   public allowServers = false;
+  public serverCreationStatus = 'No server was created';
 
   constructor() {
     setTimeout(() => {
@@ -18,4 +19,11 @@ export class ServersComponent implements OnInit {
   ngOnInit() {
   }
 
+  onCreateServer(){
+    this.serverCreationStatus = 'Server was created!';
+  }
 }
+
+/**
+ * onCreateServer = Just a regular function, it's a good practice to name with the prefix "on" functions that will be called from a template
+ */
