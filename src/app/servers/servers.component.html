@@ -1,5 +1,21 @@
-<ul>
-  <app-server></app-server>
-  <app-server></app-server>
-  <app-server></app-server>
-</ul>
+<div class="row">
+  <div class="col-12">
+    <ul>
+      <app-server></app-server>
+      <app-server></app-server>
+      <app-server></app-server>
+    </ul>
+  </div>
+  <div class="col-6 offset-6 mt-3">
+    <button class="btn btn-outline-primary btn-block"
+      [disabled]="!allowServers"
+    >Add Server</button>
+  </div>
+</div>
+
+<!-- Imagine if we didn't want the user to be able to add a server for a period of time, we could use the "disabled" html attribute
+  But we could also se it on the component that holds the button (ServersComponent).
+  For that we could make use of "Property Binding", which make it possible to dynamically bind data to the html attributes
+
+  Therefore, "Property Binding" can be used to dynamically bind data to a html attribute
+-->
