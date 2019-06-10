@@ -11,9 +11,11 @@ export class ServersComponent implements OnInit {
   public serverCreationStatus = 'No server was created';
   public serverName: string;
   public serverCreated: boolean;
+  public servers = [];
 
   constructor() {
     this.serverCreated = false;
+    this.servers.push('Server 1', 'Server 2');
 
     setTimeout(() => {
       this.allowServers = true;
@@ -26,6 +28,7 @@ export class ServersComponent implements OnInit {
   onCreateServer() {
     this.serverCreated = true;
     this.serverCreationStatus = `Server: ${this.serverName} was created!`;
+    this.servers.push(`Server ${this.servers.length + 2}`);
   }
 
   onUpdateServerName(event: Event) {
@@ -33,3 +36,8 @@ export class ServersComponent implements OnInit {
   }
 }
 
+
+/**
+ * To be able to add servers dynamically, we could assign the servers to a component property array and then just 'push' it when the user
+ * adds a new server. and in the template we could use the "ngFor" structural directive to print those servers.
+ */

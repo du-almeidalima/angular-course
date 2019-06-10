@@ -21,35 +21,12 @@
 
   <div class="col-12 mb-5">
     <ul>
-      <app-server></app-server>
-      <app-server></app-server>
-      <app-server></app-server>
+      <app-server *ngFor="let server of servers"></app-server>
     </ul>
   </div>
 </div>
 
 <!--
-  Attribute Directives: Unlike structural directives, attribute directives don't add or remove elements. They only change the element they were placed on
-
-  Directives: At a high level, directives are markers on a DOM element (such as an attribute, element name, comment or CSS class)
-  that tell AngularJS's HTML compiler ($compile) to attach a specified behavior to that DOM element (e.g. via event listeners)
-  or even to transform the DOM element and its children.
-
-  AngularJS comes with a set of these directives built-in, like ngBind, ngModel, and ngClass. Much like you create controllers and services,
-  you can create your own directives for AngularJS to use. When AngularJS bootstraps your application,
-  the HTML compiler traverses the DOM matching directives against the DOM elements.
-
-
-
-  There are three kinds of directives in Angular:
-
-    1) Components—directives with a template.
-    2) Structural directives—change the DOM layout by adding and removing DOM elements.
-    3) Attribute directives—change the appearance or behavior of an element, component, or another directive.
-
-    Components are the most common of the three directives. You saw a component for the first time in the Getting Started tutorial.
-
-    Structural Directives change the structure of the view. Two examples are NgFor and NgIf. Learn about them in the Structural Directives guide.
-
-    Attribute directives are used as attributes of elements. The built-in NgStyle directive in the Template Syntax guide, for example, can change several element styles at the same time.
+  To loop through servers we can use "ngFor", it will define a temporary variable inside the loop
+  Unfortunately this wont change anything in the AppServer component, just print it the servers array length times
 -->
