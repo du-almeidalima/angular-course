@@ -1,0 +1,19 @@
+<div class="row">
+
+  <div class="col-12">
+    <div class="input-group mb-3">
+      <!-- <input type="text" class="form-control" id="server-name" placeholder="Server Name" (input)="onUpdateServerName($event)"> <- Using Event Binding and then displaying the data using String Interpolation -->
+      <input type="text" class="form-control" id="server-name" aria-describedby="userHelp" placeholder="User Name" [(ngModel)]="name" (input)="onUserInput($event)">
+      <div class="input-group-append">
+        <button class="btn btn-outline-primary btn-block" [disabled]="!resetStatusBtn" (click)="onResetButtonClick()" >Reset</button>
+      </div>
+    </div>
+    <small id="userHelp" class="form-text text-muted">The User name needs to have more than one character to reset</small>
+  </div>
+
+  <div class="col-12 mt-3">
+    <fieldset disabled>
+      <input class="form-control" type="text" [placeholder]="name">
+    </fieldset>
+  </div>
+</div>
