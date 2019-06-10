@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col-12">
     <div class="input-group mb-3">
-    <!-- <input type="text" class="form-control" id="server-name" placeholder="Server Name" (input)="onUpdateServerName($event)"> <- Using Event Binding and then displaying the data using String Interpolation -->
       <input type="text" class="form-control" id="server-name" placeholder="Server Name" [(ngModel)]="serverName">
       <div class="input-group-append">
         <button class="btn btn-outline-primary btn-block"
@@ -13,7 +12,13 @@
 
     <!--  <div class="col-12 mt-3"><p class="lead">{{ serverCreationStatus }}</p></div> <-- This now will be taken care by the Structural directive "ngIf" -->
 
-  <div class="col-12 mt-3" *ngIf="serverCreated"><p class="lead">{{ serverCreationStatus }}</p></div> <!-- The " * " is required because it is a structural directive-->
+  <div class="col-12 mt-3" *ngIf="serverCreated; else falseServer"><p class="lead">{{ serverCreationStatus }}</p></div>
+
+  <!-- Else output -->
+  <ng-template #falseServer>
+    <div class="col-12 mt-3"><p class="lead">There's no server created yet...</p></div>
+  </ng-template>
+
   <div class="col-12 mb-5">
     <ul>
       <app-server></app-server>
@@ -24,6 +29,15 @@
 </div>
 
 <!--
+  "If Else" structure: We can achieve this in Angular by creating a <ng-template> which is a component directive shipped with Angular
+   - Syntax: {
+    <element class"..." *ngIf="[expression]; else [theMark]"> True output </element> "
+
+    <ng-template #theMark>
+      <element class="..."> False output </element>
+    </ng-template>
+   }
+
   Directives: At a high level, directives are markers on a DOM element (such as an attribute, element name, comment or CSS class)
   that tell AngularJS's HTML compiler ($compile) to attach a specified behavior to that DOM element (e.g. via event listeners)
   or even to transform the DOM element and its children.
