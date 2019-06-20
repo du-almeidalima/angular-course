@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "first-angular-app": {
+    "cooking-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/first-angular-app",
+            "outputPath": "dist/cooking-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,8 +23,8 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -59,18 +59,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "first-angular-app:build"
+            "browserTarget": "cooking-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "first-angular-app:build:production"
+              "browserTarget": "cooking-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "first-angular-app:build"
+            "browserTarget": "cooking-app:build"
           }
         },
         "test": {
@@ -104,7 +104,7 @@
         }
       }
     },
-    "first-angular-app-e2e": {
+    "cooking-app-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -113,11 +113,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "first-angular-app:serve"
+            "devServerTarget": "cooking-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "first-angular-app:serve:production"
+              "devServerTarget": "cooking-app:serve:production"
             }
           }
         },
@@ -133,5 +133,5 @@
       }
     }
   },
-  "defaultProject": "first-angular-app"
+  "defaultProject": "cooking-app"
 }

@@ -1,12 +1,10 @@
-# Angular Notes
+# Cooking App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+This is the repository for the course project <b> Cooking App </b> from Section 3. It'll follow
+the same structure as the previous project (Section 2).
 
-This is the repository for my Angular 8 course, it will have all the projects developed in this course organized by commits
-
-You can find comments explaining the elements/processes/functionalities in the files that they're implemented.
-
-For general instructions, such as installing or configuration something, you can find it into the "readme.md" of each project.
+## App Planning
+![App Diagram](./app-planning.png?raw=true "App Diagram")
 ## Sections
 
 The course sections / lessons will be organized as commits, for instance:
@@ -21,7 +19,12 @@ The Section 2: The Basics will be
 
 ## Bootstrap
 
-Bootstrap 4.3.1 was installed in this project through npm, in order
+Bootstrap 4.3.1 was installed in this project through npm with the command: 
+```
+npm install --save bootstrap
+```
+
+In order
 to Angular recognizes it, we need to specify it into 'angular.json' file:
 
 ```
