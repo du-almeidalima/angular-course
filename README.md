@@ -19,11 +19,17 @@ The Section 2: The Basics will be
 
 ## Bootstrap
 
+#### Installation
 Bootstrap 4.3.1 was installed in this project through npm with the command: 
 ```
 npm install --save bootstrap
 ```
 
+Also, for using bootstrap js utilities: 
+```
+npm install --save jquery popper.js
+```
+#### Configuration
 In order
 to Angular recognizes it, we need to specify it into 'angular.json' file:
 
@@ -31,6 +37,15 @@ to Angular recognizes it, we need to specify it into 'angular.json' file:
 "styles": [
   "node_modules/bootstrap/dist/css/bootstrap.min.css",
   "src/styles.css"
+]
+```
+
+And for Bootstrap js:
+```
+"scripts": [
+  "node_modules/jquery/dist/jquery.min.js",
+  "node_modules/popper.js/dist/umd/popper.js",
+  "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
 ]
 ```
 
