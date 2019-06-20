@@ -5,10 +5,10 @@
   <div class="col-12">
     <hr>
     <ul class="list-group">
-      <a href="#" class="list-group-item-action">asdsdaasdas</a>
-      <a href="#" class="list-group-item-action">asdsdaasdas</a>
-      <a href="#" class="list-group-item-action">asdsdaasdas</a>
-      <a href="#" class="list-group-item-action">asdsdaasdas</a>
+      <li *ngFor="let ingredient of ingredients" href="#" class="list-group-item-action">
+        {{ ingredient.name }}
+        <span class="badge badge-secondary">{{ingredient.amount}}</span>
+      </li>
     </ul>
   </div>
 </div>
