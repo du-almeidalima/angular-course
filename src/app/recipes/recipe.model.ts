@@ -9,5 +9,4 @@ export class RecipeModel {
     this.description = description;
     this.imagePath = imagePath;
   }
-
 }
