@@ -10,19 +10,3 @@
     </div>
   </div>
 </div>
-
-<!--
-    We could bind a property just like we've bound the property directive, for COMPONENTS, when we pass a property we're actually passing data
-    To its visible (@input) fields/properties.
-    basically what we're doing is:
-    We're setting the property "element" of our component to the value of "serverElement" which is an array in app.component (serverElements)
--->
-
-<!--
-  In the same way we can assign events to an Html Element we can also assign them to a Component
-  Syntax: ( eventName ) = "functionToGetExecuted( parameter )"
-  In this case, the "functionToGetExecuted" is on AppComponent and the "parameter" is sent by the CockpitComponent
-  And the "eventName" must be emitted by the CockPitComponent
-
-  NOTE: The parameter should always be $event, otherwise it won't work
--->

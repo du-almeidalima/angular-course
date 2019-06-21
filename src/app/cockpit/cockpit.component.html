@@ -1,23 +1,43 @@
 <div class="row">
-    <div class="col-xs-12">
-        <p>Add new Servers or blueprints!</p>
+  <div class="col-xs-12">
+    <p>Add new Servers or blueprints!</p>
 
-        <label>Server Name</label>
-        <input type="text" class="form-control" [(ngModel)]="newServerName">
+    <label>Server Name</label>
+<!--        <input type="text" class="form-control" [(ngModel)]="newServerName">-->
+    <input
+      type="text"
+      class="form-control"
+      #serverNameInput
+    >
 
-        <label>Server Content</label>
-        <input type="text" class="form-control" [(ngModel)]="newServerContent">
+    <label>Server Content</label>
+<!--        <input type="text" class="form-control" [(ngModel)]="newServerContent">-->
+    <input
+      type="text"
+      class="form-control"
+      #serverContentInput
+    >
+    <br>
 
-        <br>
+    <button
+    class="btn btn-primary"
+    style="margin-right: 10px;"
+    (click)="onAddServer(serverNameInput, serverContentInput)">Add Server</button>
 
-        <button
-        class="btn btn-primary"
-        style="margin-right: 10px;"
-        (click)="onAddServer()">Add Server</button>
+    <button
+    class="btn btn-primary"
+    (click)="onAddBlueprint(serverNameInput, serverContentInput)">Add Server Blueprint</button>
 
-        <button
-        class="btn btn-primary"
-        (click)="onAddBlueprint()">Add Server Blueprint</button>
-
-    </div>
+  </div>
 </div>
+
+<!--
+  We're using the "ngModel" directive to pass the data to our CockpitComponent, but it's not needed, because the purpose
+  of ngModel is to sync data, and we only want to used it when we send.
+  We could achieve this by using "Local Reference", it can be placed on any HTML Element. It will hold a reference to this
+  Element, not only to the value, with EVERYTHING.
+  Also, you can use them EVERYWHERE on your template, even as a parameter of another Element function, as we did above.
+  It's just like an variable got by the JavaScript document.getElement...
+
+  NOTE: YOU CAN ONLY USE "LOCAL REFERENCE" INSIDE YOUR TEMPLATE, NOT IN THE TYPESCRIPT CODE
+-->
