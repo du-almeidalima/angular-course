@@ -27,4 +27,6 @@ export class ServerElementComponent implements OnInit {
  *  through the selector "app-server-element"
  *
  *  NOTE: We can also expose our property/field 'element' with an alias, as shown above
+ *
+ *  NOTE: When a property/field is declared with the decorator @Input() you don't need to initialize it on constructor
 */
