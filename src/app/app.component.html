@@ -3,7 +3,13 @@
   <hr>
   <div class="row">
     <div class="col-xs-12">
-      <app-server-element></app-server-element>
+      <app-server-element *ngFor="let serverElement of serverElements" [element]="serverElement"></app-server-element>
     </div>
   </div>
 </div>
+
+<!-- We could bind a property just like we've bound the property directive, for COMPONENTS, when we pass a property we're actually passing data
+     To its visible (@input) fields/properties.
+     basically what we're doing is:
+     We're setting the property "element" of our component to the value of "serverElement" which is an array in app.component (serverElements)
+-->
