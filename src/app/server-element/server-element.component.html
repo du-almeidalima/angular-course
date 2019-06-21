@@ -3,10 +3,26 @@
   <div class="panel-heading">{{ element.name }}</div>
 
   <div class="panel-body">
-    <p>
-      <strong *ngIf="element.type === 'server'" style="color: red">{{ element.content }}</strong>
-      <em *ngIf="element.type === 'blueprint'">{{ element.content }}</em>
-    </p>
+    <ng-content></ng-content>
   </div>
 
 </div>
+
+<!-- There is another way of passing data through components, imagine if you wanted to pass this section:
+      <p>
+        <strong *ngIf="element.type === 'server'" style="color: red">{{ element.content }}</strong>
+        <em *ngIf="element.type === 'blueprint'">{{ element.content }}</em>
+      </p>
+
+    Via other component. Well, we can achieve that using the <ng-content> directive. by Default everything passed
+    between the opening and closing of a component is ignored by Angular, for example:
+      <app-server-element *ngFor="let serverElement of serverElements" [srvElement]="serverElement">
+
+        <p>
+          <strong *ngIf="element.type === 'server'" style="color: red">{{ element.content }}</strong>
+          <em *ngIf="element.type === 'blueprint'">{{ element.content }}</em>
+        </p>
+
+      </app-server-element>
+    That would be just ignored by Angular, but with the <ng-content> we can pass that HTML down to our Component template!
+ -->
