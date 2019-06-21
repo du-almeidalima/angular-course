@@ -7,7 +7,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 export class CockpitComponent {
     // Event emitters
     @Output() public serverCreated = new EventEmitter<{serverName: string, serverContent: string}>();
-    @Output() public blueprintCreated = new EventEmitter<{serverName: string, serverContent: string}>();
+    @Output('bpCreated') public blueprintCreated = new EventEmitter<{serverName: string, serverContent: string}>();
 
     // Properties / Fields
     public newServerName = '';
@@ -39,5 +39,5 @@ export class CockpitComponent {
  *
  * LAST OF ALL, the same way we used @Input inform Angular that the property "element" of server-element would receive a value from
  * "outside", we also need inform Angular that this property ("serverCreated", "blueprintCreated") will send data to outside
- * We can do this by adding the Decorator @Output
+ * We can do this by adding the Decorator @Output, and we can also assign an alias to it, just like in @Input
 */
