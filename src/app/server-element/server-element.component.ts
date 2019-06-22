@@ -7,7 +7,7 @@ import {
   SimpleChanges,
   DoCheck,
   AfterContentChecked,
-  AfterContentInit, AfterViewInit, AfterViewChecked, OnDestroy, ViewChild, ElementRef
+  AfterContentInit, AfterViewInit, AfterViewChecked, OnDestroy, ViewChild, ElementRef, ContentChild
 } from '@angular/core';
 
 @Component({
@@ -19,6 +19,7 @@ import {
 export class ServerElementComponent implements
     OnInit, OnChanges, DoCheck, AfterContentInit , AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
 
+  // Properties
   @Input('srvElement')
   public element: {type: string, name: string, content: string};
 
@@ -28,6 +29,8 @@ export class ServerElementComponent implements
   @ViewChild('divHeadingElement', {static: false})
   public headingElement: ElementRef;
 
+  @ContentChild('htmlParagraphElement', {static: false})
+  public paragraphContentElement: ElementRef;
   // Runs while building your class
   constructor() { console.log('=== Constructor was called ==='); }
 
@@ -41,10 +44,19 @@ export class ServerElementComponent implements
   // Runs after the component was completely built
   ngOnInit(): void {
     console.log('=== ngOnInit was called ===');
+
+    // Trying to access @ViewChild in ngOnInit
     try {
       console.log('@ViewChild headingElement on ngOnInit: ', this.headingElement.nativeElement.textContent);
     } catch (e) {
       console.log('Tried to access @ViewChild headingElement, before it is initialized, error message: ', e.message);
+    }
+
+    // Trying to access @ContentChild in ngOnInit
+    try {
+      console.log('@ContentChild paragraphContentElement on ngOnInit: ', this.paragraphContentElement.nativeElement.textContent);
+    } catch (e) {
+      console.log('Tried to access @ContentChild paragraphContentElement, before it is initialized, error message: ', e.message);
     }
   }
 
@@ -56,6 +68,8 @@ export class ServerElementComponent implements
   // Runs after the content was projected, remembering it is projected within <ng-content>
   ngAfterContentInit(): void {
     console.log('=== ngAfterContentInit ===');
+    console.log('now accessing @ContentChild htmlParagraphElement ngAfterContentInit: ',
+      this.paragraphContentElement.nativeElement.textContent);
   }
 
   // Same as doCheck but for the content, thus, <ng-content>
@@ -80,12 +94,8 @@ export class ServerElementComponent implements
   }
 
   /**
-   * So we added the @input name: string to demonstrate that onNgChange is called on every change.
-   * But we needed to do this, because the "element" property a object, and object are passed through references, and the reference
-   * wouldn't change, even if we changed some value inside of it, thus the ngOnChange of ServerElementComponent wouldn't get triggered
-   */
-
-  /**
-   * As a demonstration that we can't use the @ViewChild headingElement before ngAfterViewInit, we'll log it in ngOnInit event
+   * If we want to get a reference / HTML Element from a HTML that is being projected into our component, that being, it's not there in the
+   * component template
+   * We can make use of @ContentChild, that works just like the @ViewChild but for projections
    */
 }

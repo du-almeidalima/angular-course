@@ -10,7 +10,7 @@
       <button class="btn btn-danger" (click)="onDestroyFirst()">Destroy first component </button>
       <app-server-element *ngFor="let serverElement of serverElements" [srvElement]="serverElement" [name]="serverElement.name">
 
-        <p>
+        <p #htmlParagraphElement>
           <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
           <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
         </p>
@@ -21,6 +21,7 @@
 </div>
 
 <!--
-  Here we just implemented a function that will change the first ServerElementComponent to prove that ngOnChange
-  is called more than one time.
+  What if we wanted to place a reference within the <p> that is being projected into the app-server-element?
+  For that, we could just create a normal reference like if was outside the <ng-content>
+  But for getting that we can use @ContentChild instead of @ViewChild
 -->
