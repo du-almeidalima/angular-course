@@ -16,6 +16,7 @@ The Section 2: The Basics will be
   "[section number and name]"
 ```
 
+![Components Lifecycle](./component-lifecycle.png?raw=true "Component Lifecycle")
 ## Authors
 
 * **Eduardo Lima** - Xenosgrilda

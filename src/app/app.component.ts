@@ -25,4 +25,14 @@ export class AppComponent {
       content: blueprintData.serverContent
     });
   }
+
+  public onChangeFirst(): void {
+    // Just a function to change the name of the first element to prove that ngOnChange is always called
+    this.serverElements[0].name = 'Changed!';
+  }
+
+  public onDestroyFirst(): void{
+    // Just a function to simulates a destruction of a component
+    this.serverElements.splice(0, 1);
+  }
 }
