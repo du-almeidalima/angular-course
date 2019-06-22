@@ -7,7 +7,7 @@ import {
   SimpleChanges,
   DoCheck,
   AfterContentChecked,
-  AfterContentInit, AfterViewInit, AfterViewChecked, OnDestroy
+  AfterContentInit, AfterViewInit, AfterViewChecked, OnDestroy, ViewChild, ElementRef
 } from '@angular/core';
 
 @Component({
@@ -16,13 +16,18 @@ import {
   styleUrls: ['./server-element.component.css'],
   encapsulation: ViewEncapsulation.Emulated // This will remove Angular CSS behaviour and apply it application wilde
 })
-export class ServerElementComponent implements OnInit, OnChanges, DoCheck, AfterContentInit , AfterContentChecked, AfterViewInit
-  , AfterViewChecked, OnDestroy {
+export class ServerElementComponent implements
+    OnInit, OnChanges, DoCheck, AfterContentInit , AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
+
   @Input('srvElement')
   public element: {type: string, name: string, content: string};
 
   @Input()
   public name: string;
+
+  @ViewChild('divHeadingElement', {static: false})
+  public headingElement: ElementRef;
+
   // Runs while building your class
   constructor() { console.log('=== Constructor was called ==='); }
 
@@ -36,6 +41,11 @@ export class ServerElementComponent implements OnInit, OnChanges, DoCheck, After
   // Runs after the component was completely built
   ngOnInit(): void {
     console.log('=== ngOnInit was called ===');
+    try {
+      console.log('@ViewChild headingElement on ngOnInit: ', this.headingElement.nativeElement.textContent);
+    } catch (e) {
+      console.log('Tried to access @ViewChild headingElement, before it is initialized, error message: ', e.message);
+    }
   }
 
   // Runs on every change detection run, this is called on every Angular changes check, from everywhere
@@ -55,6 +65,7 @@ export class ServerElementComponent implements OnInit, OnChanges, DoCheck, After
 
   ngAfterViewInit(): void {
     console.log('=== ngAfterViewInit ===');
+    console.log('now accessing @ViewChild headingElement ngAfterViewInit: ', this.headingElement.nativeElement.textContent);
   }
 
   ngAfterViewChecked(): void {
@@ -72,5 +83,9 @@ export class ServerElementComponent implements OnInit, OnChanges, DoCheck, After
    * So we added the @input name: string to demonstrate that onNgChange is called on every change.
    * But we needed to do this, because the "element" property a object, and object are passed through references, and the reference
    * wouldn't change, even if we changed some value inside of it, thus the ngOnChange of ServerElementComponent wouldn't get triggered
+   */
+
+  /**
+   * As a demonstration that we can't use the @ViewChild headingElement before ngAfterViewInit, we'll log it in ngOnInit event
    */
 }

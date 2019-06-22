@@ -6,11 +6,15 @@ import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/c
 })
 export class CockpitComponent {
   // Event emitters
-  @Output() public serverCreated = new EventEmitter<{serverName: string, serverContent: string}>();
-  @Output('bpCreated') public blueprintCreated = new EventEmitter<{serverName: string, serverContent: string}>();
+  @Output()
+  public serverCreated = new EventEmitter<{serverName: string, serverContent: string}>();
+
+  @Output('bpCreated')
+  public blueprintCreated = new EventEmitter<{serverName: string, serverContent: string}>();
 
   // Properties
-  @ViewChild('serverContentInput', {static: false}) public serverContentInput: ElementRef;
+  @ViewChild('serverContentInput', {static: false})
+  public serverContentInput: ElementRef;
 
   onAddServer(nameInput: HTMLInputElement) {
     console.log(this.serverContentInput);
