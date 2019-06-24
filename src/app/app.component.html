@@ -1,27 +1,38 @@
 <div class="container">
-  <app-cockpit
-    (serverCreated) = onServerAdded($event)
-    (bpCreated) = onBlueprintAdded($event)
-  ></app-cockpit>
-  <hr>
-  <div class="row">
-    <div class="col-xs-12">
-      <button class="btn btn-primary" (click)="onChangeFirst()">Fire ngOnChange !</button>
-      <button class="btn btn-danger" (click)="onDestroyFirst()">Destroy first component </button>
-      <app-server-element *ngFor="let serverElement of serverElements" [srvElement]="serverElement" [name]="serverElement.name">
 
-        <p #htmlParagraphElement>
-          <strong *ngIf="serverElement.type === 'server'" style="color: red">{{ serverElement.content }}</strong>
-          <em *ngIf="serverElement.type === 'blueprint'">{{ serverElement.content }}</em>
-        </p>
-
-      </app-server-element>
+  <div class="row justify-content-center mt-5">
+    <div class="col-6">
+      <app-game-control (numberChanged)="onNumberUpdate($event)"></app-game-control>
     </div>
   </div>
-</div>
 
-<!--
-  What if we wanted to place a reference within the <p> that is being projected into the app-server-element?
-  For that, we could just create a normal reference like if was outside the <ng-content>
-  But for getting that we can use @ContentChild instead of @ViewChild
--->
+  <div class="row justify-content-center mt-3">
+    <div class="col-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div class="col-6">
+              <h2 class="text-center">Odd</h2>
+              <hr>
+              <div class="number-container" *ngFor="let num of numbersArray">
+                <app-odd *ngIf="num % 2 !== 0"
+                  [num]="num"
+                ></app-odd>
+              </div>
+            </div>
+            <div class="col-6">
+              <h2 class="text-center">Even</h2>
+              <hr>
+              <div class="number-container" *ngFor="let num of numbersArray">
+                <app-even *ngIf="num % 2 === 0"
+                  [num]="num"
+                ></app-even>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,8 +1,18 @@
-# Section 5: Components & Databinding
+# Section 5: Assignment 4
 
-This is an app previously build by the course instructor, here we'll explore how to send data through components and so on.
+This project is for the Assignment 4 of this course:
 
-It follows the same structure as the previous sections.
+## Taks
+<ol>
+  <li>Create three new components: GameControl, Odd and Even</li>
+  <li>The GameControl Component should have buttons to start and stop the game</li>
+  <li>When starting the game, an event (holding a incrementing number) should get emitted each second (ref = setInterval())</li>
+  <li>The event should be listenable from outside the component</li>
+  <li>When stopping the game, no more events should get emitted (clearInterval(ref))</li>
+  <li>A new Odd component should get created for every odd number emitted, the same should happen for the Even Component (on even numbers)</li>
+  <li>Simply output Odd - NUMBER or Even - NUMBER in the two components</li>
+  <li>Style the element (e.g. paragraph) holding your output text differently in both components</li>
+</ol>
 
 ## Sections
 
@@ -16,7 +26,6 @@ The Section 2: The Basics will be
   "[section number and name]"
 ```
 
-![Components Lifecycle](./component-lifecycle.png?raw=true "Component Lifecycle")
 ## Authors
 
 * **Eduardo Lima** - Xenosgrilda
