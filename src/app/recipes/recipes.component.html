@@ -1,11 +1,30 @@
 <div class="row border p-4">
   <div class="col-md-5">
-    <app-recipes-list></app-recipes-list>
+    <app-recipes-list (onRecipeClickedForwarded)="setDisplayedRecipe($event)"></app-recipes-list>
   </div>
+
   <div class="col-md-2">
     <div class="vertical-divider"></div>
   </div>
+
   <div class="col-md-5">
-    <app-recipe-detail></app-recipe-detail>
+    <app-recipe-detail *ngIf="displayedRecipe; else noRecipeMessage" [currentRecipe]="displayedRecipe"></app-recipe-detail>
+
+    <!-- Else structure -->
+    <ng-template #noRecipeMessage>
+      <p class="text-center text-muted"> Please Select a recipe for more details...</p>
+    </ng-template>
   </div>
 </div>
+
+<!--
+  Here we're checking if there is a recipe being displayed and if not, we're telling angular to display another thing.
+
+  Note: This is possible by the use of the if/else structure directive.
+  Note: Remember that for displaying something in else we need to pass a local reference.
+-->
+
+<!--
+  If there is a recipe, we'll pass it to the RecipeDetail component, and there we'll just display it using String
+  Interpolation.
+ -->

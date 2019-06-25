@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-12">
-    <h4 class="text-center"> Recipe Title </h4>
+    <h4 class="text-center"> {{currentRecipe.name}} </h4>
   </div>
 </div>
 <div class="row mt-3">
@@ -9,13 +9,11 @@
     <hr />
     <img
       class="float-right float-image"
-      src="https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/crab-asparagus-pappardelle.jpg"
+      [src]="currentRecipe.imagePath"
       height="125"
       alt=""
     >
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae, recusandae!
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis delectus expedita facere inventore officiis omnis porro praesentium sapiente similique voluptas! Architecto autem dignissimos eos harum nisi! Aliquid commodi magnam voluptas!</p>
+    <p> {{currentRecipe.description}} </p>
   </div>
 </div>
 <div class="row mt-1">

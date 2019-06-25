@@ -8,6 +8,13 @@
 </div>
 <div class="row mt-3">
   <div class="col-12" *ngFor="let recipeItem of recipes">
-      <app-recipe-item [recipe]="recipeItem"></app-recipe-item>
+      <app-recipe-item [recipe]="recipeItem" (onRecipeClicked)="onRecipeForwardedHandler(recipeItem)"></app-recipe-item>
   </div>
 </div>
+
+<!--
+  Here we're listening to RecipeItemComponent event, since we already have the current recipe data that is emitting this
+  event (because of the for loop) we don't need to retrieve any data
+
+  So basically we will forward this event to this component parent ( RecipeComponent )
+-->
