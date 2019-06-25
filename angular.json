@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "assignment-four": {
+    "cooking-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/assignment-four",
+            "outputPath": "dist/cooking-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -26,7 +26,11 @@
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/popper.js/dist/umd/popper.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -59,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "assignment-four:build"
+            "browserTarget": "cooking-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "assignment-four:build:production"
+              "browserTarget": "cooking-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "assignment-four:build"
+            "browserTarget": "cooking-app:build"
           }
         },
         "test": {
@@ -104,7 +108,7 @@
         }
       }
     },
-    "assignment-four-e2e": {
+    "cooking-app-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -113,11 +117,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "assignment-four:serve"
+            "devServerTarget": "cooking-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "assignment-four:serve:production"
+              "devServerTarget": "cooking-app:serve:production"
             }
           }
         },
@@ -133,5 +137,5 @@
       }
     }
   },
-  "defaultProject": "assignment-four"
+  "defaultProject": "cooking-app"
 }

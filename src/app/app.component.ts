@@ -6,10 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public numbersArray: number[] = [];
+  public activeLink = 'recipes';
 
-  // Handler for numberChanged event triggered from GameControl Component
-  public onNumberUpdate(event): void {
-    this.numbersArray.push(event);
+  public onLinkClickHandler(link: string){
+    this.activeLink = link;
   }
 }

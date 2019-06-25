@@ -1,19 +1,10 @@
-# Section 5: Assignment 4
+# Cooking App
 
-This project is for the Assignment 4 of this course:
+This is the repository for the course project <b> Cooking App </b> from Section 3. It'll follow
+the same structure as the previous project (Section 2).
 
-## Taks
-<ol>
-  <li>Create three new components: GameControl, Odd and Even</li>
-  <li>The GameControl Component should have buttons to start and stop the game</li>
-  <li>When starting the game, an event (holding a incrementing number) should get emitted each second (ref = setInterval())</li>
-  <li>The event should be listenable from outside the component</li>
-  <li>When stopping the game, no more events should get emitted (clearInterval(ref))</li>
-  <li>A new Odd component should get created for every odd number emitted, the same should happen for the Even Component (on even numbers)</li>
-  <li>Simply output Odd - NUMBER or Even - NUMBER in the two components</li>
-  <li>Style the element (e.g. paragraph) holding your output text differently in both components</li>
-</ol>
-
+## App Planning
+![App Diagram](./app-planning.png?raw=true "App Diagram")
 ## Sections
 
 The course sections / lessons will be organized as commits, for instance:
@@ -24,6 +15,38 @@ The Section 2: The Basics will be
   OR
   
   "[section number and name]"
+```
+
+## Bootstrap
+
+#### Installation
+Bootstrap 4.3.1 was installed in this project through npm with the command: 
+```
+npm install --save bootstrap
+```
+
+Also, for using bootstrap js utilities: 
+```
+npm install --save jquery popper.js
+```
+#### Configuration
+In order
+to Angular recognizes it, we need to specify it into 'angular.json' file:
+
+```
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+]
+```
+
+And for Bootstrap js:
+```
+"scripts": [
+  "node_modules/jquery/dist/jquery.min.js",
+  "node_modules/popper.js/dist/umd/popper.js",
+  "node_modules/bootstrap/dist/js/bootstrap.bundle.js"
+]
 ```
 
 ## Authors
