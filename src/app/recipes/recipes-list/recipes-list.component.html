@@ -7,22 +7,7 @@
   </div>
 </div>
 <div class="row mt-3">
-  <div class="col-12" *ngFor="let recipe of recipes">
-
-    <!-- For now we're only outputting the data of a single recipe -->
-    <div class="card mb-3" style="max-width: 540px;">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-          <img [src]="recipe.imagePath" class="card-img" alt="...">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title"><b>{{ recipe.name }}</b></h5>
-            <p class="card-text">{{ recipe.description }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
+  <div class="col-12" *ngFor="let recipeItem of recipes">
+      <app-recipe-item [recipe]="recipeItem"></app-recipe-item>
   </div>
 </div>

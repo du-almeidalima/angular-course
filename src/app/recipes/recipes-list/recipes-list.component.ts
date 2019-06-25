@@ -14,7 +14,6 @@ export class RecipesListComponent implements OnInit {
 
   constructor() {
     let ex = new RecipeModel('Recipe 1', 'This is just a recipe test', 'https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/crab-asparagus-pappardelle.jpg')
-    console.log(ex.name);
   }
 
   ngOnInit() {
