@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row">
+  <div class="row mx-auto">
     <div class="col-xs-12">
       <button
         class="btn btn-primary"
@@ -12,6 +12,8 @@
           <li
             class="list-group-item text-center"
             *ngFor="let number of oddNumbers"
+            [ngClass]="{odd: number % 2 !== 0}"
+            [ngStyle]="{backgroundColor: number % 2 !== 0 ? 'lightpink' : 'initial'}"
           >
             {{number}}
           </li>
@@ -22,6 +24,8 @@
           <li
             class="list-group-item text-center"
             *ngFor="let number of evenNumbers"
+            [ngClass]="{odd: number % 2 !== 0}"
+            [ngStyle]="{backgroundColor: number % 2 !== 0 ? 'lightpink' : 'initial'}"
           >
             {{number}}
           </li>
@@ -37,11 +41,7 @@
 </div>
 
 <!--
-  Basic stuff here, we're looping through numbers array with a Structural Directive (Which is a directive that changes the dom and
-  the elements)
+  Here we'll use two important Attribute Directive, the ngStyle and ngClass
 
-  If we wanted to show only the odd numbers when clicking the button Only odd we would need to create another directive
-  Because Angular only allows one directive per element
-
-  Since this is a project about Directive we'll use a poor solution to sort odd and even
+  Remember this is for learning purposes
 -->
