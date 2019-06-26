@@ -1,6 +1,47 @@
-<app-header (linkClicked)="onLinkClickHandler($event)"></app-header>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <button
+        class="btn btn-primary"
+        (click)="onlyOdd = !onlyOdd">Only show odd numbers</button>
+      <br><br>
+      <ul class="list-group">
 
-<main role="main" class="container mt-5">
-  <app-recipes *ngIf="activeLink === 'recipes'"></app-recipes>
-  <app-shopping-list *ngIf="activeLink === 'shoppingList'"></app-shopping-list>
-</main>
+        <!-- Displaying only odd-->
+        <div *ngIf="onlyOdd">
+          <li
+            class="list-group-item text-center"
+            *ngFor="let number of oddNumbers"
+          >
+            {{number}}
+          </li>
+        </div>
+
+        <!-- Displaying only odd-->
+        <div *ngIf="!onlyOdd">
+          <li
+            class="list-group-item text-center"
+            *ngFor="let number of evenNumbers"
+          >
+            {{number}}
+          </li>
+        </div>
+
+      </ul>
+
+      <ng-template [ngIf]="onlyOdd">
+        <p>Only odd</p>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<!--
+  Basic stuff here, we're looping through numbers array with a Structural Directive (Which is a directive that changes the dom and
+  the elements)
+
+  If we wanted to show only the odd numbers when clicking the button Only odd we would need to create another directive
+  Because Angular only allows one directive per element
+
+  Since this is a project about Directive we'll use a poor solution to sort odd and even
+-->
