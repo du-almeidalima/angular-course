@@ -16,20 +16,11 @@ export class BasicHighlightDirective implements OnInit {
 }
 
 /**
- * To create a directive we simple create a folder and put it into it, following the namespace
- * "directiveName.directive.ts"
+ * Event though our directive works, it's not a good practice to access our element directly, because Angular is also able to render our
+ * templates without a DOM, thus this won't work, like when using service workers.
+ * So we can make use of a tool for this, the Renderer
  *
- * To make it a Directive, just like then component we need to assign a decorator on it.
- * We also need to pass a object to it, just like the Component decorator:
- * {
- *     selector(mandatory): '...'
- * }
+ * Note: we can generate a new directive with the command "ng generate directive"
  *
- * Note: I've add square brackets on it so it will be recognized whenever we add appBasicHighlight without square brackets to an element
- *
- * We can get access to the element our directive is sitting on natively by Angular, we can inject this element
- * We did it here by assigning the constructor and a property, using the convenient syntax of TypeScript. Angular now will try to find
- * something to instantiate on this property (Injection), and will instantiate the element this Directive is on, thus giving us access
- *
- * FINALLY, to being able to use, we need to inform Angular that we have a new Directive, just like the component, in a module
+ * This lecture will continue in the "better-highlight" directive
  */
