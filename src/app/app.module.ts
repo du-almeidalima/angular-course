@@ -1,16 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
+import { BasicHighlightDirective} from '../app/basic-highligh/basic-highlight.directive'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BasicHighlightDirective
   ],
   imports: [
-    BrowserModule,
-    FormsModule
+    BrowserModule
   ],
   providers: [],
   bootstrap: [AppComponent]
