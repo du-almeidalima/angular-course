@@ -34,6 +34,14 @@
       </ul>
       <p class="text-center mt-3" appBasicHighlight>Style me with BasicHighlightDirective !!! </p>
       <p class="text-center" appBetterHighlight [defaultColor]="'purple'" [highlightColor]="'tomato'">Style me with a better practice BetterHighlightDirective !!! </p>
+      <hr />
+      <!-- ngSwitch -->
+      <div [ngSwitch]="dummyValue">
+        <p *ngSwitchCase="1">I have 1</p>
+        <p *ngSwitchCase="10">I have 10</p>
+        <p *ngSwitchCase="100">I have 100</p>
+        <p *ngSwitchDefault>I have nothing :c</p>
+      </div>
     </div>
   </div>
 </div>
@@ -44,4 +52,8 @@
 
 <!--
   Here we can see how to pass properties to the directive, it seems that it becomes the property of the hosting element
+-->
+
+<!--
+  We can use the ngSwitch to display values on a switch/case style
 -->
