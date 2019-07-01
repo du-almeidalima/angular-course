@@ -19,6 +19,17 @@
           </li>
         </div>
 
+        <ng-template [ngIf]="onlyOdd">
+          <li
+            class="list-group-item text-center"
+            *ngFor="let number of oddNumbers"
+            [ngClass]="{odd: number % 2 !== 0}"
+            [ngStyle]="{backgroundColor: number % 2 !== 0 ? 'lightpink' : 'initial'}"
+          >
+            {{number}}
+          </li>
+        </ng-template>
+
         <!-- Displaying only odd-->
         <div *ngIf="!onlyOdd">
           <li
@@ -39,7 +50,13 @@
 </div>
 
 <!--
-  Now we're going to create our own Directive! it's a simple directive to highlight something on hover
+  Structural Directives behind the scenes. There is no " * " in Angular syntax when we write like *ngIf, what Angular does
+  is, it translate to this template
+  <ng-template [ngIf= "condition">
+    content...
+  </ng-template>
+
+  Look above for an example
 -->
 
 <!--
