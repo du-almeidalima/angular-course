@@ -5,7 +5,7 @@ import {Directive, ElementRef, HostBinding, HostListener, OnInit, Renderer2} fro
 })
 export class BetterHighlightDirective implements OnInit {
 
-  @HostBinding('style.display') fontSize: string;
+  @HostBinding('style.fontSize') fontSize: string;
 
   constructor(private elRef: ElementRef, private renderer: Renderer2) { }
 
@@ -17,7 +17,7 @@ export class BetterHighlightDirective implements OnInit {
   public mouseOver() {
     this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'darkblue');
     this.renderer.setStyle(this.elRef.nativeElement, 'color', 'white');
-    this.fontSize = 'none';
+    this.fontSize = '30px';
   }
 
   @HostListener('mouseleave')
