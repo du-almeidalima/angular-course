@@ -1,15 +1,26 @@
-import {Directive, ElementRef, OnInit, Renderer2} from '@angular/core';
+import {Directive, ElementRef, HostListener, OnInit, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[appBetterHighlight]'
 })
-export class BetterHighlightDirective implements OnInit{
+export class BetterHighlightDirective implements OnInit {
 
   constructor(private elRef: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'blue');
+
+  }
+
+  @HostListener('mouseenter')
+  public mouseOver() {
+    this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'darkblue');
     this.renderer.setStyle(this.elRef.nativeElement, 'color', 'white');
+  }
+
+  @HostListener('mouseleave')
+  public mouseLeave() {
+    this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'tomato');
+    this.renderer.setStyle(this.elRef.nativeElement, 'color', 'black');
   }
 }
 
@@ -23,4 +34,7 @@ export class BetterHighlightDirective implements OnInit{
  * (elementReference, style, the value,flags(optional)) -> flags are css flags like !important
  *
  * Note: we can generate a new directive with the command "ng generate directive"
+ *
+ * @HostListener: Listen to an event to the DOM element this directive is sitting, also it passes metadata
+ * In order for it to work we need to pass 1 - 2 arguments, {name: 'event' }
  */
