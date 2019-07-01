@@ -1,11 +1,13 @@
-import {Directive, ElementRef, HostBinding, HostListener, OnInit, Renderer2} from '@angular/core';
+import {Directive, ElementRef, HostBinding, HostListener, Input, OnInit, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[appBetterHighlight]'
 })
 export class BetterHighlightDirective implements OnInit {
 
-  @HostBinding('style.fontSize') fontSize: string;
+  @Input() defaultColor = 'gray'; // Those are defaultColors
+  @Input() highlightColor = 'pink';
+  @HostBinding('style.backgroundColor') bgColor: string = this.defaultColor;
 
   constructor(private elRef: ElementRef, private renderer: Renderer2) { }
 
@@ -15,14 +17,13 @@ export class BetterHighlightDirective implements OnInit {
 
   @HostListener('mouseenter')
   public mouseOver() {
-    this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'darkblue');
+    this.bgColor = this.highlightColor;
     this.renderer.setStyle(this.elRef.nativeElement, 'color', 'white');
-    this.fontSize = '30px';
   }
 
   @HostListener('mouseleave')
   public mouseLeave() {
-    this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'tomato');
+    this.bgColor = this.defaultColor;
     this.renderer.setStyle(this.elRef.nativeElement, 'color', 'black');
   }
 }
@@ -37,6 +38,10 @@ export class BetterHighlightDirective implements OnInit {
  * (elementReference, style, the value,flags(optional)) -> flags are css flags like !important
  *
  * Note: we can generate a new directive with the command "ng generate directive"
+ *
+ * What if we wanted to add a custom property to our Directive, such as the background color?
+ * We could do similar to a Component, adding an @Input decorator, take a look on AppComponent to see how we passed the values to this
+ * Directive
  *
  * @HostListener: Listen to an event to the DOM element this directive is sitting, also it passes metadata
  * In order for it to work we need to pass 1 - 2 arguments, {name: 'event' }

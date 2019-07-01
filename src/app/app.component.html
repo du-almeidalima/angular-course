@@ -33,11 +33,15 @@
 
       </ul>
       <p class="text-center mt-3" appBasicHighlight>Style me with BasicHighlightDirective !!! </p>
-      <p class="text-center" appBetterHighlight>Style me with a better practice BetterHighlightDirective !!! </p>
+      <p class="text-center" appBetterHighlight [defaultColor]="'purple'" [highlightColor]="'tomato'">Style me with a better practice BetterHighlightDirective !!! </p>
     </div>
   </div>
 </div>
 
 <!--
   Now we're going to create our own Directive! it's a simple directive to highlight something on hover
+-->
+
+<!--
+  Here we can see how to pass properties to the directive, it seems that it becomes the property of the hosting element
 -->
