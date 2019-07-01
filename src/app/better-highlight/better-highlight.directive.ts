@@ -1,9 +1,11 @@
-import {Directive, ElementRef, HostListener, OnInit, Renderer2} from '@angular/core';
+import {Directive, ElementRef, HostBinding, HostListener, OnInit, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[appBetterHighlight]'
 })
 export class BetterHighlightDirective implements OnInit {
+
+  @HostBinding('style.display') fontSize: string;
 
   constructor(private elRef: ElementRef, private renderer: Renderer2) { }
 
@@ -15,6 +17,7 @@ export class BetterHighlightDirective implements OnInit {
   public mouseOver() {
     this.renderer.setStyle(this.elRef.nativeElement, 'background-color', 'darkblue');
     this.renderer.setStyle(this.elRef.nativeElement, 'color', 'white');
+    this.fontSize = 'none';
   }
 
   @HostListener('mouseleave')
@@ -37,4 +40,8 @@ export class BetterHighlightDirective implements OnInit {
  *
  * @HostListener: Listen to an event to the DOM element this directive is sitting, also it passes metadata
  * In order for it to work we need to pass 1 - 2 arguments, {name: 'event' }
+ *
+ * @HostBinding: Basically binds this host (element that this directive is sitting on) properties to this Directive property, allowing us
+ * to change then.
+ * Note: We didn't need to make use of Renderer2
  */
