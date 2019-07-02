@@ -1,59 +1,6 @@
-<div class="container">
-  <div class="row mx-auto">
-    <div class="col-xs-12">
-      <button
-        class="btn btn-primary"
-        (click)="onlyOdd = !onlyOdd">Only show odd numbers</button>
-      <br><br>
-      <ul class="list-group">
+<app-header (linkClicked)="onLinkClickHandler($event)"></app-header>
 
-        <!-- Displaying only odd-->
-        <div *ngIf="onlyOdd">
-          <li
-            class="list-group-item text-center"
-            *ngFor="let number of oddNumbers"
-            [ngClass]="{odd: number % 2 !== 0}"
-            [ngStyle]="{backgroundColor: number % 2 !== 0 ? 'lightpink' : 'initial'}"
-          >
-            {{number}}
-          </li>
-        </div>
-
-        <!-- Displaying only odd-->
-        <div *appUnless="onlyOdd">
-          <li
-            class="list-group-item text-center"
-            *ngFor="let number of evenNumbers"
-            [ngClass]="{odd: number % 2 !== 0}"
-            [ngStyle]="{backgroundColor: number % 2 !== 0 ? 'lightpink' : 'initial'}"
-          >
-            {{number}}
-          </li>
-        </div>
-
-      </ul>
-      <p class="text-center mt-3" appBasicHighlight>Style me with BasicHighlightDirective !!! </p>
-      <p class="text-center" appBetterHighlight [defaultColor]="'purple'" [highlightColor]="'tomato'">Style me with a better practice BetterHighlightDirective !!! </p>
-      <hr />
-      <!-- ngSwitch -->
-      <div [ngSwitch]="dummyValue">
-        <p *ngSwitchCase="1">I have 1</p>
-        <p *ngSwitchCase="10">I have 10</p>
-        <p *ngSwitchCase="100">I have 100</p>
-        <p *ngSwitchDefault>I have nothing :c</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!--
-  Here we're using our custom directive "AppUnless" on odd numbers
--->
-
-<!--
-  Here we can see how to pass properties to the directive, it seems that it becomes the property of the hosting element
--->
-
-<!--
-  We can use the ngSwitch to display values on a switch/case style
--->
+<main role="main" class="container mt-5">
+  <app-recipes *ngIf="activeLink === 'recipes'"></app-recipes>
+  <app-shopping-list *ngIf="activeLink === 'shoppingList'"></app-shopping-list>
+</main>

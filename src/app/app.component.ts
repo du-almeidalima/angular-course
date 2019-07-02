@@ -6,12 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  oddNumbers = [1, 3, 5];
-  evenNumbers = [2, 4];
-  onlyOdd = false;
-  dummyValue = 0;
-}
+  public activeLink = 'recipes';
 
-/**
- * Imagine that we wanted to display something for specif values from dummyValue, we could use ngSwitch, take a look on app.compent.html
-*/
+  public onLinkClickHandler(link: string){
+    this.activeLink = link;
+  }
+}
