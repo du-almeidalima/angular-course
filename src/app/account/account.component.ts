@@ -4,19 +4,19 @@ import {LogService} from '../services/log.service';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  styleUrls: ['./account.component.css'],
+  providers: [LogService]
 })
 export class AccountComponent {
   @Input() account: {name: string, status: string};
   @Input() id: number;
   @Output() statusChanged = new EventEmitter<{id: number, newStatus: string}>();
 
-  constructor() {}
+  constructor(private logService: LogService) {}
 
   onSetTo(status: string) {
     this.statusChanged.emit({id: this.id, newStatus: status});
 
-    const logService = new LogService();
-    logService.logStatus(status);
+    this.logService.logStatus(status);
   }
 }

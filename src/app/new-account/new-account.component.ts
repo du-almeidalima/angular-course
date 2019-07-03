@@ -4,12 +4,13 @@ import {LogService} from '../services/log.service';
 @Component({
   selector: 'app-new-account',
   templateUrl: './new-account.component.html',
-  styleUrls: ['./new-account.component.css']
+  styleUrls: ['./new-account.component.css'],
+  providers: [LogService]
 })
 export class NewAccountComponent {
   @Output() accountAdded = new EventEmitter<{name: string, status: string}>();
 
-  constructor() { }
+  constructor(private logService: LogService) { }
 
   onCreateAccount(accountName: string, accountStatus: string) {
     this.accountAdded.emit({
@@ -17,7 +18,6 @@ export class NewAccountComponent {
       status: accountStatus
     });
 
-    const logService = new LogService();
-    logService.logStatus(accountStatus);
+    this.logService.logStatus(accountStatus);
   }
 }

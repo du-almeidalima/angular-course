@@ -13,5 +13,15 @@ export class LogService {
  * You would think that we could just instantiate it in our component
  *  - const logService = new LogService();
  *
- *  But this is not Services should be implemented
+ *  But this is not Services should be implemented.
+ *
+ *  For Angular to Inject a Dependency we need to specify it in our constructor, and ALSO, in the Decorator, we need to create a property
+ *  called "providers":
+ *
+ *    @Component({
+ *      selector: 'app-root',
+ *      templateUrl: './app.component.html',
+ *      styleUrls: ['./app.component.css'],
+ *      providers: []
+ *    })
  */
