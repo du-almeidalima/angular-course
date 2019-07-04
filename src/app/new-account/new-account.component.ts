@@ -6,7 +6,7 @@ import {AccountsService} from '../services/accounts.service';
   selector: 'app-new-account',
   templateUrl: './new-account.component.html',
   styleUrls: ['./new-account.component.css'],
-  providers: [LogService, AccountsService]
+  providers: [LogService]
 })
 export class NewAccountComponent {
 
@@ -18,3 +18,8 @@ export class NewAccountComponent {
     this.logService.logStatus(accountStatus);
   }
 }
+
+/** Basically for the AccountsService to work we need to stop instantiating a new instance of it here, but we still need it on the
+ * constructor so Angular knows that it needs to inject something. Instead, we just remove it from the "providers" array,
+ * that tells Angular to create a new instance for this class
+ */
