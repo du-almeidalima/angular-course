@@ -4,8 +4,7 @@ import {AccountsService} from './services/accounts.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  providers: [AccountsService]
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
 
@@ -25,3 +24,5 @@ export class AppComponent implements OnInit {
  * NOTE: Since the "accounts" is an array/object in the AccountsService it becomes a reference type every time we passes it into a variable
  * So if we pass it into a property of AppComponent, it's in fact, referring to the AccountsService array.
  */
+
+// NOTE: We took the AccountsService out of here to instantiate it on AppModule

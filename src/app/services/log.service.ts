@@ -1,3 +1,6 @@
+import {Injectable} from '@angular/core';
+
+@Injectable({providedIn: 'root'})
 export class LogService {
 
   public logStatus(status: string) {
@@ -24,4 +27,6 @@ export class LogService {
  *      styleUrls: ['./app.component.css'],
  *      providers: []
  *    })
+ *
+ * @Injectable({providedIn: })   https://stackoverflow.com/questions/50848357/what-is-the-purpose-of-providedin-with-the-injectable-decorator-when-generating
  */
