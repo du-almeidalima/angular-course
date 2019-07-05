@@ -10,7 +10,11 @@ import {AccountsService} from '../services/accounts.service';
 })
 export class NewAccountComponent {
 
-  constructor(private logService: LogService, private accountService: AccountsService) { }
+  constructor(private logService: LogService, private accountService: AccountsService) {
+    this.accountService.statusUpdated.subscribe(
+      (status: string) => alert('New Status: ' + status)
+    );
+  }
 
   onCreateAccount(accountName: string, accountStatus: string) {
     this.accountService.addAccount(accountName, accountStatus);
@@ -25,4 +29,17 @@ export class NewAccountComponent {
  *
  * Note: We took off the LogService to use it inside another Service, the AccountService, that's only possible because we're instantiating
  * Them in the AppModule
+ */
+
+/**
+ * Note that we added the:
+ *
+ *  this.accountService.statusUpdated.subscribe(
+ *    (status: string) => alert('New Status: ' + status)
+ *  );
+ *
+ * This is how we subscribe to listen to an specific event.
+ * With that we achieved cross component communication!
+ * We used a service to get this, a component calls a service for something, the service emitts an event and other component
+ * listen/subscribe to it
  */

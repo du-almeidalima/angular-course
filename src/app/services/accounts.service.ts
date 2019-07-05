@@ -1,10 +1,11 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {LogService} from './log.service';
 
 @Injectable()
 export class AccountsService {
 
-  accounts = [
+  // Properties
+  private accounts = [
     {
       name: 'Master Account',
       status: 'active'
@@ -19,17 +20,20 @@ export class AccountsService {
     }
   ];
 
+  public statusUpdated = new EventEmitter<string>();
+
   constructor(private logService: LogService) {}
 
-  addAccount(name: string, status: string): void {
+  public addAccount(name: string, status: string): void {
     this.accounts.push({name, status});
 
     this.logService.logStatus(status);
   }
 
-  statusChange(id: number, newStatus: string): void {
+  public statusChange(id: number, newStatus: string): void {
     this.accounts[id].status = newStatus;
 
+    this.statusUpdated.emit(newStatus);
     this.logService.logStatus(newStatus);
   }
 
@@ -58,4 +62,11 @@ export class AccountsService {
  *
  *    @Injectable({providedIn: 'root'})
  *    export class MyService { ... }
+ */
+
+/**
+ * What if we wanted Cross-Component communication without having to pass properties up and down through a chain of components?
+ * We could make use of subscribing to an event, here for example, we're emitting an event in the "statusChange()" and in the NewAccountComp
+ * we're listening to it, so every time this event occurs NewAccountComponent will listen to it and can get its data, so the components
+ * are actually communicating much leaner now.
  */
