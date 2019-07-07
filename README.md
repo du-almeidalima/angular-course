@@ -1,13 +1,10 @@
-# Section 9: Using Services & Dependency Injection
+# Section 9: Assignment 5
 
-This is an app previously build by the course instructor, here we will take a look on Services
-and Dependency Injection, you can find comments explaining the code
+This project is for the Assignment 4 of this course:
 
-### Directives
-![Directives](./services.png?raw=true "Directives")
-
-### Hierarchical Injector
-![Hierarchical Injector](./hierarchical_injector.png?raw=true "Hierarchical Injector")
+## Taks
+Implement a Service type solution instead of passing data up and down
+through components
 
 ## Sections
 
@@ -20,6 +17,7 @@ The Section 2: The Basics will be
   
   "[section number and name]"
 ```
+
 ## Authors
 
 * **Eduardo Lima** - Xenosgrilda

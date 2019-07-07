@@ -1,0 +1,10 @@
+<h3 class="text-center text-white">Active Users</h3>
+<ul class="list-group">
+  <li
+    class="list-group-item d-flex justify-content-between"
+    appUserColor [bgColor]="'#ffe9f0'" [hoverColor]="'#ffdedf'"
+    *ngFor="let user of activeUsers; let i = index">
+    <h5> {{ user }} </h5>
+    <a class="btn btn-outline-danger" role="button" href="#" (click)="inactiveUser(i)">Inactive Me</a>
+  </li>
+</ul>

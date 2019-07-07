@@ -1,28 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {AccountsService} from './services/accounts.service';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
-  public accounts: {name: string, status: string}[] = [];
+  private hideContentCheck = false;
 
-  constructor(private accountsService: AccountsService) {}
 
-  ngOnInit(): void {
-    this.accounts = this.accountsService.accounts;
+  private hideContent() {
+    this.hideContentCheck = !this.hideContentCheck;
   }
 }
-
-/** All the logic was basically taken from AppComponent and thrown into AccountsService.
- * Now, the AppComponent will only have a empty array of accounts
- * And we will INJECT the accounts service into this component constructor
- *
- * NOTE: Since the "accounts" is an array/object in the AccountsService it becomes a reference type every time we passes it into a variable
- * So if we pass it into a property of AppComponent, it's in fact, referring to the AccountsService array.
- */
-
-// NOTE: We took the AccountsService out of here to instantiate it on AppModule
