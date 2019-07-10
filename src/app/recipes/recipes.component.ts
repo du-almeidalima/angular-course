@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RecipeModel} from "./recipe.model";
+import {RecipeService} from "../services/recipe.service";
 
 @Component({
   selector: 'app-recipes',
@@ -10,13 +11,18 @@ export class RecipesComponent implements OnInit {
 
   public displayedRecipe: RecipeModel;
 
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
-  public setDisplayedRecipe(recipe: RecipeModel){
-    this.displayedRecipe = recipe;
+  ngOnInit(): void {
+    this.recipeService.recipeSelected.subscribe(
+      (recipe: RecipeModel) => {
+        this.displayedRecipe = recipe;
+      }
+    );
   }
-
-  ngOnInit() {
-  }
-
 }
+
+/**
+ * Here we're listening to the event recipeSelected from RecipeService, it's important to subscribe to this in the
+ * OnInit method. Remembering that we need to this only once
+ */

@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import {RecipeModel} from "../recipes/recipe.model";
 
 @Injectable({providedIn: "root"})
@@ -8,6 +8,8 @@ export class RecipeService {
     new RecipeModel('Recipe 1', 'This is just a recipe test', 'https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/crab-asparagus-pappardelle.jpg'),
     new RecipeModel('Recipe 2', 'This is just another recipe test', 'https://upload.wikimedia.org/wikipedia/commons/3/39/Recipe.jpg')
   ];
+
+  public recipeSelected = new EventEmitter<RecipeModel>();
 
   public getRecipes(): RecipeModel[] {
     return this.recipes.slice(); // Returning a new copy of recipes array

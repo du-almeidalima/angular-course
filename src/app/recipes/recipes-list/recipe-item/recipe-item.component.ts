@@ -1,5 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {RecipeModel} from "../../recipe.model";
+import {RecipeService} from "../../../services/recipe.service";
 
 @Component({
   selector: 'app-recipe-item',
@@ -12,14 +13,10 @@ export class RecipeItemComponent implements OnInit {
   @Input()
   public recipe: RecipeModel;
 
-  // Events
-  @Output()
-  public onRecipeClicked = new EventEmitter<void>();
-
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   public onRecipeClick(){
-    this.onRecipeClicked.emit();
+    this.recipeService.recipeSelected.emit(this.recipe);
   }
 
   ngOnInit() {
@@ -33,4 +30,9 @@ export class RecipeItemComponent implements OnInit {
  * its parent to RecipesComponent.
  * In fact, its parent, the RecipeListComponent, already have the data of the recipe, remember that it's looping through
  * the recipes array, so we can just send this data up
+ */
+
+/**
+ * As for passing the recipe to be displayed, instead of passing it up through 2 levels ( which was what we were doing )
+ * We could pass it in an event in recipeService
  */
