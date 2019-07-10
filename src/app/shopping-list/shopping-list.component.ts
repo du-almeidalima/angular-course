@@ -14,6 +14,18 @@ export class ShoppingListComponent implements OnInit {
 
   ngOnInit() {
     this.ingredients = this.shoppingListService.ingredients;
+
+    this.shoppingListService.ingredientArrayUpdate.subscribe(
+      (ingredientsUpdated: Ingredient[]) => {
+        console.table(this.ingredients, ingredientsUpdated);
+        this.ingredients = ingredientsUpdated;
+      }
+    );
   }
 
 }
+
+/**
+ * We also need to listen whenever the Ingredients change, because this component doesn't have the original array ref
+ * just a copy of it
+ */
