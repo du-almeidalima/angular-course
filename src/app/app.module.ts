@@ -1,30 +1,34 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-
 
 import { AppComponent } from './app.component';
-import { ActiveUsersComponent } from './active-users/active-users.component';
-import { InactiveUsersComponent } from './inactive-users/inactive-users.component';
-import {UserManagerService} from './services/user-manager.service';
-import { UserChangesCounterComponent } from './user-changes-counter/user-changes-counter.component';
-import {HideMeDirective} from './shared/hide-me.directive';
-import {UserColorDirective} from './shared/user-color.directive';
+import {HeaderComponent} from "./header/header.component";
+import { RecipesComponent } from './recipes/recipes.component';
+import { RecipesListComponent } from './recipes/recipes-list/recipes-list.component';
+import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
+import { RecipeItemComponent } from './recipes/recipes-list/recipe-item/recipe-item.component';
+import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
+import {FormsModule} from "@angular/forms";
+import {DropdownDirective} from "./shared/dropdown.directive";
 
 @NgModule({
   declarations: [
     AppComponent,
-    ActiveUsersComponent,
-    InactiveUsersComponent,
-    UserChangesCounterComponent,
-    HideMeDirective,
-    UserColorDirective
+    HeaderComponent,
+    RecipesComponent,
+    RecipesListComponent,
+    RecipeDetailComponent,
+    RecipeItemComponent,
+    ShoppingListComponent,
+    ShoppingEditComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    FormsModule
   ],
-  providers: [UserManagerService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

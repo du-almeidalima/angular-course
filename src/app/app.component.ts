@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,11 +6,9 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  public activeLink = 'recipes';
 
-  private hideContentCheck = false;
-
-
-  private hideContent() {
-    this.hideContentCheck = !this.hideContentCheck;
+  public onLinkClickHandler(link: string){
+    this.activeLink = link;
   }
 }

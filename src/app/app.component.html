@@ -1,16 +1,6 @@
-<div class="container">
-  <div class="row">
-    <div class="col-6 offset-3">
-      <app-active-users *appHideMe="hideContentCheck"></app-active-users>
-      <app-inactive-users *appHideMe="hideContentCheck"></app-inactive-users>
-    </div>
+<app-header (linkClicked)="onLinkClickHandler($event)"></app-header>
 
-    <div class="col-6 offset-3 mt-4">
-      <app-user-changes-counter></app-user-changes-counter>
-      <div class="custom-control custom-switch" >
-        <input type="checkbox" class="custom-control-input" id="hideMeSwitch" (click)="hideContent()"/>
-        <label class="custom-control-label text-white" for="hideMeSwitch">Hide / Show me!</label>
-      </div>
-    </div>
-  </div>
-</div>
+<main role="main" class="container mt-5">
+  <app-recipes *ngIf="activeLink === 'recipes'"></app-recipes>
+  <app-shopping-list *ngIf="activeLink === 'shoppingList'"></app-shopping-list>
+</main>
