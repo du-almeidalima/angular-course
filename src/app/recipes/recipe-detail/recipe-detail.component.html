@@ -38,17 +38,11 @@
   </div>
   <div class="col-12">
     <ul class="two-columns">
-      <li>Eggs</li>
-      <li>Bacon</li>
-      <li>Brocolis</li>
-      <li>Bananas</li>
-      <li>Bacon</li>
-      <li>Brocolis</li>
-      <li>Bananas</li>
+      <li *ngFor="let ingredient of currentRecipe.ingredients">{{ingredient.name}} &times; {{ingredient.amount}}</li>
     </ul>
   </div>
 </div>
 
-<!-- Here we just added a custom Directive that would flip its value and add and remove a classe, we also needed to
+<!-- Here we just added a custom Directive that would flip its value and add and remove a class, we also needed to
 pass an element through reference due to bootstrap
 -->

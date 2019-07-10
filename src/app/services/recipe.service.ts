@@ -1,12 +1,31 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {RecipeModel} from "../recipes/recipe.model";
+import {Ingredient} from "../shared/ingredient.model";
 
 @Injectable({providedIn: "root"})
 export class RecipeService {
 
   private recipes: RecipeModel[] = [
-    new RecipeModel('Recipe 1', 'This is just a recipe test', 'https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/crab-asparagus-pappardelle.jpg'),
-    new RecipeModel('Recipe 2', 'This is just another recipe test', 'https://upload.wikimedia.org/wikipedia/commons/3/39/Recipe.jpg')
+
+    new RecipeModel('Recipe 1',
+      'This is just a recipe test',
+      'https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/crab-asparagus-pappardelle.jpg',
+      [
+        new Ingredient('Macaroni', 2),
+        new Ingredient('Legume', 1),
+        new Ingredient('Peas', 3),
+        new Ingredient('Cheese', 1)]
+    ),
+
+    new RecipeModel('Recipe 2',
+      'This is just another recipe test',
+      'https://upload.wikimedia.org/wikipedia/commons/3/39/Recipe.jpg',
+      [
+        new Ingredient('Avocado', 2),
+        new Ingredient('Pumpkin ', 1),
+        new Ingredient('Tomato', 3),
+        new Ingredient('Beans', 1)]
+    )
   ];
 
   public recipeSelected = new EventEmitter<RecipeModel>();
