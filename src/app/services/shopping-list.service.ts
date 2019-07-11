@@ -4,11 +4,7 @@ import {Ingredient} from "../shared/ingredient.model";
 @Injectable({providedIn: "root"})
 export class ShoppingListService {
 
-  private _ingredients: Ingredient[] = [
-    new Ingredient('Banana', 5),
-    new Ingredient('Tomatoes', 10),
-    new Ingredient('Broccoli', 2),
-  ];
+  private _ingredients: Ingredient[] = [];
 
   public ingredientArrayUpdate = new EventEmitter<Ingredient[]>();
 
@@ -19,6 +15,22 @@ export class ShoppingListService {
   public addIngredient(newIngredient: Ingredient): void {
     this._ingredients.push(newIngredient);
     this.ingredientArrayUpdate.emit(this.ingredients);
+  }
+
+  public addIngredientsArray(ingredientsArray: Ingredient[]): void {
+    const ingredientsNames = this._ingredients.map(ingredient => ingredient.name);
+
+    ingredientsArray.forEach( (ingredient: Ingredient) => {
+
+      if (ingredientsNames.indexOf(ingredient.name) >= 0){
+
+        this._ingredients[ingredientsNames.indexOf(ingredient.name)].amount += ingredient.amount;
+
+      } else {
+
+        this._ingredients.push(ingredient);
+      }
+    });
   }
 }
 
@@ -31,4 +43,9 @@ export class ShoppingListService {
  * As for addIngredient, this wasn't working because we were passing a copy of the array a making the changes on the
  * original, so the copy wasn't sync. So to do this we used this approach, emitting an event whenever the ingredient
  * array changes.
+ */
+
+/**
+ * For addIngredientsArray we're looping through both arrays checking if one has an item of the other and then just
+ * adding the amount
  */
