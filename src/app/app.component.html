@@ -3,9 +3,9 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a href="#">Home</a></li>
-        <li role="presentation"><a href="#">Servers</a></li>
-        <li role="presentation"><a href="#">Users</a></li>
+        <li role="presentation" class="active"><a routerLink="/">Home</a></li>
+        <li role="presentation"><a routerLink="/servers">Servers</a></li>
+        <li role="presentation"><a [routerLink]="['/users']">Users</a></li>
       </ul>
     </div>
   </div>
@@ -17,3 +17,13 @@
   </div>
 
 </div>
+
+<!--
+  And how the navigation could be implemented? Up til' now, the app is reloading by entering the address manually, and
+  even worse, is reloading the whole app!
+  If one add the routes path to the links "href", that's the behaviour.
+  Angular provide us with a directive to take care of this, "routerLink".
+  There are some ways to define the path of it, it could be passed as a Directive or as Property Binding.
+  For Property Binding, an array can be passed separating all the segments of the route. It allows to construct more
+  complex paths.
+-->
