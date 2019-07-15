@@ -16,6 +16,7 @@ import { ServersService } from './servers/servers.service';
 const appRoutes: Routes = [
   {  path: '', component: HomeComponent },          // localhost:4200
   {  path: 'users', component: UsersComponent },    // localhost:4200/users
+  {  path: 'users/:id', component: UserComponent }, // Loading a single user by passing parameters
   {  path: 'servers', component: ServersComponent } // localhost:4200/servers
 ];
 
@@ -38,6 +39,10 @@ const appRoutes: Routes = [
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+/**
+ * To pass parameters dynamically, use the ":" on the "path" of the rout, this tells Angular that this will be a dynamic part of the path
+ */
 
 /**
  * Since Routing is something that should be available app-wide, I'm going to place it into the AppModule.
