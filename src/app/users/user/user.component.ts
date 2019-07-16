@@ -1,13 +1,15 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit, DoCheck {
+export class UserComponent implements OnInit, OnDestroy {
   user: {id: number, name: string};
+  private paramsSubscription: Subscription;
 
   constructor(private route: ActivatedRoute) { }
 
@@ -17,7 +19,7 @@ export class UserComponent implements OnInit, DoCheck {
       name: this.route.snapshot.params['name']
     };
 
-    this.route.params.subscribe(
+    this.paramsSubscription = this.route.params.subscribe(
       //This will receive the updated set of params for this route, whenever it changes
       (params: Params) => {
         this.user = {
@@ -26,6 +28,10 @@ export class UserComponent implements OnInit, DoCheck {
         };
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.paramsSubscription.unsubscribe();
   }
 
   // BTW, it also works with the DoCheck method
@@ -52,4 +58,11 @@ export class UserComponent implements OnInit, DoCheck {
  * rout.params receive 3 functions as parameters, the first will be fired whenever data is send through the observable.
  *
  * By using a function like above, we're getting the updated set of parameters of this route, whenever it changes
+ */
+
+/**
+ * A note about subscribing to route.params, if we subscribe this component to this event, and then this component gets destroyed, this
+ * subscription continues living! but Angular handles this for us! But it's also good to guarantee it by ourselves. We can do that
+ * by assigning this subscription to a variable of type Subscription and whenever this component is destroyed, we unsubscribe it from this
+ * event. For Routes it's not necessary doing this, but for our own component we need to manually unsubscribe.
  */
