@@ -20,7 +20,7 @@ export class UserComponent implements OnInit, OnDestroy {
     };
 
     this.paramsSubscription = this.route.params.subscribe(
-      //This will receive the updated set of params for this route, whenever it changes
+      // This will receive the updated set of params for this route, whenever it changes
       (params: Params) => {
         this.user = {
           id: params['id'],

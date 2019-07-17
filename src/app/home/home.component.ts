@@ -18,7 +18,8 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
 
       // Navigating to specific server
-      this.router.navigate(['/servers', id, 'edit'], {queryParams: {allowEdit: '1'}, fragment: 'loading'});
+      this.router.navigate(['/servers', id, 'edit'],
+        {queryParams: {allowEdit: '1'}, fragment: 'loading'});
 
     }, 1500);
   }
