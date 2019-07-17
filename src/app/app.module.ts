@@ -14,10 +14,11 @@ import { ServersService } from './servers/servers.service';
 
 
 const appRoutes: Routes = [
-  {  path: '', component: HomeComponent },          // localhost:4200
-  {  path: 'users', component: UsersComponent },    // localhost:4200/users
-  {  path: 'users/:id/:name', component: UserComponent }, // Loading a single user by passing parameters
-  {  path: 'servers', component: ServersComponent } // localhost:4200/servers
+  {  path: '', component: HomeComponent },                    // localhost:4200
+  {  path: 'users', component: UsersComponent },              // localhost:4200/users
+  {  path: 'users/:id/:name', component: UserComponent },     // Loading a single user by passing parameters
+  {  path: 'servers', component: ServersComponent },          // localhost:4200/servers
+  {  path: 'servers/:id/edit', component: EditServerComponent }  // localhost:4200/servers
 ];
 
 @NgModule({
@@ -65,4 +66,10 @@ export class AppModule { }
  * One can do so by adding "<router-outlet></router-outlet>" Directive (That looks like a component)
  * in where the components loaded by the route should be displayed. This will mark the place where the components should be displayed.
  * In this case in the app.component.html
+ */
+
+/**
+ * Passing Query Parameters and Fragments
+ *
+ *
  */
