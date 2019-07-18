@@ -15,10 +15,17 @@ import { ServersService } from './servers/servers.service';
 
 const appRoutes: Routes = [
   {  path: '', component: HomeComponent },                    // localhost:4200
-  {  path: 'users', component: UsersComponent },              // localhost:4200/users
-  {  path: 'users/:id/:name', component: UserComponent },     // Loading a single user by passing parameters
-  {  path: 'servers', component: ServersComponent },          // localhost:4200/servers
-  {  path: 'servers/:id/edit', component: EditServerComponent }  // localhost:4200/servers
+
+  {  path: 'users', component: UsersComponent , children: [
+      {  path: ':id/:name', component: UserComponent }
+    ]},
+
+  {  path: 'servers', component: ServersComponent, children: [
+      {  path: ':id/edit', component: EditServerComponent },
+      {  path: ':id', component: ServerComponent }
+    ]
+  }
+
 ];
 
 @NgModule({
@@ -69,7 +76,17 @@ export class AppModule { }
  */
 
 /**
- * Passing Query Parameters and Fragments
+ * Setting up Child (Nested) Routes
  *
+ * So our routes used to look like this
+ * const appRoutes: Routes = [
+ * {  path: '', component: HomeComponent },                    // localhost:4200
+ * {  path: 'users', component: UsersComponent },              // localhost:4200/users
+ * {  path: 'users/:id/:name', component: UserComponent },     // Loading a single user by passing parameters
+ * {  path: 'servers', component: ServersComponent },          // localhost:4200/servers
+ * {  path: 'servers/:id/edit', component: EditServerComponent },
+ * {  path: 'servers/:id', component: ServerComponent }
+ * ];
  *
+ * We can make it better approach to this, note that we have lots of duplicated routes. check above the solution
  */

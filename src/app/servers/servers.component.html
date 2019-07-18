@@ -2,7 +2,7 @@
   <div class="col-xs-12 col-sm-4">
     <div class="list-group">
       <a
-        [routerLink]="['/servers', 5, 'edit']"
+        [routerLink]="['/servers', server.id]"
         [queryParams]="{allowEdit: 1}"
         [fragment]="'loading'"
         class="list-group-item"
@@ -12,10 +12,15 @@
     </div>
   </div>
   <div class="col-xs-12 col-sm-4">
-    <button class="btn btn-success" (click)="onReloadPage()">Reload Page</button>
-    <app-edit-server></app-edit-server>
-    <hr>
-    <app-server></app-server>
+<!--    Commented out because this will be loaded now by the router!, as we refactored the routers array, we assigned
+those components to be child routes of the ServersComponent, but now they need their own <route-outlet> -->
+<!--    <button class="btn btn-success" (click)="onReloadPage()">Reload Page</button>-->
+<!--    <app-edit-server></app-edit-server>-->
+<!--    <hr>-->
+<!--    <app-server></app-server>-->
+
+    <!-- Remembering that we're only able to load this router here because it's assigned as "children" of servers -->
+    <router-outlet></router-outlet>
   </div>
 </div>
 
@@ -37,6 +42,14 @@
 
   We could also add a fragment by using the "fragment / [fragment] property to the url
 
-  Now, to do everything above programatically check home.component.ts
+  Now, to do everything above programmatically check home.component.ts
+-->
+
+<!--
+  Setting up Child (Nested) Routes
+
+  So here we we're facing a problem, after we refactor our routes array, our child routes were not loading anymore.
+  Because we're using one <router-outlet> which was being used by the servers, so we need to actually add another
+  for the children
 -->
 
