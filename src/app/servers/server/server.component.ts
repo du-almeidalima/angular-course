@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ServersService } from '../servers.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-server',
@@ -11,7 +11,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 export class ServerComponent implements OnInit {
   server: {id: number, name: string, status: string};
 
-  constructor(private serversService: ServersService, private route: ActivatedRoute) { }
+  constructor(private serversService: ServersService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     // Remember, when getting something from the url it will always be a string
@@ -24,4 +24,15 @@ export class ServerComponent implements OnInit {
     });
   }
 
+  public onEditNavigate() {
+    this.router.navigate(
+      ['edit'],
+      {relativeTo: this.route});
+  }
 }
+
+/**
+ * In our use case, we have a query parameter on the ulr when this component is loaded, once we click on "Edit Server" and
+ * navigate to the EditServerComponent we loose those query parameters!
+ *
+ */

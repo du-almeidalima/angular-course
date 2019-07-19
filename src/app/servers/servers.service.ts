@@ -3,17 +3,20 @@ export class ServersService {
     {
       id: 1,
       name: 'Productionserver',
-      status: 'online'
+      status: 'online',
+      allowEdit: '0'
     },
     {
       id: 2,
       name: 'Testserver',
-      status: 'offline'
+      status: 'offline',
+      allowEdit: '1'
     },
     {
       id: 3,
       name: 'Devserver',
-      status: 'offline'
+      status: 'offline',
+      allowEdit: '1'
     }
   ];
 
