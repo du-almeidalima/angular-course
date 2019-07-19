@@ -27,7 +27,10 @@ export class ServerComponent implements OnInit {
   public onEditNavigate() {
     this.router.navigate(
       ['edit'],
-      {relativeTo: this.route});
+      {
+        relativeTo: this.route,
+        queryParamsHandling: 'preserve'
+      });
   }
 }
 
@@ -35,4 +38,9 @@ export class ServerComponent implements OnInit {
  * In our use case, we have a query parameter on the ulr when this component is loaded, once we click on "Edit Server" and
  * navigate to the EditServerComponent we loose those query parameters!
  *
+ * We can keep them using:
+ * - queryParamsHandling: 'preserve' . This override the default behaviour that is drop the params
+ * 'preserve' is fine when you don't add any new ones, but if we do, then 'merge' is a better solution
+ *
+ * "preserveQueryParams" is deprecated, don't use
  */
