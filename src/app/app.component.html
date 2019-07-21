@@ -10,7 +10,13 @@
         </li>
         <li role="presentation" routerLinkActive="active"><a routerLink="/servers">Servers</a></li>
         <li role="presentation" routerLinkActive="active"><a [routerLink]="['/users']">Users</a></li>
+        <ul class="nav nav-tabs navbar-right">
+          <li><a class="btn btn-primary" (click)="onLoginClick()">LogIn</a></li>
+          <li><a class="btn btn-danger" (click)="onLogoutClick()">Logout</a></li>
+        </ul>
       </ul>
+
+      <!-- Just for testing purposes I'll create this 2 buttons to login and logout -->
     </div>
   </div>
 
