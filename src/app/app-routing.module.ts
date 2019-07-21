@@ -10,6 +10,7 @@ import {ServerComponent} from './servers/server/server.component';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {AuthGuard} from './auth-guard.service';
 import {CanDeactivateGuardService} from './can-deactivate-guard.service';
+import {ErrorPageComponent} from './error-page/error-page.component';
 
 const appRoutes: Routes = [
   {  path: '', component: HomeComponent },
@@ -28,7 +29,9 @@ const appRoutes: Routes = [
   },
   // PageNotFound
   {
-    path: 'not-found', component: PageNotFoundComponent
+    // path: 'not-found', component: PageNotFoundComponent
+    // We can pass data to our component when redirecting it via "data"
+    path: 'not-found', component: ErrorPageComponent, data: {message: '404 Page not Found!'}
   },
   {
     path: 'something', redirectTo: '/not-found', // Remember to use absolute paths
@@ -132,4 +135,12 @@ export class AppRoutingModule {
  *
  * Now we commented out the canActivate from the routes array and added the implementation for the children only (canActivateChild)
  * And we used the same service! it can handle both!. So now, only the children routes of Server will be guarded.
+ */
+
+
+/**
+ * Passing Static Data to a Route
+ *
+ * Imagine that we wanted to create an generic error page that would receive the it's error message and display it. Up until now, we're
+ * only able to redirect to a route if, for example, there no other routes, but we couldn't pass any data to it
  */
