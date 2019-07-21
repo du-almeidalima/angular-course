@@ -7,10 +7,10 @@ import {UserComponent} from './users/user/user.component';
 import {ServersComponent} from './servers/servers.component';
 import {EditServerComponent} from './servers/edit-server/edit-server.component';
 import {ServerComponent} from './servers/server/server.component';
-import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {AuthGuard} from './auth-guard.service';
 import {CanDeactivateGuardService} from './can-deactivate-guard.service';
 import {ErrorPageComponent} from './error-page/error-page.component';
+import {ServerResolverService} from './servers/server/server-resolver.service';
 
 const appRoutes: Routes = [
   {  path: '', component: HomeComponent },
@@ -24,7 +24,7 @@ const appRoutes: Routes = [
     canActivateChild: [AuthGuard],
     component: ServersComponent, children: [
       {  path: ':id/edit', component: EditServerComponent, canDeactivate: [ CanDeactivateGuardService ]},
-      {  path: ':id', component: ServerComponent }
+      {  path: ':id', component: ServerComponent, resolve: {server: ServerResolverService} } // Getting the server with a resolver
     ]
   },
   // PageNotFound
@@ -106,17 +106,6 @@ export class AppRoutingModule {
  */
 
 /**
- * Protecting Routes with canActivate
- *
- * Note that on Server route ( and by extension all it's children routes) we added a guard! so it will only allow the access to this
- * component if this guard allow!
- */
-
-
-
-
-
-/**
  * Important: Redirection Path Matching
  * In our example, we didn't encounter any issues when we tried to redirect the user. But that's not always the case when adding
  * redirections.
@@ -128,6 +117,13 @@ export class AppRoutingModule {
  * To fix this behavior, you need to change the matching strategy to "full" :
  * { path: '', redirectTo: '/somewhere-else', pathMatch: 'full' }
  * Now, you only get redirected, if the full path is ''  (so only if you got NO other content in your path in this example).
+ */
+
+/**
+ * Protecting Routes with canActivate
+ *
+ * Note that on Server route ( and by extension all it's children routes) we added a guard! so it will only allow the access to this
+ * component if this guard allow!
  */
 
 /**
@@ -143,4 +139,12 @@ export class AppRoutingModule {
  *
  * Imagine that we wanted to create an generic error page that would receive the it's error message and display it. Up until now, we're
  * only able to redirect to a route if, for example, there no other routes, but we couldn't pass any data to it
+ */
+
+/**
+ * Resolving Dynamic Data with the resolve Guard
+ *
+ * Note that on "server" we added a "resolver", which is an Angular way of fetching data before loading the component.
+ * Note that on resolver we added an jobj {server: ServerResolverService}, this server will receive the result of the "resolve" function
+ * from the Resolver Guard, and it will be available in the loaded component!
  */
