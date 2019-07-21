@@ -1,10 +1,10 @@
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {AuthService} from './auth.service';
 
 @Injectable({providedIn: 'root'})
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild {
 
   // Just injecting our fake authService that will simulate an server authentication
   constructor(private authService: AuthService, private router: Router) {}
@@ -20,6 +20,10 @@ export class AuthGuard implements CanActivate {
           this.router.navigate(['/']).then(() => false);
         }
       });
+  }
+
+  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    return this.canActivate(route, state);
   }
 }
 
@@ -42,4 +46,10 @@ export class AuthGuard implements CanActivate {
  *
  * Everything implemented! now we need to apply it to the AppModule. For that, we need to define which route or routes should be protected
  * by this guard! In our case the Servers routes!
+ */
+
+/**
+ * So, what if we wanted this Guard to be only applied to children of Server?
+ * For that we could use the CanActivateChild interface, it's basically the same as CanActivate but work only for the children of Server.
+ * Since we're doing the same validation, we can just call the canActivate passing its arguments
  */

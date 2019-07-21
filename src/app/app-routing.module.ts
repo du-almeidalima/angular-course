@@ -17,7 +17,10 @@ const appRoutes: Routes = [
       {  path: ':id/:name', component: UserComponent }
     ]},
   // Servers
-  {  path: 'servers', canActivate: [ AuthGuard ], component: ServersComponent, children: [
+  {  path: 'servers',
+    // canActivate: [ AuthGuard ],
+    canActivateChild: [AuthGuard],
+    component: ServersComponent, children: [
       {  path: ':id/edit', component: EditServerComponent },
       {  path: ':id', component: ServerComponent }
     ]
@@ -121,4 +124,11 @@ export class AppRoutingModule {
  * To fix this behavior, you need to change the matching strategy to "full" :
  * { path: '', redirectTo: '/somewhere-else', pathMatch: 'full' }
  * Now, you only get redirected, if the full path is ''  (so only if you got NO other content in your path in this example).
+ */
+
+/**
+ * Protecting Child (Nested) Routes with canActivateChild
+ *
+ * Now we commented out the canActivate from the routes array and added the implementation for the children only (canActivateChild)
+ * And we used the same service! it can handle both!. So now, only the children routes of Server will be guarded.
  */
