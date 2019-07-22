@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+.clickable{
+  background-color: initial;
+  transition: background-color 0.4s;
+}
+
+.clickable:hover{
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.05);
+
+  transition: background-color 0.4s;
+}

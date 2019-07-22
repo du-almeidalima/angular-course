@@ -8,13 +8,13 @@
   </div>
 
   <div class="col-md-5">
-    <router-outlet></router-outlet>
-<!--    <app-recipe-detail *ngIf="displayedRecipe; else noRecipeMessage" [currentRecipe]="displayedRecipe"></app-recipe-detail>-->
+<!--    <router-outlet></router-outlet>-->
+    <app-recipe-detail *ngIf="displayedRecipe; else noRecipeMessage" [currentRecipe]="displayedRecipe"></app-recipe-detail>
 
-<!--    &lt;!&ndash; Else structure &ndash;&gt;-->
-<!--    <ng-template #noRecipeMessage>-->
-<!--      <p class="text-center text-muted"> Please Select a recipe for more details...</p>-->
-<!--    </ng-template>-->
+    <!-- Else structure -->
+    <ng-template #noRecipeMessage>
+      <p class="text-center text-muted"> Please Select a recipe for more details...</p>
+    </ng-template>
   </div>
 </div>
 
