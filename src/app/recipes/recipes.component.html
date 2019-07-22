@@ -1,0 +1,25 @@
+<div class="row border p-4">
+  <div class="col-md-5">
+    <app-recipes-list></app-recipes-list>
+  </div>
+
+  <div class="col-md-2">
+    <div class="vertical-divider"></div>
+  </div>
+
+  <div class="col-md-5">
+    <router-outlet></router-outlet>
+<!--    <app-recipe-detail *ngIf="displayedRecipe; else noRecipeMessage" [currentRecipe]="displayedRecipe"></app-recipe-detail>-->
+
+<!--    &lt;!&ndash; Else structure &ndash;&gt;-->
+<!--    <ng-template #noRecipeMessage>-->
+<!--      <p class="text-center text-muted"> Please Select a recipe for more details...</p>-->
+<!--    </ng-template>-->
+  </div>
+</div>
+
+<!--
+  We refactored how we were dealing with displaying a recipe, instead of being passing the click event and the recipe
+  clicked through lots of components, we assigned it to the RecipeService and in this component we're listening to this
+  event.
+-->

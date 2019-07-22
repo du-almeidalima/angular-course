@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {AuthService} from './auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,17 +6,9 @@ import {AuthService} from './auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  private authService: AuthService;
+  public activeLink = 'recipes';
 
-  constructor(authService: AuthService) {
-    this.authService = authService;
-  }
-
-  onLoginClick(): void {
-    this.authService.login();
-  }
-
-  onLogoutClick(): void {
-    this.authService.logout();
+  public onLinkClickHandler(link: string){
+    this.activeLink = link;
   }
 }

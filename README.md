@@ -1,11 +1,9 @@
-# Section 11: Changing Pages with Routing
+# Cooking App
 
-This is an app previously build by the course instructor, this sections will show on how Routing
-works. Up until now I was doing everything in the same page by showing and hiding elements.
+This is the repository for the course project <b> Cooking App </b> from Section 3.
 
-For this section I'm going to use a project provided by te instructor, and I'll implement
-the navigation of the components by implementing a routing.
-
+## App Planning
+![App Diagram](./app-planning.png?raw=true "App Diagram")
 ## Sections
 
 The course sections / lessons will be organized as commits, for instance:
@@ -17,6 +15,32 @@ The Section 2: The Basics will be
   
   "[section number and name]"
 ```
+
+## Bootstrap
+
+#### Installation
+Bootstrap 4.3.1 was installed in this project through npm with the command: 
+```
+npm install --save bootstrap
+```
+
+Also, for using bootstrap js utilities: 
+```
+npm install --save jquery popper.js
+```
+#### Configuration
+In order
+to Angular recognizes it, we need to specify it into 'angular.json' file:
+
+```
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+]
+```
+
+Bootstrap JS was removed so our custom JS could be implemented, for academic reasons
+
 ## Authors
 
 * **Eduardo Lima** - Xenosgrilda
