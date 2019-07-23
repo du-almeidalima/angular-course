@@ -13,6 +13,7 @@ import { FormsModule } from "@angular/forms";
 import { DropdownDirective } from "./shared/dropdown.directive";
 import { AppRoutesModule } from "./app-routes.module";
 import { HomeComponent } from './home/home.component';
+import { NoRecipeComponent } from './recipes/no-recipe/no-recipe.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { HomeComponent } from './home/home.component';
     ShoppingListComponent,
     ShoppingEditComponent,
     DropdownDirective,
-    HomeComponent
+    HomeComponent,
+    NoRecipeComponent
   ],
   imports: [
     BrowserModule,

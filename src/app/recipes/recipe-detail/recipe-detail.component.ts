@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RecipeModel} from "../recipe.model";
 import {ShoppingListService} from "../../services/shopping-list.service";
+import {ActivatedRoute, Data} from "@angular/router";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -10,12 +11,21 @@ import {ShoppingListService} from "../../services/shopping-list.service";
 export class RecipeDetailComponent implements OnInit {
 
   // Properties
-  @Input()
-  public currentRecipe: RecipeModel;
+  private currentRecipe: RecipeModel;
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  constructor(private shoppingListService: ShoppingListService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    // We're receiving this "data" from the resolver in the RouterModule
+    // For component initialization
+    this.currentRecipe = this.route.snapshot.data['recipe'];
+
+    // For changes in the current component
+    this.route.data.subscribe(
+      (data: Data) => {
+        this.currentRecipe = data['recipe']
+      }
+    )
   }
 
   // Methods

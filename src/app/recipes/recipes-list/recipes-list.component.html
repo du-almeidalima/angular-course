@@ -8,7 +8,7 @@
 </div>
 <div class="row mt-3">
   <div class="col-12" *ngFor="let recipeItem of recipes">
-      <app-recipe-item [recipe]="recipeItem"></app-recipe-item>
+      <app-recipe-item [recipe]="recipeItem" [routerLink]="[recipeItem.id]"></app-recipe-item>
   </div>
 </div>
 

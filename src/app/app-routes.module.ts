@@ -4,6 +4,9 @@ import {RouterModule, Routes} from "@angular/router";
 import {RecipesComponent} from "./recipes/recipes.component";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {HomeComponent} from "./home/home.component";
+import {RecipeDetailComponent} from "./recipes/recipe-detail/recipe-detail.component";
+import {RecipeResolver} from "./services/recipe-resolver.service";
+import {NoRecipeComponent} from "./recipes/no-recipe/no-recipe.component";
 
 // Defining our routes
 const ROUTES: Routes = [
@@ -11,7 +14,11 @@ const ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full'}, // This is used to only redirect if it's the full path
   // Recipes Routes
-  { path: 'recipes', component: RecipesComponent},
+  { path: 'recipes', component: RecipesComponent, children: [
+      { path: '', component: NoRecipeComponent },
+      { path: ':id', component: RecipeDetailComponent, resolve: { recipe: RecipeResolver } }
+    ]
+  },
 
   // Shopping List Routes
   { path: 'shopping-list', component: ShoppingListComponent}
@@ -24,3 +31,12 @@ const ROUTES: Routes = [
   exports: [ RouterModule ]
 })
 export class AppRoutesModule {}
+
+/**
+ * ------------ Comments -------------
+ *
+ * Getting the Recipe through the route params
+ *
+ * In order for me to get the Recipe being passed in the params, I decided to go with the resolver approach. Which
+ * basically consist on a service that will return an Observable, Promise or our Recipe
+ */
