@@ -8,9 +8,9 @@
         Recipe Options
       </button>
       <div class="dropdown-menu" #dropdownMenu>
-        <a class="dropdown-item" href="#" (click)="onSendToShoppingList()">Send to Shopping List</a>
-        <a class="dropdown-item" [routerLink]="['../edit', currentRecipe.id]">Edit Recipe</a>
-        <a class="dropdown-item" href="#">Delete Recipe</a>
+        <button class="dropdown-item" (click)="onSendToShoppingList()">Send to Shopping List</button>
+        <button class="dropdown-item" (click)="onEditRecipe()">Edit Recipe</button>
+        <button class="dropdown-item" >Delete Recipe</button>
       </div>
     </div>
   </div>
