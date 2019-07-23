@@ -8,10 +8,6 @@
 </div>
 <div class="row mt-3">
   <div class="col-12" *ngFor="let recipeItem of recipes">
-      <app-recipe-item [recipe]="recipeItem" [routerLink]="[recipeItem.id]"></app-recipe-item>
+      <app-recipe-item [recipe]="recipeItem"></app-recipe-item>
   </div>
 </div>
-
-<!--
-  Here we removed the "onRecipeClicked" event because we're passing it through event
--->
