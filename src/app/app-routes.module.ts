@@ -7,6 +7,7 @@ import {HomeComponent} from "./home/home.component";
 import {RecipeDetailComponent} from "./recipes/recipe-detail/recipe-detail.component";
 import {RecipeResolver} from "./services/recipe-resolver.service";
 import {NoRecipeComponent} from "./recipes/no-recipe/no-recipe.component";
+import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
 
 // Defining our routes
 const ROUTES: Routes = [
@@ -16,6 +17,11 @@ const ROUTES: Routes = [
   // Recipes Routes
   { path: 'recipes', component: RecipesComponent, children: [
       { path: '', component: NoRecipeComponent },
+      // We'll use the same component to create and edit a Recipe
+      { path: 'create', component: RecipeEditComponent },
+      { path: 'edit/:id', component: RecipeEditComponent },
+      // It's important to leave the routes with dynamic values to last, otherwise Angular will try to parse other
+      // paths into this value e.g. "create" would become the id
       { path: ':id', component: RecipeDetailComponent, resolve: { recipe: RecipeResolver } }
     ]
   },

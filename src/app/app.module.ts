@@ -14,6 +14,7 @@ import { DropdownDirective } from "./shared/dropdown.directive";
 import { AppRoutesModule } from "./app-routes.module";
 import { HomeComponent } from './home/home.component';
 import { NoRecipeComponent } from './recipes/no-recipe/no-recipe.component';
+import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NoRecipeComponent } from './recipes/no-recipe/no-recipe.component';
     ShoppingEditComponent,
     DropdownDirective,
     HomeComponent,
-    NoRecipeComponent
+    NoRecipeComponent,
+    RecipeEditComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +37,6 @@ import { NoRecipeComponent } from './recipes/no-recipe/no-recipe.component';
     AppRoutesModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
