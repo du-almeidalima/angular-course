@@ -1,18 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {RecipeModel} from "../recipe.model";
 import {ShoppingListService} from "../../services/shopping-list.service";
 import {ActivatedRoute, Data, Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css']
 })
-export class RecipeDetailComponent implements OnInit {
+export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   // Properties
   private currentRecipe: RecipeModel;
-
+  private recipeSubscription: Subscription;
   constructor(private shoppingListService: ShoppingListService,
               private route: ActivatedRoute, private router: Router) { }
 
@@ -22,11 +23,16 @@ export class RecipeDetailComponent implements OnInit {
     this.currentRecipe = this.route.snapshot.data['recipe'];
 
     // For changes in the current component
-    this.route.data.subscribe(
+    this.recipeSubscription = this.route.data.subscribe(
       (data: Data) => {
         this.currentRecipe = data['recipe']
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    // This is not necessary for Angular Observables, but for custom it's
+    this.recipeSubscription.unsubscribe();
   }
 
   // Methods
@@ -39,7 +45,8 @@ export class RecipeDetailComponent implements OnInit {
   // - programmatically navigation to execute some logic before doing so
   // - resolvers to fetch data that te component being loaded will need
   private onEditRecipe(): void{
-    this.router.navigate(['../', 'edit', this.currentRecipe.id], {relativeTo: this.route});
     // this.route = <domain>/recipes/edit/2
+    this.router.navigate(['../', 'edit', this.currentRecipe.id], {relativeTo: this.route});
   }
+
 }
