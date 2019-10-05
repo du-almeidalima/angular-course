@@ -2,6 +2,8 @@
 
 This is the repository for the course project <b> Cooking App </b> from Section 3.
 
+You can check it out [here](https://xenosgrilda.github.io/angular-8-course/home).
+
 ## App Planning
 ![App Diagram](./app-planning.png?raw=true "App Diagram")
 ## Sections

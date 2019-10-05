@@ -12,7 +12,7 @@ import {Subscription} from "rxjs";
 export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   // Properties
-  private currentRecipe: RecipeModel;
+  public currentRecipe: RecipeModel;
   private recipeSubscription: Subscription;
   constructor(private shoppingListService: ShoppingListService,
               private route: ActivatedRoute, private router: Router) { }
@@ -36,7 +36,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   // Methods
-  private onSendToShoppingList(): void {
+  public onSendToShoppingList(): void {
     this.shoppingListService.addIngredientsArray(this.currentRecipe.ingredients);
   }
 
@@ -44,7 +44,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   // - routerLink to navigate on click
   // - programmatically navigation to execute some logic before doing so
   // - resolvers to fetch data that te component being loaded will need
-  private onEditRecipe(): void{
+  public onEditRecipe(): void{
     // this.route = <domain>/recipes/edit/2
     this.router.navigate(['../', 'edit', this.currentRecipe.id], {relativeTo: this.route});
   }
