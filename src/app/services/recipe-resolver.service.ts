@@ -13,6 +13,6 @@ export class RecipeResolver implements Resolve<RecipeModel>{
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<RecipeModel> | Promise<RecipeModel> | RecipeModel {
 
-    return this.recipeService.getRecipe(+ route.params['id']);
+    return this.recipeService.getRecipe( Number(route.params.id) );
   }
 }

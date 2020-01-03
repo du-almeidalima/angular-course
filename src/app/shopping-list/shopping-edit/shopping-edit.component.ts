@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
-import {Ingredient} from "../../shared/ingredient.model";
-import {ShoppingListService} from "../../services/shopping-list.service";
+import {Ingredient} from '../../models/ingredient.model';
+import {ShoppingListService} from '../../services/shopping-list.service';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -21,7 +21,7 @@ export class ShoppingEditComponent implements OnInit {
   ngOnInit() {
   }
 
-  public onAddItem(): void{
+  public onAddItem(): void {
 
     const ingName = this.itemName.nativeElement.value;
     const ingAmount = this.amount.nativeElement.value;
@@ -34,4 +34,4 @@ export class ShoppingEditComponent implements OnInit {
 /**
  * Just a basic gathering data from view/template and sending it out through an event (@Output)
  * Note: Remember, to access a referenceElement value use nativeElement property
-*/
+ */

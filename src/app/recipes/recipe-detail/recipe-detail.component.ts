@@ -20,12 +20,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // We're receiving this "data" from the resolver in the RouterModule
     // For component initialization
-    this.currentRecipe = this.route.snapshot.data['recipe'];
+    this.currentRecipe = this.route.snapshot.data.recipe;
 
     // For changes in the current component
     this.recipeSubscription = this.route.data.subscribe(
       (data: Data) => {
-        this.currentRecipe = data['recipe']
+        this.currentRecipe = data.recipe;
       }
     )
   }
@@ -44,7 +44,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   // - routerLink to navigate on click
   // - programmatically navigation to execute some logic before doing so
   // - resolvers to fetch data that te component being loaded will need
-  public onEditRecipe(): void{
+  public onEditRecipe(): void {
     // this.route = <domain>/recipes/edit/2
     this.router.navigate(['../', 'edit', this.currentRecipe.id], {relativeTo: this.route});
   }
