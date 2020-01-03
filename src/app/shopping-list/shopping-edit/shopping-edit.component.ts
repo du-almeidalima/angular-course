@@ -10,10 +10,10 @@ import {ShoppingListService} from "../../services/shopping-list.service";
 export class ShoppingEditComponent implements OnInit {
 
   // Properties
-  @ViewChild('itemNameInput')
+  @ViewChild('itemNameInput', { static: true })
   public itemName: ElementRef;
 
-  @ViewChild('amountInput')
+  @ViewChild('amountInput', { static: true })
   public amount: ElementRef;
 
   constructor(private shoppingListService: ShoppingListService) { }
