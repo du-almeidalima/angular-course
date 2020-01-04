@@ -1,51 +1,56 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Ingredient} from '../models/ingredient.model';
+import {Observable, Subject} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingListService {
 
   private _ingredients: Ingredient[] = [];
-
-  public ingredientArrayUpdate = new EventEmitter<Ingredient[]>();
+  private _ingredientObserver = new Subject<Ingredient[]>();
 
   public get ingredients() : Ingredient[] {
     return this._ingredients.slice();
   }
 
+  public get ingredientObserver(): Observable<Ingredient[]> {
+    return this._ingredientObserver.asObservable();
+  }
   public addIngredient(newIngredient: Ingredient): void {
-    this._ingredients.push(newIngredient);
-    this.ingredientArrayUpdate.emit(this.ingredients);
+    const index = this.findIngredientIndexByName(newIngredient);
+
+    if (index >= 0 ) {
+      console.log(newIngredient);
+      console.log(index);
+
+      this._ingredients[index].amount += Number (newIngredient.amount);
+    } else {
+      this._ingredients.push(newIngredient);
+    }
+
+    this._ingredientObserver.next(this._ingredients);
   }
 
-  public addIngredientsArray(ingredientsArray: Ingredient[]): void {
+  public addIngredients(newIngredients: Ingredient[]): void {
+
+    newIngredients.forEach( (newIngredient: Ingredient) => {
+      const index = this.findIngredientIndexByName(newIngredient);
+
+      if (index >= 0 ) {
+        this._ingredients[index].amount = this._ingredients[index].amount + newIngredient.amount;
+      } else {
+        this._ingredients.push(Object.create(newIngredient));
+      }
+    });
+  }
+
+  private findIngredientIndexByName(ingredient: Ingredient): number{
     const ingredientsNames = this._ingredients.map(ingredient => ingredient.name);
 
-    ingredientsArray.forEach( (ingredient: Ingredient) => {
-
-      if (ingredientsNames.indexOf(ingredient.name) >= 0){
-
-        this._ingredients[ingredientsNames.indexOf(ingredient.name)].amount += ingredient.amount;
-
-      } else {
-
-        this._ingredients.push(ingredient);
-      }
-    })
+    return ingredientsNames.indexOf(ingredient.name);
   }
 }
 
 /**
- * Basically the same approach as in RecipeService, but here we're also handling the addition of ingredients.
- * Instead of emitting an event on ShoppingListComponent we created a function here
- */
-
-/**
- * As for addIngredient, this wasn't working because we were passing a copy of the array a making the changes on the
- * original, so the copy wasn't sync. So to do this we used this approach, emitting an event whenever the ingredient
- * array changes.
- */
-
-/**
- * For addIngredientsArray we're looping through both arrays checking if one has an item of the other and then just
- * adding the amount
+ * Section 14: The EventEmitter "ingredientArrayUpdate" was changed to a Observable because EventEmitter shouldn't
+ * be used for Cross Component communication.
  */
