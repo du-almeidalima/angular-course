@@ -1,7 +1,7 @@
 <div class="container">
 
   <h1 style="text-align: center; margin-top: 30px;">Template Driven Form</h1>
-  <form>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div class="row">
       <div class="twelve columns">
         <label for="username">Username</label>
@@ -36,7 +36,18 @@
  With the "FormsModule" imported in our module. Angular will automatically create a JS representation of the form
  whenever it finds the <form> element in html. Even though, we still need to tell Angular which inputs or "controls"
  are to be registered manually. By control I mean, what inputs Angular should care.
+ -->
 
+<!--
  To register which input we want to have mapped, we just need to add the ngModel directive!
     ngModel name="nameOfControl"
- -->
+
+ To be able to retrieve the Submit action via Angular we can attach the (ngSubmit) to the <form> Element.
+-->
+
+<!--
+  To retrieve the form data object that Angular has made, we need to do a peculiar thing, add a template reference to
+  the form and assign to it to "ngForm". This will capture the object exposed by this form element which is a directive,
+  when we add FormsModule.
+    (ngSubmit)="onSubmit(f)" #f="ngForm"
+-->
