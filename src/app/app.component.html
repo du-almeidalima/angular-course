@@ -1,5 +1,35 @@
-<app-header></app-header>
+<div class="container">
 
-<main role="main" class="container mt-5">
-  <router-outlet></router-outlet>
-</main>
+  <h1 style="text-align: center; margin-top: 30px;">Template Driven Form</h1>
+  <form>
+    <div class="row">
+      <div class="twelve columns">
+        <label for="username">Username</label>
+        <input class="u-full-width" type="text" placeholder="John..." id="username">
+        <button>Suggest Username</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="six columns">
+        <label for="secret">Secret Question</label>
+        <select class="u-full-width" id="secret">
+          <option value="Option 1">Your first Pet?</option>
+          <option value="Option 2">Your first teacher?</option>
+          <option value="Option 3">Color of your car?</option>
+        </select>
+      </div>
+      <div class="six columns">
+        <label for="email">Email</label>
+        <input class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
+      </div>
+    </div>
+
+    <input class="button-primary u-pull-right" type="submit" value="Submit">
+  </form>
+
+</div>
+
+<!-- The form "action" should not be defined, because, Angular will take care of this form. This form should not
+ be submitted to a server.
+ -->

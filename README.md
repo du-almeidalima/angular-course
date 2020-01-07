@@ -1,11 +1,11 @@
-# Cooking App
+# Section 14: Handling Forms in Angular Apps
 
-This is the repository for the course project <b> Cooking App </b> from Section 3.
+In this Module we'll take a look on how to handle forms in Angular. As known, forms, by its natural behaviour, sends a
+request to the server, however, Angular apps are SPA, therefore Angular need to treat forms differently.
+<br />
+In Angular we can build forms using the **Template-Driven** and **Reactive** approaches:
+![TDvsRA](./src/assets/template-driven-vs-reactive-approach.png?raw=true "Template Driven vs Reactive Approach")
 
-You can check it out [here](https://xenosgrilda.github.io/angular-8-course/home).
-
-## App Planning
-![App Diagram](./app-planning.png?raw=true "App Diagram")
 ## Sections
 
 The course sections / lessons will be organized as commits, for instance:
@@ -17,32 +17,6 @@ The Section 2: The Basics will be
   
   "[section number and name]"
 ```
-
-## Bootstrap
-
-#### Installation
-Bootstrap 4.3.1 was installed in this project through npm with the command: 
-```
-npm install --save bootstrap
-```
-
-Also, for using bootstrap js utilities: 
-```
-npm install --save jquery popper.js
-```
-#### Configuration
-In order
-to Angular recognizes it, we need to specify it into 'angular.json' file:
-
-```
-"styles": [
-  "node_modules/bootstrap/dist/css/bootstrap.min.css",
-  "src/styles.css"
-]
-```
-
-Bootstrap JS was removed so our custom JS could be implemented, for academic reasons
-
 ## Authors
 
 * **Eduardo Lima** - Xenosgrilda
