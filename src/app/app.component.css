@@ -1,0 +1,6 @@
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched{
+  color: tomato;
+  border: 1px dashed tomato;
+}
+
+/* ng-invalid and ng-touched should be used together when you want the for not be red from the beginning */

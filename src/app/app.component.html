@@ -27,19 +27,12 @@
       </div>
     </div>
 
-    <input class="button-primary u-pull-right" type="submit" value="Submit">
+    <input
+      [disabled]="f.invalid"
+      class="button-primary u-pull-right" type="submit" value="Submit">
   </form>
 
 </div>
-
-<!-- The form "action" should not be defined, because, Angular will take care of this form. This form should not
- be submitted to a server.
-
- With the "FormsModule" imported in our module. Angular will automatically create a JS representation of the form
- whenever it finds the <form> element in html. Even though, we still need to tell Angular which inputs or "controls"
- are to be registered manually. By control I mean, what inputs Angular should care.
- -->
-
 <!--
  To register which input we want to have mapped, we just need to add the ngModel directive!
     ngModel name="nameOfControl"
@@ -63,3 +56,11 @@
   If validation don't pass Angular will update the form value and also each form controller. It'll also add classes to
   those controllers.
  -->
+
+<!--
+  Here we're disabling the 'submit' <button> if the form 'f' (which we have access to the form object provided by
+  FormsModule) has any error.
+
+  Also, since Angular add some classes depending on the control state (invalid = ngInvalid, touched = ngTouched) we can
+  take advantage on that and add styling
+-->
