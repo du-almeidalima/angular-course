@@ -22,8 +22,10 @@
       </div>
       <div class="six columns">
         <label for="email">Email</label>
-        <input ngModel required email
+        <input ngModel required email #emailEl="ngModel"
                name="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
+        <p *ngIf="emailEl.touched && emailEl.invalid" class="form-error">
+          Please... You know how to write an email, right?</p>
       </div>
     </div>
 
@@ -63,4 +65,13 @@
 
   Also, since Angular add some classes depending on the control state (invalid = ngInvalid, touched = ngTouched) we can
   take advantage on that and add styling
+
+  And if we wanted to get a specific input? In the same way angular expose the form information as a template reference:
+    #f="ngForm"
+
+  We can do the same with a control(input), but for that, we don't want to expose the whole form just the control
+  element, to do so:
+    <input ngModel required email #emailEl="ngModel"
+           name="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
+    <p *ngIf="emailEl.touched && emailEl.invalid" class="form-error">...</p>
 -->
