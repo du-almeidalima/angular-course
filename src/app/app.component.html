@@ -1,11 +1,12 @@
 <div class="container">
 
   <h1 style="text-align: center; margin-top: 30px;">Template Driven Form</h1>
-  <form (ngSubmit)="onSubmit()" #f="ngForm">
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div class="row">
       <div class="twelve columns">
         <label for="username">Username</label>
-        <input ngModel  name="username" class="u-full-width" type="text" placeholder="John..." id="username">
+        <input ngModel required
+               name="username" class="u-full-width" type="text" placeholder="John..." id="username">
         <button type="button">Suggest Username</button>
       </div>
     </div>
@@ -21,7 +22,8 @@
       </div>
       <div class="six columns">
         <label for="email">Email</label>
-        <input ngModel name="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
+        <input ngModel required email
+               name="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
       </div>
     </div>
 
@@ -53,7 +55,11 @@
 -->
 
 <!--
-  There's another way to retrieve the form, since we're getting a template reference "#f" we can access it via
-  @ViwChild
-  This is useful when we need access to form at a time before submitting it
--->
+  Validations
+  Since we're using a Template Driven approach, our validations should be on template...
+  We can use HTML validators, and they will act as selectors for Directives built in Angular.
+
+  Angular also provides some additional directives such as "email" (used above).
+  If validation don't pass Angular will update the form value and also each form controller. It'll also add classes to
+  those controllers.
+ -->
