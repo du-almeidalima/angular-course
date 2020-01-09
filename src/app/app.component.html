@@ -19,8 +19,17 @@
           <option value="teacher">Your first teacher?</option>
           <option value="car">Color of your car?</option>
         </select>
+
       </div>
+
       <div class="six columns">
+        <label for="answer">Question Answer</label>
+        <textarea [(ngModel)]="answer" required name="answer" class="u-full-width" id="answer"></textarea>
+        <h6>Your answer: </h6>
+        <p>{{answer}}</p>
+      </div>
+
+      <div class="twelve columns">
         <label for="email">Email</label>
         <input ngModel required email #emailEl="ngModel"
                name="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
@@ -76,7 +85,15 @@
 -->
 
 <!-- DEFAULT VALUES
+  Property Binding (One-Way Data Binding)
   What if we wanted to assign a value to our controls. We could ngModel, but in another way.
     [ngModel]="variable";
   this will update the control value with the variable's value. With that we have a one-way property binding.
+
+  Two-Wau Data Binding
+    suppose we wanted the user to provide an answer to its secret question, and for some reason, repeat it to the user.
+    for that we can use the traditional Two-Way dataBinding
+      [(ngModel)]
+    which is a shorter form of:
+      [ngModel]="overRideRate" (ngModelChange)="overRideRate = $event"
 -->

@@ -9,6 +9,7 @@ import {NgForm} from '@angular/forms';
 export class AppComponent {
 
   public defaultSecretSelect = 'teacher';
+  public answer: string;
 
   public onSubmit(form: NgForm): void {
     console.log(form);
