@@ -14,10 +14,10 @@
     <div class="row">
       <div class="six columns">
         <label for="secret">Secret Question</label>
-        <select ngModel name="secret" class="u-full-width" id="secret">
-          <option value="Option 1">Your first Pet?</option>
-          <option value="Option 2">Your first teacher?</option>
-          <option value="Option 3">Color of your car?</option>
+        <select [ngModel]="defaultSecretSelect" name="secret" class="u-full-width" id="secret">
+          <option value="pet">Your first Pet?</option>
+          <option value="teacher">Your first teacher?</option>
+          <option value="car">Color of your car?</option>
         </select>
       </div>
       <div class="six columns">
@@ -35,9 +35,9 @@
   </form>
 
 </div>
-<!--
+<!-- NgMODEL
  To register which input we want to have mapped, we just need to add the ngModel directive!
-    ngModel name="nameOfControl"
+    ngModel
 
  To be able to retrieve the Submit action via Angular we can attach the (ngSubmit) to the <form> Element.
 -->
@@ -49,8 +49,7 @@
     (ngSubmit)="onSubmit(f)" #f="ngForm"
 -->
 
-<!--
-  Validations
+<!-- VALIDATIONS
   Since we're using a Template Driven approach, our validations should be on template...
   We can use HTML validators, and they will act as selectors for Directives built in Angular.
 
@@ -74,4 +73,10 @@
     <input ngModel required email #emailEl="ngModel"
            name="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
     <p *ngIf="emailEl.touched && emailEl.invalid" class="form-error">...</p>
+-->
+
+<!-- DEFAULT VALUES
+  What if we wanted to assign a value to our controls. We could ngModel, but in another way.
+    [ngModel]="variable";
+  this will update the control value with the variable's value. With that we have a one-way property binding.
 -->
