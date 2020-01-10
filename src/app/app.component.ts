@@ -25,6 +25,7 @@ export class AppComponent {
   };
 
   public onFormSubmission(form: NgForm): void {
+    this.formSub.submitted = true;
     this.formSub.values.email = form.value.email;
     this.formSub.values.subscription = form.value.subscription;
     this.formSub.values.password = form.value.password;
