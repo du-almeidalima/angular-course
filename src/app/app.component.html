@@ -29,13 +29,13 @@
     </div>
     <div class="row">
       <div class="twelve columns">
-        <button class="u-pull-right" type="submit">Submit Form!</button>
+        <button class="u-pull-right" [ngClass]="f.valid ? 'button-primary' : ''" type="submit">Submit Form!</button>
       </div>
     </div>
   </form>
 
   <!-- UserData -->
-  <div class="row">
+  <div class="row" *ngIf="this.formSub.submitted">
     <div class="twelve columns">
       <h2>Your Data</h2>
       <ul>
