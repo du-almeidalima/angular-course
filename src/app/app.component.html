@@ -9,7 +9,7 @@
         <label for="username">Username</label>
         <input ngModel required
                name="username" class="u-full-width" type="text" placeholder="John..." id="username">
-        <button type="button">Suggest Username</button>
+        <button type="button" (click)="suggestUser()">Suggest Username</button>
       </div>
 
       <div class="six columns">
@@ -27,7 +27,12 @@
 
       <div class="six columns">
         <label for="answer">Question Answer</label>
-        <textarea [(ngModel)]="answer" required name="answer" class="u-full-width" id="answer"></textarea>
+        <textarea [(ngModel)]="answer"
+                  required name="answer"
+                  class="u-full-width"
+                  id="answer" rows="3" style="resize: none">
+        </textarea>
+
         <h6>Your answer: </h6>
         <p>{{answer}}</p>
       </div>
@@ -41,6 +46,17 @@
         </select>
       </div>
 
+    </div>
+
+    <!-- Radio Buttons works like any other element, with the same validations-->
+    <div class="row">
+      <div class="twelve columns">
+        <label for="gender">Gender</label>
+        <label *ngFor="let gender of genders" id="gender">
+          <input ngModel required type="radio" name="gender" [value]="gender">
+          <span class="label-body" [textContent]="gender"></span>
+        </label>
+      </div>
     </div>
 
     <input
