@@ -15,8 +15,27 @@ export class AppComponent {
   public answer: string;
   public genders = ['male', 'female'];
 
+  public formSubmission = {
+    formSubmitted: false,
+    values: {
+      user: '',
+      email: '',
+      secretQuestion: '',
+      questionAnswer: '',
+      gender: ''
+    }
+  };
+
   public onSubmit(form: NgForm): void {
-    console.log(form);
+    this.formSubmission.formSubmitted = true;
+    this.formSubmission.values.user = form.value.userData.username;
+    this.formSubmission.values.email = form.value.userData.email;
+    this.formSubmission.values.secretQuestion = form.value.secret;
+    this.formSubmission.values.questionAnswer = form.value.answer;
+    this.formSubmission.values.gender = form.value.gender;
+
+    // Reset form values and state ( touched, dirty...) it can also receive a parameter to reset to those values
+    this.formRef.reset();
   }
 
   public suggestUser() {

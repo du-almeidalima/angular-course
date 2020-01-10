@@ -63,7 +63,23 @@
       [disabled]="f.invalid"
       [className]="f.invalid ? 'button' : 'button-primary'"
       class="u-pull-right" type="submit" value="Submit">
+
   </form>
+  <div class="row" *ngIf="formSubmission.formSubmitted">
+    <hr>
+    <div class="twelve columns">
+      <h2>Your Data</h2>
+      <ul>
+        <li><b>Username: </b>{{this.formSubmission.values.user}}</li>
+        <li><b>Email: </b>{{this.formSubmission.values.email}}</li>
+        <li><b>Secret Question: </b>{{this.formSubmission.values.secretQuestion}}</li>
+        <li><b>Answer: </b>{{this.formSubmission.values.questionAnswer}}</li>
+        <li><b>Gender: </b>{{this.formSubmission.values.gender}}</li>
+      </ul>
+
+
+    </div>
+  </div>
 
 </div>
 <!-- NgMODEL
@@ -134,4 +150,9 @@
    We can also get a JS Reference to the Group Object in the same way we do for ngForm or ngModule:
 
     #userDataRef="ngModelGroup"
+-->
+
+<!-- USING THE FORM DATA
+  We can get the form state at submission time, for example and use as we want. Here we're just printing it to the
+  user
 -->
