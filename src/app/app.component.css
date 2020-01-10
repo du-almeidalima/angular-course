@@ -1,18 +1,27 @@
-input.ng-invalid.ng-touched, select.ng-invalid.ng-touched{
+.error{
   color: tomato;
-  border: 1px dashed tomato;
+  border-color: tomato;
 }
 
-.form-error{
-  margin-top: -10px;
-  font-size: 90%;
-  font-palette: dark;
-  font-style: italic;
-  color: tomato;
+.error-message{
+  padding: 10px;
+  background-color: #ffeaec;
+  border-radius: 5px;
+  border: 1px solid;
+}
+.success{
+  color: #4F8A10;
+  border-color: #4F8A10;
+  background-color: transparent;
 }
 
-input.ng-valid.ng-touched, select.ng-valid.ng-touched{
-  color: lime;
-  border: 1px dashed lightgreen;
+@-webkit-keyframes autofill {
+  to {
+    background: transparent;
+  }
 }
-/* ng-invalid and ng-touched should be used together when you want the for not be red from the beginning */
+
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+}
