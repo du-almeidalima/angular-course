@@ -2,25 +2,28 @@
 
   <h1 style="text-align: center; margin-top: 30px;">Template Driven Form</h1>
   <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-    <div class="row">
-      <div class="twelve columns">
+
+    <!-- userData Group-->
+    <div class="row" ngModelGroup="userData" #userData="ngModelGroup">
+      <div class="six columns">
         <label for="username">Username</label>
         <input ngModel required
                name="username" class="u-full-width" type="text" placeholder="John..." id="username">
         <button type="button">Suggest Username</button>
       </div>
+
+      <div class="six columns">
+        <label for="email">Email</label>
+        <input ngModel required email #emailEl="ngModel"
+               name="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
+        <p *ngIf="emailEl.touched && emailEl.invalid" class="form-error">
+          Please... You know how to write an email, right?</p>
+      </div>
+
+      <p class="form-error" *ngIf="userData.invalid && userData.touched">The User data group is invalid.</p>
     </div>
 
     <div class="row">
-      <div class="six columns">
-        <label for="secret">Secret Question</label>
-        <select [ngModel]="defaultSecretSelect" name="secret" class="u-full-width" id="secret">
-          <option value="pet">Your first Pet?</option>
-          <option value="teacher">Your first teacher?</option>
-          <option value="car">Color of your car?</option>
-        </select>
-
-      </div>
 
       <div class="six columns">
         <label for="answer">Question Answer</label>
@@ -29,18 +32,21 @@
         <p>{{answer}}</p>
       </div>
 
-      <div class="twelve columns">
-        <label for="email">Email</label>
-        <input ngModel required email #emailEl="ngModel"
-               name="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
-        <p *ngIf="emailEl.touched && emailEl.invalid" class="form-error">
-          Please... You know how to write an email, right?</p>
+      <div class="six columns">
+        <label for="secret">Secret Question</label>
+        <select [ngModel]="defaultSecretSelect" name="secret" class="u-full-width" id="secret">
+          <option value="pet">Your first Pet?</option>
+          <option value="teacher">Your first teacher?</option>
+          <option value="car">Color of your car?</option>
+        </select>
       </div>
+
     </div>
 
     <input
       [disabled]="f.invalid"
-      class="button-primary u-pull-right" type="submit" value="Submit">
+      [className]="f.invalid ? 'button' : 'button-primary'"
+      class="u-pull-right" type="submit" value="Submit">
   </form>
 
 </div>
@@ -84,11 +90,11 @@
     <p *ngIf="emailEl.touched && emailEl.invalid" class="form-error">...</p>
 -->
 
-<!-- DEFAULT VALUES
+<!-- PROPERTY BINDINGS
   Property Binding (One-Way Data Binding)
-  What if we wanted to assign a value to our controls. We could ngModel, but in another way.
-    [ngModel]="variable";
-  this will update the control value with the variable's value. With that we have a one-way property binding.
+    What if we wanted to assign a value to our controls. We could ngModel, but in another way.
+      [ngModel]="variable";
+    this will update the control value with the variable's value. With that we have a one-way property binding.
 
   Two-Wau Data Binding
     suppose we wanted the user to provide an answer to its secret question, and for some reason, repeat it to the user.
@@ -96,4 +102,20 @@
       [(ngModel)]
     which is a shorter form of:
       [ngModel]="overRideRate" (ngModelChange)="overRideRate = $event"
+-->
+
+<!-- GROUPING FIELDS/CONTROLS/DATA
+  To group controls, or put them under a property like:
+
+    userData: {
+      name: ...,
+      email: ...,
+      secret: ...
+    }
+
+   We can make use of another NgForms directive, the "ngModuleGroup". To do so in TD, just need to place it into a
+   parent of those controls.
+   We can also get a JS Reference to the Group Object in the same way we do for ngForm or ngModule:
+
+    #userDataRef="ngModelGroup"
 -->
