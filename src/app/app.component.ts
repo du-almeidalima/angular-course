@@ -37,4 +37,11 @@ export class AppComponent implements OnInit {
  * - formState: the initial value of this control
  * - validator: single validator or an array
  * - asyncValidator: a async validator
+ *
+ * After creating our "FormGroup" and ours "FormControl" we need to connect/sync the HTML and Form/Template.
+ * By default Angular detects a <form> tag and creates a Form for it, to overwrite this we need to assign our TS FormGroup to the <form>
+ * in template. With that, Angular won't create/infer a FormGroup it will use ours! To do that:
+ *    [formGroup] => <form [formGroup]="userForm">
+ * But we still need to connect the Template Controls to the controls "FormControls" we've created, for that we have another directive:
+ *    formControlName => <input formControlName="username" class="u-full-width" type="text" placeholder="John..." id="username">
  */

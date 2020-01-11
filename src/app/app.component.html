@@ -6,13 +6,13 @@
       <!-- Username -->
       <div class="twelve columns">
         <label for="username">Username</label>
-        <input name="username" class="u-full-width" type="text" placeholder="John..." id="username">
+        <input formControlName="username" class="u-full-width" type="text" placeholder="John..." id="username">
       </div>
 
       <!-- Email -->
       <div class="twelve columns">
         <label for="email">Email</label>
-        <input name="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
+        <input formControlName="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
       </div>
     </div>
 
@@ -21,7 +21,7 @@
       <div class="twelve columns">
         <label for="gender">Gender</label>
         <label *ngFor="let gender of genders" id="gender">
-          <input type="radio" name="gender" [value]="gender">
+          <input formControlName="gender" type="radio" [value]="gender">
           <span class="label-body" [textContent]="gender"></span>
         </label>
       </div>
