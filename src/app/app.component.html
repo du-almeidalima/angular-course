@@ -1,49 +1,35 @@
-<div class="container" style="max-width: 700px; margin-top: 3em;">
-  <h3>Assignment 6: Template Driven Form</h3>
-  <form (ngSubmit)="onFormSubmission(f)" #f="ngForm">
+<div class="container" style="width: 600px;">
+
+  <h1 style="text-align: center; margin-top: 30px;">Reactive Form</h1>
+  <form [formGroup]="userForm">
     <div class="row">
       <!-- Username -->
       <div class="twelve columns">
-        <label for="email" [class.error]="emailRef.invalid && emailRef.touched">Email</label>
-        <input ngModel #emailRef="ngModel" required email
-               [ngClass]="[(emailRef.invalid && emailRef.touched) ? 'error' : (emailRef.valid) ? 'success' : '']"
-               name="email" class="u-full-width" type="email" placeholder="something@email.com..." id="email">
-        <p *ngIf="emailRef.invalid && emailRef.touched" class="error error">Please enter a valid email...</p>
-      </div>
-      <!-- Subscription -->
-      <div class="twelve columns">
-        <label for="subscription">Subscription</label>
-        <select [ngModel]="defaultSubscription" required name="subscription" class="u-full-width" type="text" id="subscription">
-          <option *ngFor="let sub of this.subscriptionValues" [value]="sub.value">{{sub.description}}</option>
-        </select>
-      </div>
-      <!-- Password -->
-      <div class="twelve columns">
-        <label for="password" [class.error]="passRef.invalid && passRef.touched">Password</label>
-        <input ngModel #passRef="ngModel"
-               [ngClass]="[(passRef.invalid && passRef.touched) ? 'error' : (passRef.valid) ? 'success' : '']"
-               required name="password" class="u-full-width" type="password" id="password">
-        <p *ngIf="passRef.invalid && passRef.touched" class="error error">Please enter a password...</p>
+        <label for="username">Username</label>
+        <input name="username" class="u-full-width" type="text" placeholder="John..." id="username">
       </div>
 
+      <!-- Email -->
+      <div class="twelve columns">
+        <label for="email">Email</label>
+        <input name="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
+      </div>
     </div>
+
     <div class="row">
+      <!-- Gender -->
       <div class="twelve columns">
-        <button class="u-pull-right" [ngClass]="f.valid ? 'button-primary' : ''" type="submit">Submit Form!</button>
+        <label for="gender">Gender</label>
+        <label *ngFor="let gender of genders" id="gender">
+          <input type="radio" name="gender" [value]="gender">
+          <span class="label-body" [textContent]="gender"></span>
+        </label>
       </div>
     </div>
+
+    <input class="u-pull-right" type="submit" value="Submit">
+
   </form>
-
-  <!-- UserData -->
-  <div class="row" *ngIf="this.formSub.submitted">
-    <div class="twelve columns">
-      <h2>Your Data</h2>
-      <ul>
-        <li><b>Email: </b>{{this.formSub.values.email}}</li>
-        <li><b>Subscription: </b>{{this.formSub.values.subscription}}</li>
-        <li><b>Password: </b>{{this.formSub.values.password}}<small> - ( ͡° ͜ʖ ͡°)</small></li>
-      </ul>
-    </div>
-  </div>
-
 </div>
+
+<!-- Error: <form> element requires [formGroup] to work... -->

@@ -1,19 +1,10 @@
-# Section 15: Assignment 6
+# Section 15: Handling Forms in Angular Apps
 
-This project is for the Assignment 6 of this course: Build a form using 
-the Template Driven approach.
-
-## Tasks
- * Mail address (should not be empty and should be an email address)
- * A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")
-   * Set "Advanced" as Default
- * A Password field (should not be empty)
- * A Submit Button
-
- * Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if it's invalid.
-
- *  Upon submitting the form, you should simply print the Value of the Form to the Console.
-   Optionally, display it in your template.
+In this Module we'll take a look on how to handle forms in Angular. As known, forms, by its natural behaviour, sends a
+request to the server, however, Angular apps are SPA, therefore Angular need to treat forms differently.
+<br />
+In Angular we can build forms using the **Template-Driven** and **Reactive** approaches:
+![TDvsRA](./src/assets/template-driven-vs-reactive-approach.png?raw=true "Template Driven vs Reactive Approach")
 
 ## Sections
 
@@ -26,7 +17,6 @@ The Section 2: The Basics will be
   
   "[section number and name]"
 ```
-
 ## Authors
 
 * **Eduardo Lima** - Xenosgrilda
