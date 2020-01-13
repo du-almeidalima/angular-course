@@ -18,6 +18,10 @@ export class AppComponent implements OnInit {
       gender: new FormControl('male'),
     });
   }
+
+  onFormSubmit(): void {
+    console.log(this.userForm);
+  }
 }
 
 /* REACTIVE APPROACH
@@ -44,4 +48,8 @@ export class AppComponent implements OnInit {
  *    [formGroup] => <form [formGroup]="userForm">
  * But we still need to connect the Template Controls to the controls "FormControls" we've created, for that we have another directive:
  *    formControlName => <input formControlName="username" class="u-full-width" type="text" placeholder="John..." id="username">
+ *
+ * === SUBMITTING THE FORM ===
+ * Contrary to the Template Driven approach, where we'd need to pass the form as a Template Reference from the Angular auto creation
+ * "ngForm". Here we already have the form in our code! just use it.
  */
