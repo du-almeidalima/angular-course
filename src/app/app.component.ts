@@ -29,6 +29,10 @@ export class AppComponent implements OnInit {
       gender: new FormControl('male'),
       hobbies: new FormArray([new FormControl(null, Validators.required)])
     });
+
+    // Reacting to Status or Value Changes
+    this.userForm.valueChanges.subscribe((data) => console.log(data));
+    this.userForm.statusChanges.subscribe((data) => console.log(data));
   }
 
   onFormSubmit(): void {
@@ -162,4 +166,23 @@ export class AppComponent implements OnInit {
  *
  * === ASYNC VALIDATOR ===
  * It's really similar to a normal validator, but ir also must return a Promise or a Observable
+ *
+     forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          if (this.forbiddenEmailsArray.indexOf(control.value) !== -1) {
+            console.log('test fal');
+            resolve({emailIsForbidden: true});
+          } else {
+            resolve(null);
+          }
+        }, 1500);
+      });
+    }
+ *
+ * I also must return null on valid cases.
+ *
+ *
+ * === Reacting to Status and Value changes
+ * We also have two Observables, one for each control value changed and the other for each status changed.
  */
