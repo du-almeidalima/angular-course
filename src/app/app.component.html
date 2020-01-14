@@ -2,17 +2,28 @@
 
   <h1 style="text-align: center; margin-top: 30px;">Reactive Form</h1>
   <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
-    <div class="row">
+    <div class="row" formGroupName="userData">
       <!-- Username -->
       <div class="twelve columns">
         <label for="username">Username</label>
-        <input formControlName="username" class="u-full-width" type="text" placeholder="John..." id="username">
+        <input formControlName="username"
+               [ngClass]="(usernameControl.invalid && usernameControl.touched) ? 'form-error' : ''"
+               class="u-full-width" type="text" placeholder="John..." id="username">
+
+        <p *ngIf="usernameControl.invalid && usernameControl.touched"
+          style="margin-top: 10px" class="form-error">Please provide a valid username.</p>
+
       </div>
 
       <!-- Email -->
       <div class="twelve columns">
         <label for="email">Email</label>
-        <input formControlName="email" class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
+        <input formControlName="email"
+               [ngClass]="(emailControl.invalid && emailControl.touched) ? 'form-error' : ''"
+               class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
+
+        <p *ngIf="emailControl.invalid && emailControl.touched"
+           style="margin-top: 10px" class="form-error">Please provide a valid username.</p>
       </div>
     </div>
 
@@ -27,7 +38,10 @@
       </div>
     </div>
 
-    <input class="u-pull-right" type="submit" value="Submit">
+    <input
+      [disabled]="userForm.invalid"
+      [ngClass]="userForm.invalid ? 'button' : 'button-primary'"
+      class="u-pull-right" type="submit" value="Submit">
 
   </form>
 </div>

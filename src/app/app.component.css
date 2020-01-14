@@ -1,18 +1,7 @@
-/*input.ng-invalid.ng-touched, select.ng-invalid.ng-touched{*/
-/*  color: tomato;*/
-/*  border: 1px dashed tomato;*/
-/*}*/
+.form-error{
+  color: tomato;
+}
 
-/*.form-error{*/
-/*  margin-top: -10px;*/
-/*  font-size: 90%;*/
-/*  font-palette: dark;*/
-/*  font-style: italic;*/
-/*  color: tomato;*/
-/*}*/
-
-/*input.ng-valid.ng-touched, select.ng-valid.ng-touched{*/
-/*  color: lime;*/
-/*  border: 1px dashed lightgreen;*/
-/*}*/
-/* ng-invalid and ng-touched should be used together when you want the for not be red from the beginning */
+input.form-error, select.form-error, textarea.form-error{
+  border: 1px solid red;
+}

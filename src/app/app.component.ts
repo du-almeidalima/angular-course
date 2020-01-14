@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -11,10 +11,20 @@ export class AppComponent implements OnInit {
   public genders = ['male', 'female'];
   public userForm: FormGroup;
 
+  public get usernameControl(): AbstractControl {
+    return this.userForm.get('userData.username');
+  }
+
+  public get emailControl(): AbstractControl {
+    return this.userForm.get('userData.email');
+  }
+
   ngOnInit(): void {
     this.userForm = new FormGroup({
-      username: new FormControl(null),
-      email: new FormControl(null),
+      userData: new FormGroup({
+        username: new FormControl(null, Validators.required),
+        email: new FormControl(null, [Validators.required, Validators.email])
+      }),
       gender: new FormControl('male'),
     });
   }
@@ -52,4 +62,30 @@ export class AppComponent implements OnInit {
  * === SUBMITTING THE FORM ===
  * Contrary to the Template Driven approach, where we'd need to pass the form as a Template Reference from the Angular auto creation
  * "ngForm". Here we already have the form in our code! just use it.
+ *
+ * === VALIDATIONS ===
+ * We can apply validations to our forms controls by passing it as a single or an array in second and third arguments for the
+ * FormControl constructor:
+ *
+ *    new FormControl(null, Validators.required)
+ *    new FormControl(null, [Validators.required, Validators.email])
+ *
+ * Angular will execute the validator whenever it detects that the control has changed.
+ * To access the controls we can use the FormGroup.get('nameOfControl')
+ *
+ * === GROUPING CONTROLS ===
+ * Like in Template Driven approach, we can use FormGroups to group our controls, but notice that using a FormGroup will change the path to
+ * ours controls!
+ *
+ *    userData: new FormGroup({
+        username: new FormControl(null, Validators.required),
+        email: new FormControl(null, [Validators.required, Validators.email])
+      })
+ *
+ * Also whenever we add a FormGroup we need to reflect this in our template, wrapping the controls in the FormGroup with a elements that has
+ * the formGroupName directive:
+ *    <div class="row" formGroupName="userData">
+ *      <input formControlName="username" ... >
+ *      <input formControlName="email" ... >
+ *   </div>
  */
