@@ -38,6 +38,22 @@
       </div>
     </div>
 
+    <div class="row">
+      <!-- Gender -->
+      <div class="nine columns" formArrayName="hobbies">
+        <label>Hobbies</label>
+        <input *ngFor="let hobbieControl of hobbiesFormControls; let i = index"
+               [formControlName]="i.toString()"
+               type="text" class="u-full-width"
+        >
+      </div>
+
+      <div class="three columns">
+        <button class="u-pull-right button-primary" (click)="onAddHobby()" type="button" style="margin-top: 29px">Add Hobby</button>
+      </div>
+
+    </div>
+
     <input
       [disabled]="userForm.invalid"
       [ngClass]="userForm.invalid ? 'button' : 'button-primary'"

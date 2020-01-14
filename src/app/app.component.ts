@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +11,10 @@ export class AppComponent implements OnInit {
   public genders = ['male', 'female'];
   public userForm: FormGroup;
 
-  public get usernameControl(): AbstractControl {
-    return this.userForm.get('userData.username');
-  }
-
-  public get emailControl(): AbstractControl {
-    return this.userForm.get('userData.email');
-  }
+  public get usernameControl(): AbstractControl { return this.userForm.get('userData.username'); }
+  public get emailControl(): AbstractControl { return this.userForm.get('userData.email'); }
+  public get hobbiesFormArray(): AbstractControl { return this.userForm.get('hobbies'); }
+  public get hobbiesFormControls(): AbstractControl[] { return (this.hobbiesFormArray as FormArray).controls; }
 
   ngOnInit(): void {
     this.userForm = new FormGroup({
@@ -26,11 +23,18 @@ export class AppComponent implements OnInit {
         email: new FormControl(null, [Validators.required, Validators.email])
       }),
       gender: new FormControl('male'),
+      hobbies: new FormArray([new FormControl(null, Validators.required)])
     });
   }
 
   onFormSubmit(): void {
     console.log(this.userForm);
+  }
+
+  onAddHobby(): void {
+    const formControl = new FormControl(null, Validators.required);
+    // We need to cast the AbstractControl to FormArray to work with it
+    (this.hobbiesFormArray as FormArray).push(formControl);
   }
 }
 
@@ -85,7 +89,29 @@ export class AppComponent implements OnInit {
  * Also whenever we add a FormGroup we need to reflect this in our template, wrapping the controls in the FormGroup with a elements that has
  * the formGroupName directive:
  *    <div class="row" formGroupName="userData">
- *      <input formControlName="username" ... >
- *      <input formControlName="email" ... >
- *   </div>
+ *       <input formControlName="username" ... >
+ *       <input formControlName="email" ... >
+ *    </div>
+ *
+ * === REACTIVE ARRAYS OF FORM CONTROLS ===
+ * Imagine that we wanted to create our controls programmatically, in this case, a input control for a hobie. For that we can use FormArray.
+ * we can create one like this:
+ *
+ *    hobbies: new FormArray([])
+ *
+ * In the constructor we can pass a array of FormControl, or we can create one programmatically.
+ *
+ *    onAddHobby(): void {
+        const formControl = new FormControl(null, Validators.required);
+
+        // We need to cast the AbstractControl to FormArray to work with it
+        (this.hobbiesFormArray as FormArray)
+          .push(formControl);
+      }
+ *
+ * For sync it with the Template, again we need to use a directive in the parent, similar to the formGroupName:
+ *    <div class="six columns" formArrayName="hobbies"></div>
+ *
+ * And with that loop through the FormArray
+ * Notice that we don't name the inputs, so their name will be their indexes
  */
