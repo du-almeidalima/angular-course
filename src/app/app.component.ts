@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@a
 export class AppComponent implements OnInit {
 
   private forbiddenNamesArray = ['Juaum', 'Jolie'];
+  private forbiddenEmailsArray = ['test@test.com', 'dualmeidalima@gmail.com'];
   public genders = ['male', 'female'];
   public userForm: FormGroup;
 
@@ -22,7 +24,7 @@ export class AppComponent implements OnInit {
       userData: new FormGroup({
         // Applying custom validator
         username: new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
-        email: new FormControl(null, [Validators.required, Validators.email])
+        email: new FormControl(null, [Validators.required, Validators.email], this.forbiddenEmails.bind(this))
       }),
       gender: new FormControl('male'),
       hobbies: new FormArray([new FormControl(null, Validators.required)])
@@ -45,6 +47,19 @@ export class AppComponent implements OnInit {
     } else {
       return null;
     }
+  }
+
+  forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        if (this.forbiddenEmailsArray.indexOf(control.value) !== -1) {
+          console.log('test fal');
+          resolve({emailIsForbidden: true});
+        } else {
+          resolve(null);
+        }
+      }, 1500);
+    });
   }
 }
 
@@ -144,4 +159,7 @@ export class AppComponent implements OnInit {
  * to this class anymore.
  *
  * Remembering that the error is registered in the control, not in the form, we can use that to tune our error message
+ *
+ * === ASYNC VALIDATOR ===
+ * It's really similar to a normal validator, but ir also must return a Promise or a Observable
  */

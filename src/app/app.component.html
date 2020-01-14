@@ -26,7 +26,10 @@
                class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
 
         <p *ngIf="emailControl.invalid && emailControl.touched"
-           style="margin-top: 10px" class="form-error">Please provide a valid username.</p>
+           style="margin-top: 10px" class="form-error">
+          <span *ngIf="emailControl.errors.emailIsForbidden">This email is forbidden!</span>
+          <span *ngIf="emailControl.errors.required">Please enter a valid email...</span>
+        </p>
       </div>
     </div>
 
