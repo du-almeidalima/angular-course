@@ -8,6 +8,7 @@ import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@a
 })
 export class AppComponent implements OnInit {
 
+  private forbiddenNamesArray = ['Juaum', 'Jolie'];
   public genders = ['male', 'female'];
   public userForm: FormGroup;
 
@@ -19,7 +20,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.userForm = new FormGroup({
       userData: new FormGroup({
-        username: new FormControl(null, Validators.required),
+        // Applying custom validator
+        username: new FormControl(null, [Validators.required, this.forbiddenNames.bind(this)]),
         email: new FormControl(null, [Validators.required, Validators.email])
       }),
       gender: new FormControl('male'),
@@ -35,6 +37,14 @@ export class AppComponent implements OnInit {
     const formControl = new FormControl(null, Validators.required);
     // We need to cast the AbstractControl to FormArray to work with it
     (this.hobbiesFormArray as FormArray).push(formControl);
+  }
+
+  forbiddenNames(control: FormControl): {[k: string]: any} {
+    if (this.forbiddenNamesArray.indexOf(control.value) >= 0) {
+      return {nameIsForbidden: true};
+    } else {
+      return null;
+    }
   }
 }
 
@@ -114,4 +124,22 @@ export class AppComponent implements OnInit {
  *
  * And with that loop through the FormArray
  * Notice that we don't name the inputs, so their name will be their indexes
+ *
+ * === CUSTOM VALIDATORS ===
+ * A validator is basically a function that gets executed by Angular automatically when it checks the validity of the form control, that is,
+ * whenever it changes.
+ * To write a validator it must be a function that receives a FormControl (which it should check) and it needs to return something
+ * for Angular to know if has passed. {[s:string]: any} (We're assigning a value to the key)
+ *
+       forbiddenNames(control: FormControl): {[k: string]: any} {
+        if (this.forbiddenNamesArray.indexOf(control.value) < 0) {
+          return {nameIsForbidden: true};
+        } else {
+          return null;
+        }
+      }
+ *
+ * If a validation is successful, it must return nothing or null.
+ * IMPORTANT: if in validation we use "this" we must bind it, because it'll be outer of scope when Angular calls it, "this" will not refer
+ * to this class anymore.
  */
