@@ -142,4 +142,6 @@ export class AppComponent implements OnInit {
  * If a validation is successful, it must return nothing or null.
  * IMPORTANT: if in validation we use "this" we must bind it, because it'll be outer of scope when Angular calls it, "this" will not refer
  * to this class anymore.
+ *
+ * Remembering that the error is registered in the control, not in the form, we can use that to tune our error message
  */

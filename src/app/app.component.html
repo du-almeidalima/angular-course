@@ -11,7 +11,10 @@
                class="u-full-width" type="text" placeholder="John..." id="username">
 
         <p *ngIf="usernameControl.invalid && usernameControl.touched"
-          style="margin-top: 10px" class="form-error">Please provide a valid username.</p>
+          style="margin-top: 10px" class="form-error">
+            <span *ngIf="usernameControl.errors.nameIsForbidden">This name is forbidden!</span>
+            <span *ngIf="usernameControl.errors.required">Please enter a username...</span>
+        </p>
 
       </div>
 
