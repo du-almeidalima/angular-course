@@ -33,10 +33,27 @@ export class AppComponent implements OnInit {
     // Reacting to Status or Value Changes
     this.userForm.valueChanges.subscribe((data) => console.log(data));
     this.userForm.statusChanges.subscribe((data) => console.log(data));
+
+    // Setting and Patching values
+    this.userForm.setValue({
+      userData: {
+        username: 'Duzinho',
+        email: 'duduardo@gmail.br'
+      },
+      gender: 'male',
+      hobbies: ['Hockey']
+    });
+
+    this.userForm.patchValue({
+      userData: {
+        username: 'Duardito'
+      }
+    });
   }
 
   onFormSubmit(): void {
     console.log(this.userForm);
+    this.userForm.reset();
   }
 
   onAddHobby(): void {
@@ -57,7 +74,6 @@ export class AppComponent implements OnInit {
     return new Promise(resolve => {
       setTimeout(() => {
         if (this.forbiddenEmailsArray.indexOf(control.value) !== -1) {
-          console.log('test fal');
           resolve({emailIsForbidden: true});
         } else {
           resolve(null);
@@ -183,6 +199,9 @@ export class AppComponent implements OnInit {
  * I also must return null on valid cases.
  *
  *
- * === Reacting to Status and Value changes
+ * === Reacting to Status and Value changes ===
  * We also have two Observables, one for each control value changed and the other for each status changed.
+ *
+ * === SETTING AND PATCHING VALUES ===
+ * Similar to TD approach, we can set values or patch them into our form.
  */
