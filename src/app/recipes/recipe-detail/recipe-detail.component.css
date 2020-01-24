@@ -1,0 +1,10 @@
+.float-image{
+  margin-left: 3px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 2px;
+}
+
+.two-columns{
+  columns: 2;
+}

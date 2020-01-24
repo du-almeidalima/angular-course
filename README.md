@@ -1,17 +1,11 @@
-# Section 15: Assignment 7
+# Cooking App
 
-This project is for the Assignment 7 of this course: Build a form using the Reactive Approach.
+This is the repository for the course project <b> Cooking App </b> from Section 3.
 
-## Tasks
-Create a Form with the following Controls and Validators
- * Project Name (should not be empty)
- * Mail (should not be a empty and a valid email)
- * Project Status Dropdown, with three values: 'Stable', 'Critical', 'Finished'
- * Submit Button
- * Add your own Validator which doesn't allow "Test" as a Project Name
- * Also implement that Validator as an async Validator (replace the other one)
- * Upon submitting the form, simply print the value to the console
+You can check it out [here](https://xenosgrilda.github.io/angular-8-course/home).
 
+## App Planning
+![App Diagram](./app-planning.png?raw=true "App Diagram")
 ## Sections
 
 The course sections / lessons will be organized as commits, for instance:
@@ -23,6 +17,31 @@ The Section 2: The Basics will be
   
   "[section number and name]"
 ```
+
+## Bootstrap
+
+#### Installation
+Bootstrap 4.3.1 was installed in this project through npm with the command: 
+```
+npm install --save bootstrap
+```
+
+Also, for using bootstrap js utilities: 
+```
+npm install --save jquery popper.js
+```
+#### Configuration
+In order
+to Angular recognizes it, we need to specify it into 'angular.json' file:
+
+```
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+]
+```
+
+Bootstrap JS was removed so our custom JS could be implemented, for academic reasons
 
 ## Authors
 
