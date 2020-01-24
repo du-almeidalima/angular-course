@@ -1,10 +1,16 @@
-# Section 15: Handling Forms in Angular Apps
+# Section 15: Assignment 7
 
-In this Module we'll take a look on how to handle forms in Angular. As known, forms, by its natural behaviour, sends a
-request to the server, however, Angular apps are SPA, therefore Angular need to treat forms differently.
-<br />
-In Angular we can build forms using the **Template-Driven** and **Reactive** approaches:
-![TDvsRA](./src/assets/template-driven-vs-reactive-approach.png?raw=true "Template Driven vs Reactive Approach")
+This project is for the Assignment 7 of this course: Build a form using the Reactive Approach.
+
+## Tasks
+Create a Form with the following Controls and Validators
+ * Project Name (should not be empty)
+ * Mail (should not be a empty and a valid email)
+ * Project Status Dropdown, with three values: 'Stable', 'Critical', 'Finished'
+ * Submit Button
+ * Add your own Validator which doesn't allow "Test" as a Project Name
+ * Also implement that Validator as an async Validator (replace the other one)
+ * Upon submitting the form, simply print the value to the console
 
 ## Sections
 
@@ -17,6 +23,7 @@ The Section 2: The Basics will be
   
   "[section number and name]"
 ```
+
 ## Authors
 
 * **Eduardo Lima** - Xenosgrilda

@@ -1,72 +1,56 @@
-<div class="container" style="width: 600px;">
-
-  <h1 style="text-align: center; margin-top: 30px;">Reactive Form</h1>
-  <form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
-    <div class="row" formGroupName="userData">
-      <!-- Username -->
+<div class="container" style="max-width: 700px; margin-top: 3em;">
+  <h3>Assignment 7: Reactive Forms</h3>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <!-- Project Name -->
       <div class="twelve columns">
-        <label for="username">Username</label>
-        <input formControlName="username"
-               [ngClass]="(usernameControl.invalid && usernameControl.touched) ? 'form-error' : ''"
-               class="u-full-width" type="text" placeholder="John..." id="username">
-
-        <p *ngIf="usernameControl.invalid && usernameControl.touched"
-          style="margin-top: 10px" class="form-error">
-            <span *ngIf="usernameControl.errors.nameIsForbidden">This name is forbidden!</span>
-            <span *ngIf="usernameControl.errors.required">Please enter a username...</span>
-        </p>
-
+        <label for="projectName">Project Name</label>
+        <input  formControlName="projectName"
+                [ngClass]="(projectName.invalid && projectName.touched) ? 'error' : ''"
+                id="projectName"
+                class="u-full-width"
+                type="text"
+                placeholder="Skynet...">
+        <p *ngIf="projectName.invalid && projectName.touched && projectName.errors.required" class="error">Please enter a valid project name...</p>
+        <p *ngIf="projectName.errors?.projectNameForbidden" class="error">This project name is forbidden!</p>
       </div>
 
       <!-- Email -->
       <div class="twelve columns">
         <label for="email">Email</label>
-        <input formControlName="email"
-               [ngClass]="(emailControl.invalid && emailControl.touched) ? 'form-error' : ''"
-               class="u-full-width" type="email" placeholder="someguy@somth.com" id="email">
-
-        <p *ngIf="emailControl.invalid && emailControl.touched"
-           style="margin-top: 10px" class="form-error">
-          <span *ngIf="emailControl.errors.emailIsForbidden">This email is forbidden!</span>
-          <span *ngIf="emailControl.errors.required">Please enter a valid email...</span>
-        </p>
+        <input  formControlName="email"
+                [ngClass]="(email.invalid && email.touched) ? 'error' : ''"
+                id="email"
+                name="email"
+                class="u-full-width"
+                type="email"
+                placeholder="something@email.com...">
+                <p *ngIf="(email.errors?.required|| email.errors?.email) && email.touched" class="error">Please enter a valid email...</p>
+                <p *ngIf="email.errors?.emailForbidden" class="error">This email is forbidden!</p>
       </div>
-    </div>
 
-    <div class="row">
-      <!-- Gender -->
+      <!-- Project Status -->
       <div class="twelve columns">
-        <label for="gender">Gender</label>
-        <label *ngFor="let gender of genders" id="gender">
-          <input formControlName="gender" type="radio" [value]="gender">
-          <span class="label-body" [textContent]="gender"></span>
+        <label for="projectStatus">Project Status</label>
+        <label for="projectStatus">
+          <select formControlName="projectStatus"
+                  id="projectStatus"
+                  name="projectStatus"
+                  class="u-full-width"
+          >
+            <option *ngFor="let stat of projectStatusArray" [value]="stat.key">{{stat.description}}</option>
+          </select>
         </label>
       </div>
-    </div>
 
+    </div>
     <div class="row">
-      <!-- Gender -->
-      <div class="nine columns" formArrayName="hobbies">
-        <label>Hobbies</label>
-        <input *ngFor="let hobbieControl of hobbiesFormControls; let i = index"
-               [formControlName]="i.toString()"
-               type="text" class="u-full-width"
-        >
+      <div class="twelve columns">
+        <button [disabled]="form.invalid"
+                [ngClass]="form.valid ? 'button-primary' : ''"
+                class="u-pull-right"
+                type="submit">Submit Form!</button>
       </div>
-
-      <div class="three columns">
-        <button class="u-pull-right button-primary" (click)="onAddHobby()" type="button" style="margin-top: 29px">Add Hobby</button>
-      </div>
-
     </div>
-
-    <input
-      [disabled]="userForm.invalid"
-      [ngClass]="userForm.invalid ? 'button' : 'button-primary'"
-      class="u-pull-right" type="submit" value="Submit"
-    >
-
   </form>
 </div>
-
-<!-- Error: <form> element requires [formGroup] to work... -->
