@@ -9,23 +9,28 @@
           <label for="itemName">Item name</label>
           <input
             ngModel
+            required
             name="itemName"
             type="text"
             class="form-control"
             placeholder="Name"
-            id="itemName">
+            id="itemName"
+          >
         </div>
 
         <div class="col-4">
           <label for="itemAmount">Amount</label>
           <input
             ngModel
+            required
+            pattern="^([1-9]+[0-9]*)$"
             name="itemAmount"
             id="itemAmount"
             type="number"
             min="0"
             class="form-control"
-            placeholder="Amount">
+            placeholder="Amount"
+          >
         </div>
 
       </div>
@@ -34,7 +39,11 @@
           <button class="btn btn-outline-danger" type="button">Delete</button>
           <button class="btn btn-outline-warning ml-2" type="button">Cancel</button>
         </div>
-        <button class="btn btn-success ml-2" type="submit">Add</button>
+        <button [disabled]="f.invalid"
+                [ngClass]="f.invalid ? 'btn-outline-success' : 'btn-success'"
+                class="btn ml-2" type="submit">
+          Add
+        </button>
       </div>
     </form>
   </div>
