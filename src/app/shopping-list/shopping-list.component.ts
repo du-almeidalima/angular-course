@@ -16,9 +16,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   constructor( private shoppingListService: ShoppingListService ) { }
 
   ngOnInit() {
-    this.ingredients = this.shoppingListService.ingredients;
-
-    this.ingredientSubscription = this.shoppingListService.ingredientObserver.subscribe(
+    this.ingredientSubscription = this.shoppingListService.ingredientsChanged.subscribe(
       (ingredientsUpdated: Ingredient[]) => {
         this.ingredients = ingredientsUpdated;
       }
@@ -28,9 +26,15 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.ingredientSubscription.unsubscribe();
   }
+
+  editIngredient(ingredientIndex: number): void {
+    this.shoppingListService.selectIngredientToEdit(ingredientIndex);
+  }
 }
 
 /**
- * We also need to listen whenever the Ingredients change, because this component doesn't have the original array ref
- * just a copy of it
+ * To edit an Ingredient, the ShoppingList component have a click listener on every Ingredient listed, and whenever it
+ * gets clicked on, it calls the ShoppingList service to emmit a event ".next()" with the index of the selected
+ * ingredient.
+ * this component is subscribed to this event and updates the item index
  */

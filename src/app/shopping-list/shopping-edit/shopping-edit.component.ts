@@ -9,19 +9,28 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./shopping-edit.component.css']
 })
 export class ShoppingEditComponent implements OnInit {
+  public ingredientIndex: number;
 
   constructor(private shoppingListService: ShoppingListService) { }
 
   ngOnInit() {
+    this.shoppingListService.selectedIngredient
+      .subscribe((index: number) => {
+        this.ingredientIndex = index;
+
+        console.log(index);
+      })
   }
 
   public onAddItem(form: NgForm): void {
-    const { value } = form;
+    const { name, amount } = form.value;
 
-    const itemName = value.itemName;
-    const itemAmount = + value.itemAmount;
-
-    const newIngredient = new Ingredient(itemName, itemAmount);
-    this.shoppingListService.addIngredient(newIngredient);
+    console.log(name, amount);
+    this.shoppingListService.addIngredient(new Ingredient(name, amount));
   }
 }
+
+/*
+ * Since in the ShoppingListService the "itemName" is used as a key for unique Items, it either need to know the Item
+ * index that is being edited, nor if it's new or already exists.
+ */

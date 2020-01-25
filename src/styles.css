@@ -41,6 +41,7 @@
   border-style: solid;
   border-color: transparent transparent black transparent;
 }
-.app-tooltip:hover > button[disabled] + .app-tooltip-text {
+
+.app-tooltip:hover > *[disabled] + .app-tooltip-text {
   visibility: visible;
 }

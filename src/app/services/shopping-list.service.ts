@@ -5,29 +5,33 @@ import {Observable, Subject} from "rxjs";
 @Injectable({providedIn: 'root'})
 export class ShoppingListService {
 
+  // Properties
   private _ingredients: Ingredient[] = [];
-  private _ingredientObserver = new Subject<Ingredient[]>();
+  private _ingredientsSubject = new Subject<Ingredient[]>();
 
-  public get ingredients() : Ingredient[] {
-    return this._ingredients.slice();
+  private _selectedIngredientSubject = new Subject<number>();
+
+  // Getters and Setters
+  public get ingredientsChanged(): Observable<Ingredient[]> {
+    return this._ingredientsSubject.asObservable();
   }
 
-  public get ingredientObserver(): Observable<Ingredient[]> {
-    return this._ingredientObserver.asObservable();
+  public get selectedIngredient(): Observable<number> {
+    return this._selectedIngredientSubject.asObservable();
   }
+
+  // Methods
   public addIngredient(newIngredient: Ingredient): void {
     const index = this.findIngredientIndexByName(newIngredient);
 
     if (index >= 0 ) {
-      console.log(newIngredient);
-      console.log(index);
+      this._ingredients[index].amount += newIngredient.amount;
 
-      this._ingredients[index].amount += Number (newIngredient.amount);
     } else {
       this._ingredients.push(newIngredient);
     }
 
-    this._ingredientObserver.next(this._ingredients);
+    this._ingredientsSubject.next(this._ingredients);
   }
 
   public addIngredients(newIngredients: Ingredient[]): void {
@@ -43,6 +47,11 @@ export class ShoppingListService {
     });
   }
 
+  public selectIngredientToEdit(index: number): void {
+    this._selectedIngredientSubject.next(index);
+  }
+
+  // Utils
   private findIngredientIndexByName(ingredient: Ingredient): number{
     const ingredientsNames = this._ingredients.map(ingredient => ingredient.name);
 

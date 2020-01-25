@@ -10,7 +10,7 @@
           <input
             ngModel
             required
-            name="itemName"
+            name="name"
             type="text"
             class="form-control"
             placeholder="Name"
@@ -24,7 +24,7 @@
             ngModel
             required
             pattern="^([1-9]+[0-9]*)$"
-            name="itemAmount"
+            name="amount"
             id="itemAmount"
             type="number"
             min="0"
@@ -45,7 +45,7 @@
                   class="btn ml-2" type="submit">
             Add
           </button>
-          <span class="app-tooltip-text">You must add at least on item.</span>
+          <span class="app-tooltip-text">You must add at least one.</span>
         </div>
       </div>
     </form>
