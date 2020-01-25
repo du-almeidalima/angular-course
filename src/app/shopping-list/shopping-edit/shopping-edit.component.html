@@ -39,11 +39,14 @@
           <button class="btn btn-outline-danger" type="button">Delete</button>
           <button class="btn btn-outline-warning ml-2" type="button">Cancel</button>
         </div>
-        <button [disabled]="f.invalid"
-                [ngClass]="f.invalid ? 'btn-outline-success' : 'btn-success'"
-                class="btn ml-2" type="submit">
-          Add
-        </button>
+        <div class="app-tooltip">
+          <button [disabled]="f.invalid"
+                  [ngClass]="f.invalid ? 'btn-outline-success' : 'btn-success'"
+                  class="btn ml-2" type="submit">
+            Add
+          </button>
+          <span class="app-tooltip-text">You must add at least on item.</span>
+        </div>
       </div>
     </form>
   </div>
