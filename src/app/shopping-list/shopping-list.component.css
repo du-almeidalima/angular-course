@@ -9,5 +9,5 @@
 }
 
 .shopping-list-row > div > ul > li{
-  margin-left: 10%;
+  width: 100%;
 }

@@ -8,7 +8,6 @@ export class ShoppingListService {
   // Properties
   private _ingredients: Ingredient[] = [];
   private _ingredientsSubject = new Subject<Ingredient[]>();
-
   private _selectedIngredientSubject = new Subject<number>();
 
   // Getters and Setters
@@ -20,6 +19,13 @@ export class ShoppingListService {
     return this._selectedIngredientSubject.asObservable();
   }
 
+  public getIngredientByIndex(i: number): Ingredient {
+    return this._ingredients[i]
+  }
+
+  public get ingredients() {
+    return this._ingredients.slice();
+  }
   // Methods
   public addIngredient(newIngredient: Ingredient): void {
     const index = this.findIngredientIndexByName(newIngredient);
@@ -36,13 +42,13 @@ export class ShoppingListService {
 
   public addIngredients(newIngredients: Ingredient[]): void {
 
-    newIngredients.forEach( (newIngredient: Ingredient) => {
-      const index = this.findIngredientIndexByName(newIngredient);
+    newIngredients.forEach( (ingredient: Ingredient) => {
+      const index = this.findIngredientIndexByName(ingredient);
 
       if (index >= 0 ) {
-        this._ingredients[index].amount = this._ingredients[index].amount + newIngredient.amount;
+        this._ingredients[index].amount = this._ingredients[index].amount + ingredient.amount;
       } else {
-        this._ingredients.push(Object.create(newIngredient));
+        this._ingredients.push(new Ingredient(ingredient.name, ingredient.amount));
       }
     });
   }

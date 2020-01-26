@@ -11,6 +11,11 @@
   transition: background-color 0.4s;
 }
 
+.hover:hover{
+  transition: 200ms background-color linear;
+  background-color: rgba(213, 213, 213, 0.6);
+}
+
 .app-tooltip {
   position: relative;
   display: inline-block;

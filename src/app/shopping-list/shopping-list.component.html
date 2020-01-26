@@ -5,9 +5,10 @@
     <ul class="list-group">
       <li *ngFor="let ingredient of ingredients; let i = index"
           (click)="editIngredient(i)"
-          class="list-group-item-action">
+          class="hover list-group-item list-group-flush"
+          style="cursor: pointer">
         {{ ingredient.name }}
-        <span class="badge badge-secondary">{{ingredient.amount}}</span>
+        <span class="badge badge-secondary float-right mt-1">{{ingredient.amount}}</span>
       </li>
     </ul>
   </div>
