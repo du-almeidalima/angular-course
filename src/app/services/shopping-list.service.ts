@@ -27,17 +27,25 @@ export class ShoppingListService {
     return this._ingredients.slice();
   }
   // Methods
-  public addIngredient(newIngredient: Ingredient): void {
-    const index = this.findIngredientIndexByName(newIngredient);
+  public addIngredient(ingredient: Ingredient): void {
+    const index = this.findIngredientIndexByName(ingredient);
 
     if (index >= 0 ) {
-      this._ingredients[index].amount += newIngredient.amount;
+      this._ingredients[index].amount += ingredient.amount;
 
     } else {
-      this._ingredients.push(newIngredient);
+      this._ingredients.push(ingredient);
     }
 
     this._ingredientsSubject.next(this._ingredients);
+  }
+
+  public updateIngredient(ingredient: Ingredient, index: number) {
+    if ((index >= 0) && (index <= this._ingredients.length)) {
+      this._ingredients[index] = ingredient;
+    } else {
+      throw RangeError("Invalid Ingredient index.")
+    }
   }
 
   public addIngredients(newIngredients: Ingredient[]): void {
