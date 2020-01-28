@@ -5,12 +5,12 @@ import {Observable, Subject} from "rxjs";
 @Injectable({providedIn: 'root'})
 export class ShoppingListService {
 
-  // Properties
+  // PROPERTIES
   private _ingredients: Ingredient[] = [];
   private _ingredientsSubject = new Subject<Ingredient[]>();
   private _selectedIngredientSubject = new Subject<number>();
 
-  // Getters and Setters
+  // GETTERS AND SETTERS
   public get ingredientsChanged(): Observable<Ingredient[]> {
     return this._ingredientsSubject.asObservable();
   }
@@ -24,9 +24,10 @@ export class ShoppingListService {
   }
 
   public get ingredients() {
-    return this._ingredients.slice();
+    return [...this._ingredients];
   }
-  // Methods
+  // METHODS
+  // Add
   public addIngredient(ingredient: Ingredient): void {
     const index = this.findIngredientIndexByName(ingredient);
 
@@ -38,14 +39,6 @@ export class ShoppingListService {
     }
 
     this._ingredientsSubject.next(this._ingredients);
-  }
-
-  public updateIngredient(ingredient: Ingredient, index: number) {
-    if ((index >= 0) && (index <= this._ingredients.length)) {
-      this._ingredients[index] = ingredient;
-    } else {
-      throw RangeError("Invalid Ingredient index.")
-    }
   }
 
   public addIngredients(newIngredients: Ingredient[]): void {
@@ -61,6 +54,24 @@ export class ShoppingListService {
     });
   }
 
+  // Update
+  public updateIngredient(ingredient: Ingredient, index: number): void {
+    if (this.checkIngredientIndex(index)){
+      this._ingredients[index] = ingredient;
+      this._ingredientsSubject.next(this._ingredients);
+    }
+  }
+
+  // Delete
+  public deleteIngredient(index: number): Ingredient {
+    if (this.checkIngredientIndex(index)){
+      const removedIng = this._ingredients.splice(index, 1)[0];
+      this._ingredientsSubject.next(this._ingredients);
+
+      return removedIng;
+    }
+  }
+
   public selectIngredientToEdit(index: number): void {
     this._selectedIngredientSubject.next(index);
   }
@@ -70,6 +81,14 @@ export class ShoppingListService {
     const ingredientsNames = this._ingredients.map(ingredient => ingredient.name);
 
     return ingredientsNames.indexOf(ingredient.name);
+  }
+
+  private checkIngredientIndex(index: number): boolean{
+    if ((index >= 0) && (index <= this._ingredients.length)) {
+      return true
+    } else {
+      throw RangeError("Invalid Ingredient index.")
+    }
   }
 }
 
