@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
-import {FormControl, FormGroup} from "@angular/forms";
+import {AbstractControl, FormArray, FormControl, FormGroup} from "@angular/forms";
 import {RecipeService} from "../../services/recipe.service";
 import {RecipeModel} from "../recipe.model";
 
@@ -15,6 +15,13 @@ export class RecipeEditComponent implements OnInit {
   private id: number;
 
   public recipeForm: FormGroup;
+
+  // Form Controls Getters
+  public get name(): AbstractControl { return this.recipeForm.get('name'); }
+  public get description(): AbstractControl { return this.recipeForm.get('description'); }
+  public get imgPath(): AbstractControl { return this.recipeForm.get('imagePath'); }
+  public get ingredients(): AbstractControl { return this.recipeForm.get('ingredients'); }
+  public get ingredientsControls(): AbstractControl[] { return (this.ingredients as FormArray).controls; }
 
   constructor(private route: ActivatedRoute, private recipeService: RecipeService) { }
 
@@ -34,7 +41,16 @@ export class RecipeEditComponent implements OnInit {
 
   public onSubmit(): void {
     console.log(this.recipeForm.value);
-}
+  }
+
+  public onAddIngredient(): void {
+    (this.recipeForm.get('ingredients') as FormArray).push(
+      new FormGroup({
+        ingName: new FormControl(),
+        ingAmount: new FormControl()
+      })
+    )
+  }
 
   // Utils
   private initForm(recipe: RecipeModel): void {
@@ -42,7 +58,14 @@ export class RecipeEditComponent implements OnInit {
     this.recipeForm = new FormGroup({
       name: new FormControl(recipe.name),
       description: new FormControl(recipe.description),
-      imagePath: new FormControl(recipe.imagePath)
+      imagePath: new FormControl(recipe.imagePath),
+      // Mapping Ingredients to a FormGroup
+      ingredients: new FormArray(recipe.ingredients.map(ing => {
+        return new FormGroup({
+          ingName: new FormControl(ing.name),
+          ingAmount: new FormControl(ing.amount)
+        })
+      }))
     });
   }
 }

@@ -8,13 +8,11 @@ export class RecipeModel {
   public imagePath: string;
   public ingredients: Ingredient[];
 
-  constructor()
-
   constructor(id?: number, name?: string, description?: string, imagePath?: string, ingredients?: Ingredient[]) {
     this.id = id;
-    this.name = name;
-    this.description = description;
-    this.imagePath = imagePath;
-    this.ingredients = ingredients;
+    this.name = name || null;
+    this.description = description || null;
+    this.imagePath = imagePath || null;
+    this.ingredients = ingredients || null;
   }
 }
