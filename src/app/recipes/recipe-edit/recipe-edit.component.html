@@ -1,9 +1,12 @@
-<form class="recipe-form">
+<form [formGroup]="recipeForm" class="recipe-form" (ngSubmit)="onSubmit()">
   <!-- Title -->
   <div class="row">
     <div class="col-12">
-      <label for="name"></label>
-      <input type="text" class="recipe-title" value="Recipe Name" id="name" title="Recipe Name">
+      <input formControlName="name"
+             class="recipe-title form-control"
+             id="name"
+             type="text"
+             title="Recipe Name">
     </div>
   </div>
   <!-- Description -->
@@ -15,29 +18,37 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <textarea name="" id="" title="Recipe Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, deserunt.</textarea>
+      <textarea formControlName="description"
+                class="form-control"
+                title="Recipe Description"
+                placeholder="This is an ancient recipe from the old Vikings...">
+      </textarea>
     </div>
   </div>
 
   <div class="row mt-2">
-    <div class="col-6">
-      <div class="form-group">
-        <label for="imagePath">Image Path</label>
-        <input type="text" class="form-control" id="imagePath" placeholder="https://pt.wikipedia.org/wiki/Ficheiro:Arca_zebra_as_food.jpg">
-      </div>
-    </div>
-    <div class="col-6">
+    <div class="col-12 col-lg-4">
       <img
-        class="float-image"
-        src=""
-        height="125"
+        class="float-image float-right img-thumbnail"
+        [src]="recipeForm.get('imagePath').value"
         alt="Recipe Image"
       >
+    </div>
+    <div class="col-12 col-lg-8 mt-2">
+      <div class="form-group">
+        <label for="imagePath">Image Path</label>
+        <input formControlName="imagePath"
+               class="form-control"
+               id="imagePath"
+               type="text"
+               title="Image Path"
+               placeholder="https://pt.wikipedia.org/wiki/Ficheiro:Arca_zebra_as_food.jpg">
+      </div>
     </div>
   </div>
 
   <!-- Ingredients -->
-  <div class="row mt-1">
+  <div class="row mt-3">
     <div class="col-12">
       <h5>Ingredients</h5>
       <hr />
@@ -46,9 +57,9 @@
       <ul class="p-0">
 <!--        <li *ngFor="let ingredient of currentRecipe.ingredients">{{ingredient.name}} &times; {{ingredient.amount}}</li>-->
         <li class="recipe-ingredients my-2">
-            <input class="recipe-ingredients-name" type="text" value="Legume" title="Ingredient Name">
-            <span class="text-center mx-2">&times;</span>
-            <input class="recipe-ingredients-amount text-center" type="number" value="3" min="0" title="Ingredient Amount">
+            <input class="recipe-ingredients-name form-control" type="text" value="Legume" title="Ingredient Name">
+            <span class="text-center mx-1">&times;</span>
+            <input class="recipe-ingredients-amount text-center form-control" type="number" value="3" min="0" title="Ingredient Amount">
             <button class="btn btn-danger recipe-ingredients-remove ml-2" type="button"> &times; </button>
         </li>
       </ul>

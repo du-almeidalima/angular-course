@@ -32,6 +32,11 @@ export class RecipeEditComponent implements OnInit {
     );
   }
 
+  public onSubmit(): void {
+    console.log(this.recipeForm.value);
+}
+
+  // Utils
   private initForm(recipe: RecipeModel): void {
 
     this.recipeForm = new FormGroup({
