@@ -50,3 +50,10 @@
 .app-tooltip:hover > *[disabled] + .app-tooltip-text {
   visibility: visible;
 }
+
+.app-round-btn {
+  padding: 0 !important;
+  border-radius: 50% !important;
+  height: 2rem;
+  width: 2rem;
+}

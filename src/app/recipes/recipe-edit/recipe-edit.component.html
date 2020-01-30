@@ -1,3 +1,67 @@
-<p>
-  recipe-edit works!
-</p>
+<form class="recipe-form">
+  <!-- Title -->
+  <div class="row">
+    <div class="col-12">
+      <label for="name"></label>
+      <input type="text" class="recipe-title" value="Recipe Name" id="name" title="Recipe Name">
+    </div>
+  </div>
+  <!-- Description -->
+  <div class="row mt-3">
+    <div class="col-12">
+      <h5>Description</h5>
+      <hr />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <textarea name="" id="" title="Recipe Description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, deserunt.</textarea>
+    </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-6">
+      <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+        <input type="text" class="form-control" id="imageUrl" placeholder="https://pt.wikipedia.org/wiki/Ficheiro:Arca_zebra_as_food.jpg">
+      </div>
+    </div>
+    <div class="col-6">
+      <img
+        class="float-image"
+        src=""
+        height="125"
+        alt="Recipe Image"
+      >
+    </div>
+  </div>
+
+  <!-- Ingredients -->
+  <div class="row mt-1">
+    <div class="col-12">
+      <h5>Ingredients</h5>
+      <hr />
+    </div>
+    <div class="col-12">
+      <ul class="p-0">
+<!--        <li *ngFor="let ingredient of currentRecipe.ingredients">{{ingredient.name}} &times; {{ingredient.amount}}</li>-->
+        <li class="recipe-ingredients my-2">
+            <input class="recipe-ingredients-name" type="text" value="Legume" title="Ingredient Name">
+            <span class="text-center mx-2">&times;</span>
+            <input class="recipe-ingredients-amount text-center" type="number" value="3" min="0" title="Ingredient Amount">
+            <button class="btn btn-danger recipe-ingredients-remove ml-2" type="button"> &times; </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between mt-2">
+    <div>
+      <button class="btn btn-warning" type="button">Cancel</button>
+    </div>
+    <div class="app-tooltip">
+      <button class="btn btn-success ml-2" type="submit" disabled="disabled">Save</button>
+      <span class="app-tooltip-text">You must fill all the required fields.</span>
+    </div>
+  </div>
+</form>
