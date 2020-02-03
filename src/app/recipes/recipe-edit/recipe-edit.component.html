@@ -3,10 +3,12 @@
   <div class="row">
     <div class="col-12">
       <input formControlName="name"
+             [ngClass]="(name.invalid && name.touched) ? 'recipe-form-error': ''"
              class="recipe-title form-control"
              id="name"
              type="text"
              title="Recipe Name">
+      <app-control-messages [control]="this.name"></app-control-messages>
     </div>
   </div>
   <!-- Description -->
@@ -23,6 +25,7 @@
                 title="Recipe Description"
                 placeholder="This is an ancient recipe from the old Vikings...">
       </textarea>
+      <app-control-messages [control]="this.description"></app-control-messages>
     </div>
   </div>
 
@@ -30,7 +33,7 @@
     <div class="col-12 col-lg-4">
       <img
         class="float-image float-right img-thumbnail"
-        [src]="imgPath.value"
+        [src]="imgPlaceholder ? this.FOOD_PLACEHOLDER : imgPath.value"
         alt="Recipe Image"
       >
     </div>
@@ -63,12 +66,18 @@
             class="recipe-ingredients my-2"
         >
             <input formControlName="ingName"
+                   [ngClass]="
+                   (ingredientsControls[i].get('ingName').invalid && ingredientsControls[i].get('ingName').touched)
+                   ? 'recipe-form-error' : ''"
                    class="recipe-ingredients-name form-control"
                    type="text"
                    title="Ingredient Name"
             >
             <span class="text-center mx-1">&times;</span>
             <input formControlName="ingAmount"
+                   [ngClass]="
+                   (ingredientsControls[i].get('ingAmount').invalid && ingredientsControls[i].get('ingAmount').touched)
+                   ? 'recipe-form-error' : ''"
                    class="recipe-ingredients-amount text-center form-control"
                    type="number"
                    min="1"
@@ -79,6 +88,7 @@
                     title="Delete Ingredient"
             > &times; </button>
         </li>
+        <app-control-messages [control]="this.ingredients"></app-control-messages>
       </ul>
     </div>
   </div>

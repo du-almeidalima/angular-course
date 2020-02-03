@@ -2,6 +2,10 @@
   border: 1px dashed lightgrey;
 }
 
+.recipe-form-error {
+  border-color: tomato !important;
+}
+
 .recipe-form textarea{
   display: inline-block;
   resize: vertical;
