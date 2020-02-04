@@ -45,7 +45,7 @@
                id="imagePath"
                type="text"
                title="Image Path"
-               placeholder="https://pt.wikipedia.org/wiki/Ficheiro:Arca_zebra_as_food.jpg">
+               placeholder="https://recipe-image.jpg">
       </div>
     </div>
   </div>
@@ -65,18 +65,18 @@
             [formGroupName]="i.toString()"
             class="recipe-ingredients my-2"
         >
-            <input formControlName="ingName"
+            <input formControlName="name"
                    [ngClass]="
-                   (ingredientsControls[i].get('ingName').invalid && ingredientsControls[i].get('ingName').touched)
+                   (ingredientsControls[i].get('name').invalid && ingredientsControls[i].get('name').touched)
                    ? 'recipe-form-error' : ''"
                    class="recipe-ingredients-name form-control"
                    type="text"
                    title="Ingredient Name"
             >
             <span class="text-center mx-1">&times;</span>
-            <input formControlName="ingAmount"
+            <input formControlName="amount"
                    [ngClass]="
-                   (ingredientsControls[i].get('ingAmount').invalid && ingredientsControls[i].get('ingAmount').touched)
+                   (ingredientsControls[i].get('amount').invalid && ingredientsControls[i].get('amount').touched)
                    ? 'recipe-form-error' : ''"
                    class="recipe-ingredients-amount text-center form-control"
                    type="number"
@@ -98,8 +98,11 @@
       <button class="btn btn-warning" type="button">Cancel</button>
     </div>
     <div class="app-tooltip">
-      <button class="btn btn-success ml-2" type="submit">Save</button>
-      <span class="app-tooltip-text">You must fill all the required fields.</span>
+      <button [disabled]="recipeForm.invalid"
+              class="btn btn-success ml-2"
+              type="submit">Save
+      </button>
+      <span *ngIf="recipeForm.invalid" class="app-tooltip-text">You must fill all the required fields.</span>
     </div>
   </div>
 </form>

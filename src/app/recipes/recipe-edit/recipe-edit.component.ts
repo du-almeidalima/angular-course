@@ -5,6 +5,7 @@ import {RecipeService} from "../../services/recipe.service";
 import {RecipeModel} from "../recipe.model";
 // @ts-ignore
 import FOOD_PLACEHOLDER from "../../../assets/img/food-placeholder.jpg";
+import {Ingredient} from "../../models/ingredient.model";
 
 @Component({
   selector: 'app-recipe-edit',
@@ -36,20 +37,34 @@ export class RecipeEditComponent implements OnInit {
         this.id = +params.id;
 
         // If id exist (edit mode) then fetch it, otherwise create new
-        this.initForm(this.recipeService.getRecipe(this.id) || new RecipeModel());
+        let recipe = this.recipeService.getRecipe(this.id);
+        if (recipe == undefined) {
+          recipe = new RecipeModel( null,'', '', '', [new Ingredient('', 1)]);
+          this.imgPlaceholder = true;
+        }
+        this.initForm(recipe);
       }
     );
   }
 
   public onSubmit(): void {
-    console.log(this.recipeForm.value);
+    // Save or Update recipe
+    // Since we're using a Generator to gen RecipeModels id we need to create a new recipe or use the last one with the id
+    const {name, description, imagePath, ingredients} = this.recipeForm.value;
+    const recipe = new RecipeModel(this.id, name, description, imagePath, ingredients);
+
+    if (this.id !== null) {
+      this.recipeService.saveRecipe(recipe);
+    } else {
+      this.recipeService.saveRecipe(recipe);
+    }
   }
 
   public onAddIngredient(): void {
     (this.recipeForm.get('ingredients') as FormArray).push(
       new FormGroup({
-        ingName: new FormControl(null, Validators.required),
-        ingAmount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
+        name: new FormControl(null, Validators.required),
+        amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
       })
     )
   }
@@ -60,12 +75,12 @@ export class RecipeEditComponent implements OnInit {
     this.recipeForm = new FormGroup({
       name: new FormControl(recipe.name, Validators.required),
       description: new FormControl(recipe.description, Validators.required),
-      imagePath: new FormControl(recipe.imagePath || FOOD_PLACEHOLDER, {updateOn: "blur"}),
+      imagePath: new FormControl(recipe.imagePath, {updateOn: "blur"}),
       // Mapping Ingredients to a FormGroup
       ingredients: new FormArray(recipe.ingredients.map(ing => {
         return new FormGroup({
-          ingName: new FormControl(ing.name, Validators.required),
-          ingAmount: new FormControl(ing.amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
+          name: new FormControl(ing.name, Validators.required),
+          amount: new FormControl(ing.amount, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
         })
       }))
     });
@@ -91,4 +106,10 @@ export class RecipeEditComponent implements OnInit {
 /*
  *  "imagePath: new FormControl(recipe.imagePath || FOOD_PLACEHOLDER, {updateOn: "blur"})"
  * This will tell Angular to only run validation on this control after the user blur
+ */
+
+/*
+ * To save / submit the form, a new Recipe was created with the form values, and with the id passed by the router.
+ * In the RecipeService a new method was created "saveRecipe" that would find if it's a new or updated recipe based on
+ * the id
  */

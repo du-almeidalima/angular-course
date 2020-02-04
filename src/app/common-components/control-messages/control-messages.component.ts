@@ -43,7 +43,6 @@ export class ControlMessagesComponent implements OnInit, OnDestroy{
     if (this.con) {
       this.conSub = this.con.statusChanges.subscribe(conData => {
 
-        console.log(this.con);
         switch (conData) {
           case 'INVALID':
             if (this.con.errors) {

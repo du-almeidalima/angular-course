@@ -1,10 +1,12 @@
 import {Injectable} from '@angular/core';
 import {RecipeModel} from '../recipes/recipe.model';
 import {Ingredient} from '../models/ingredient.model';
+import {Observable, Subject} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class RecipeService {
-  private readonly recipes: RecipeModel[] = [
+  private readonly _recipesSubject = new Subject<RecipeModel[]>();
+  private recipes: RecipeModel[] = [
 
     new RecipeModel(
       1,
@@ -31,6 +33,10 @@ export class RecipeService {
     )
   ];
 
+  public get recipesObservable(): Observable<RecipeModel[]> {
+    return this._recipesSubject.asObservable();
+  }
+
   public getRecipes(): RecipeModel[] {
     return this.recipes.slice(); // Returning a new copy of recipes array
   }
@@ -43,6 +49,26 @@ export class RecipeService {
     );
   }
 
+  public saveRecipe(recipe: RecipeModel): void {
+    if (recipe != null) {
+      // Update
+      if (recipe.id !== null && !isNaN(recipe.id)) {
+        const index = this.recipes.indexOf( this.recipes.find(r => r.id === recipe.id) );
+
+        this.recipes[index] = recipe;
+      }
+      // Add
+      else {
+        // Workaround for Id generators
+        const maxId = Math.max.apply(null, this.recipes.map(r => r.id));
+        recipe.id = maxId + 1;
+        this.recipes.push(recipe);
+      }
+
+      this._recipesSubject.next(this.recipes);
+    }
+  }
+
 }
 
 /**
@@ -51,4 +77,9 @@ export class RecipeService {
  * So we use the slice with no parameter to return a new array
  *
  * Note: The "providedIn" property must receive a module
+ */
+
+/*
+ * The service had to be updated with a Subscriber so the RecipeList component would be notified whenever a recipe was
+ * updated / created.
  */
