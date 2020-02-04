@@ -82,10 +82,12 @@
                    type="number"
                    min="1"
                    title="Ingredient Amount"
+                   (keydown.enter)="onAddIngredient()"
             >
             <button class="btn btn-danger recipe-ingredients-remove ml-2"
                     type="button"
                     title="Delete Ingredient"
+                    tabindex="-1"
             > &times; </button>
         </li>
         <app-control-messages [control]="this.ingredients"></app-control-messages>

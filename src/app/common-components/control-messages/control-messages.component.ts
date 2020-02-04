@@ -1,13 +1,13 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl} from "@angular/forms";
-import {Subscription} from "rxjs";
-import StatusMessages from "../../shared/status-messages";
-import {MessageStatus} from "../../shared/enums/message-status.enum";
-import RecipeValidator from "../../shared/recipe-validator";
+import {AbstractControl} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import StatusMessages from '../../shared/status-messages';
+import {MessageStatus} from '../../shared/enums/message-status.enum';
+import RecipeValidator from '../../shared/recipe-validator';
 
 interface statusMessagesDTO {
-  messageType: MessageStatus,
-  messages: string[]
+  messageType: MessageStatus;
+  messages: string[];
 }
 
 @Component({
@@ -45,14 +45,14 @@ export class ControlMessagesComponent implements OnInit, OnDestroy{
 
         switch (conData) {
           case 'INVALID':
-            if (this.con.errors) {
+            if (this.con.errors && this.con.touched) {
               Object.keys(this.con.errors).forEach(errorKey => {
                 this.mapMessage(RecipeValidator.getMessage(errorKey));
               });
             }
             break;
           case 'VALID':
-            this.messages = []
+            this.messages = [];
         }
       })
     }
@@ -76,8 +76,7 @@ export class ControlMessagesComponent implements OnInit, OnDestroy{
     if (this.messages.find( item => item.messageType === statusMessage.status )) {
       this.messages.find(item => item.messageType === statusMessage.status)
         .messages.push(statusMessage.message)
-    }
-    else {
+    } else {
       this.messages.push({
         messageType: statusMessage.status,
         messages: [statusMessage.message]

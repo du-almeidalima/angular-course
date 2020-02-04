@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
-import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
-import {RecipeService} from "../../services/recipe.service";
-import {RecipeModel} from "../recipe.model";
+import {ActivatedRoute, Params} from '@angular/router';
+import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
+import {RecipeService} from '../../services/recipe.service';
+import {RecipeModel} from '../recipe.model';
 // @ts-ignore
-import FOOD_PLACEHOLDER from "../../../assets/img/food-placeholder.jpg";
-import {Ingredient} from "../../models/ingredient.model";
+import FOOD_PLACEHOLDER from '../../../assets/img/food-placeholder.jpg';
+import {Ingredient} from '../../models/ingredient.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -66,7 +66,7 @@ export class RecipeEditComponent implements OnInit {
         name: new FormControl(null, Validators.required),
         amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
       })
-    )
+    );
   }
 
   // Utils
@@ -75,7 +75,7 @@ export class RecipeEditComponent implements OnInit {
     this.recipeForm = new FormGroup({
       name: new FormControl(recipe.name, Validators.required),
       description: new FormControl(recipe.description, Validators.required),
-      imagePath: new FormControl(recipe.imagePath, {updateOn: "blur"}),
+      imagePath: new FormControl(recipe.imagePath, {updateOn: 'blur'}),
       // Mapping Ingredients to a FormGroup
       ingredients: new FormArray(recipe.ingredients.map(ing => {
         return new FormGroup({
