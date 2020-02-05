@@ -19,7 +19,7 @@ const ROUTES: Routes = [
       { path: '', component: NoRecipeComponent },
       // We'll use the same component to create and edit a Recipe
       { path: 'create', component: RecipeEditComponent },
-      { path: 'edit/:id', component: RecipeEditComponent },
+      { path: ':id/edit', component: RecipeEditComponent },
       // It's important to leave the routes with dynamic values to last, otherwise Angular will try to parse other
       // paths into this value e.g. "create" would become the id
       { path: ':id', component: RecipeDetailComponent, resolve: { recipe: RecipeResolver } }

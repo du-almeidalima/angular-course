@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {RecipeModel} from '../recipes/recipe.model';
-import {Ingredient} from '../models/ingredient.model';
+import {Ingredient} from '../shared/models/ingredient.model';
 import {Observable, Subject} from "rxjs";
 
 @Injectable({providedIn: 'root'})
@@ -41,7 +41,7 @@ export class RecipeService {
     return this.recipes.slice(); // Returning a new copy of recipes array
   }
 
-  public getRecipe(id: number): RecipeModel | undefined {
+  public getRecipeById(id: number): RecipeModel | undefined {
     return this.recipes.find(
       (recipe: RecipeModel) => {
           return recipe.id === id;
@@ -49,7 +49,7 @@ export class RecipeService {
     );
   }
 
-  public saveRecipe(recipe: RecipeModel): void {
+  public saveRecipe(recipe: RecipeModel): RecipeModel {
     if (recipe != null) {
       // Update
       if (recipe.id !== null && !isNaN(recipe.id)) {
@@ -66,9 +66,22 @@ export class RecipeService {
       }
 
       this._recipesSubject.next(this.recipes);
+      return recipe;
     }
   }
 
+  public removeRecipeById(id: number): RecipeModel {
+    const index = this.recipes.findIndex(r => r.id === id);
+
+    if (index > -1) {
+      const deletedRecipe = this.recipes.splice(index, 1)[0];
+      this._recipesSubject.next(this.recipes);
+
+      return deletedRecipe;
+    } else {
+      throw new Error("Could not find a recipe with id: " + id);
+    }
+  }
 }
 
 /**

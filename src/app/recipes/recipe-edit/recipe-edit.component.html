@@ -55,7 +55,11 @@
     <div class="col-12">
       <div class="d-flex justify-content-between">
         <h5 style="display: inline-block">Ingredients</h5>
-        <button class="btn btn-primary" (click)="onAddIngredient()" type="button">Add</button>
+        <button (click)="onAddIngredient()"
+                class="btn btn-primary"
+                type="button"
+                tabindex="-1">Add
+        </button>
       </div>
       <hr />
     </div>
@@ -84,7 +88,8 @@
                    title="Ingredient Amount"
                    (keydown.enter)="onAddIngredient()"
             >
-            <button class="btn btn-danger recipe-ingredients-remove ml-2"
+            <button (click)="onDeleteIngredient(i)"
+                    class="btn btn-danger recipe-ingredients-remove ml-2"
                     type="button"
                     title="Delete Ingredient"
                     tabindex="-1"
@@ -97,7 +102,11 @@
 
   <div class="d-flex justify-content-between mt-2">
     <div>
-      <button class="btn btn-warning" type="button">Cancel</button>
+      <button (click)="onCancel()"
+              class="btn btn-warning"
+              tabindex="2"
+              type="button">Cancel
+      </button>
     </div>
     <div class="app-tooltip">
       <button [disabled]="recipeForm.invalid"

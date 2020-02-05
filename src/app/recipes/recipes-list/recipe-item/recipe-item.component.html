@@ -2,7 +2,7 @@
 <div class="card clickable mb-3" style="max-width: 540px;" [routerLink]="[recipe.id]" [routerLinkActive]="'recipe-active'">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <img [src]="recipe.imagePath" class="card-img" alt="...">
+      <img [src]="recipe.imagePath" class="card-img" alt="..." #recipeImg (error)="imgError()">
     </div>
     <div class="col-md-8">
       <div class="card-body">

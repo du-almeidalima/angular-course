@@ -1,5 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {RecipeModel} from "../../recipe.model";
+// @ts-ignore
+import FOOD_PLACEHOLDER from '../../../../assets/img/food-placeholder.jpg';
 
 @Component({
   selector: 'app-recipe-item',
@@ -8,10 +10,20 @@ import {RecipeModel} from "../../recipe.model";
 })
 export class RecipeItemComponent implements OnInit {
 
+  constructor(private renderer: Renderer2) {
+  }
+
   @Input()
   public recipe: RecipeModel;
 
+  @ViewChild('recipeImg', {static: true})
+  public recipeImg: ElementRef;
+
   ngOnInit() {
+  }
+
+  public imgError(): void {
+    this.renderer.setAttribute(this.recipeImg.nativeElement, 'src', FOOD_PLACEHOLDER)
   }
 
 }

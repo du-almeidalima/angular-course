@@ -3,6 +3,7 @@ import {RecipeModel} from "../recipe.model";
 import {ShoppingListService} from "../../services/shopping-list.service";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {RecipeService} from "../../services/recipe.service";
 
 @Component({
   selector: 'app-recipe-detail',
@@ -15,7 +16,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   public currentRecipe: RecipeModel;
   private recipeSubscription: Subscription;
   constructor(private shoppingListService: ShoppingListService,
-              private route: ActivatedRoute, private router: Router) { }
+              private recipeService: RecipeService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
     // For changes in the current component
@@ -42,7 +45,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   // - resolvers to fetch data that te component being loaded will need
   public onEditRecipe(): void {
     // this.route = <domain>/recipes/edit/2
-    this.router.navigate(['../', 'edit', this.currentRecipe.id], {relativeTo: this.route});
+    this.router.navigate(['../', this.currentRecipe.id, 'edit'], {relativeTo: this.route});
+  }
+
+  public onRemoveRecipe(): void {
+    this.recipeService.removeRecipeById(this.currentRecipe.id);
+    this.router.navigate(['recipes']);
   }
 
 }

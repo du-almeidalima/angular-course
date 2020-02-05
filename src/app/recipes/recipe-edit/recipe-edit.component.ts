@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RecipeService} from '../../services/recipe.service';
 import {RecipeModel} from '../recipe.model';
 // @ts-ignore
 import FOOD_PLACEHOLDER from '../../../assets/img/food-placeholder.jpg';
-import {Ingredient} from '../../models/ingredient.model';
+import {Ingredient} from '../../shared/models/ingredient.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -27,7 +27,9 @@ export class RecipeEditComponent implements OnInit {
   public get ingredients(): AbstractControl { return this.recipeForm.get('ingredients'); }
   public get ingredientsControls(): AbstractControl[] { return (this.ingredients as FormArray).controls; }
 
-  constructor(private route: ActivatedRoute, private recipeService: RecipeService) { }
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private recipeService: RecipeService) { }
 
   ngOnInit() {
     // Adding to observable to react to changes
@@ -37,7 +39,7 @@ export class RecipeEditComponent implements OnInit {
         this.id = +params.id;
 
         // If id exist (edit mode) then fetch it, otherwise create new
-        let recipe = this.recipeService.getRecipe(this.id);
+        let recipe = this.recipeService.getRecipeById(this.id);
         if (recipe == undefined) {
           recipe = new RecipeModel( null,'', '', '', [new Ingredient('', 1)]);
           this.imgPlaceholder = true;
@@ -51,13 +53,15 @@ export class RecipeEditComponent implements OnInit {
     // Save or Update recipe
     // Since we're using a Generator to gen RecipeModels id we need to create a new recipe or use the last one with the id
     const {name, description, imagePath, ingredients} = this.recipeForm.value;
-    const recipe = new RecipeModel(this.id, name, description, imagePath, ingredients);
+    const recipe = new RecipeModel(this.id, name, description, imagePath || this.FOOD_PLACEHOLDER, ingredients);
 
-    if (this.id !== null) {
-      this.recipeService.saveRecipe(recipe);
-    } else {
-      this.recipeService.saveRecipe(recipe);
-    }
+    const newRecipe = this.recipeService.saveRecipe(recipe);
+
+    this.navigateBack(newRecipe.id);
+  }
+
+  public onCancel(): void {
+    this.navigateBack();
   }
 
   public onAddIngredient(): void {
@@ -67,6 +71,10 @@ export class RecipeEditComponent implements OnInit {
         amount: new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)])
       })
     );
+  }
+
+  public onDeleteIngredient(index: number): void {
+    (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
   }
 
   // Utils
@@ -89,6 +97,13 @@ export class RecipeEditComponent implements OnInit {
     this.imgPath.valueChanges.subscribe(data => {
       this.imgPlaceholder = data === null || data.trim() === '';
     })
+  }
+
+  private navigateBack(id?: number): void {
+    const url: any[] = ['../'];
+
+    id ? url.push(id) : null;
+    this.router.navigate(url, {relativeTo: this.route});
   }
 }
 

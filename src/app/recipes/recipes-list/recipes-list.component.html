@@ -7,7 +7,18 @@
   </div>
 </div>
 <div class="row mt-3">
-  <div class="col-12" *ngFor="let recipeItem of recipes">
-      <app-recipe-item [recipe]="recipeItem"></app-recipe-item>
+  <ng-content *ngIf="recipes.length > 0; then withRecipes; else noRecipes">
+  </ng-content>
+
+  <div class="col-12" *ngFor="let recipeItem of recipes" #withRecipes>
+    <app-recipe-item [recipe]="recipeItem"></app-recipe-item>
   </div>
+
+  <ng-template #noRecipes>
+    <section class="mt-2">
+      <h3>You don't have any recipes yet!</h3>
+      <p>Click on the "Add Recipe" button to start adding your favorites recipes!</p>
+    </section>
+  </ng-template>
+
 </div>
