@@ -1,8 +1,8 @@
 <div class="row justify-content-between">
-  <div class="col-6 col-md-6">
+  <div class="col-12 col-lg-6">
     <h4> {{currentRecipe.name}} </h4>
   </div>
-  <div class="col-6 col-md-6">
+  <div class="col-12 col-lg-6 float-right">
     <div class="dropdown" appDropdown [dropdownMenu]="dropdownMenu">
       <button type="button" class="btn btn-block btn-secondary dropdown-toggle" data-toggle="dropdown">
         Recipe Options
@@ -20,18 +20,23 @@
   <div class="col-12">
     <h5>Description</h5>
     <hr />
-    <img
-      class="float-right float-image"
-      [src]="currentRecipe.imagePath"
-      height="125"
-      alt=""
-    >
-    <p> {{currentRecipe.description}} </p>
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-8">
+        <p> {{currentRecipe.description}} </p>
+      </div>
+      <div class="col-12 col-md-12 col-lg-4">
+        <img
+          class="float-image"
+          [src]="currentRecipe.imagePath"
+          alt=""
+        >
+      </div>
+    </div>
   </div>
 
 </div>
 
-<div class="row mt-1">
+<div class="row mt-3">
   <div class="col-12">
     <h5>Ingredients</h5>
     <hr />

@@ -74,6 +74,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   public onDeleteIngredient(index: number): void {
+    // To delete dynamic FromGroup / FormControls we need to use the removeAt() method from FormArray
     (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
   }
 
