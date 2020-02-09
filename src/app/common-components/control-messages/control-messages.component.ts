@@ -28,25 +28,26 @@ interface statusMessagesDTO {
     </div>
   `
 })
-export class ControlMessagesComponent implements OnInit, OnDestroy{
+export class ControlMessagesComponent implements OnInit, OnDestroy {
 
   private conSub: Subscription;
-  private messages: statusMessagesDTO[] = [];
 
-  @Input('control')
-  public con: AbstractControl;
+  public messages: statusMessagesDTO[] = [];
+
+  @Input()
+  public control: AbstractControl;
 
   constructor() { }
 
   ngOnInit(): void {
 
-    if (this.con) {
-      this.conSub = this.con.statusChanges.subscribe(conData => {
+    if (this.control) {
+      this.conSub = this.control.statusChanges.subscribe(conData => {
 
         switch (conData) {
           case 'INVALID':
-            if (this.con.errors && this.con.touched) {
-              Object.keys(this.con.errors).forEach(errorKey => {
+            if (this.control.errors && this.control.touched) {
+              Object.keys(this.control.errors).forEach(errorKey => {
                 this.mapMessage(RecipeValidator.getMessage(errorKey));
               });
             }
@@ -62,12 +63,12 @@ export class ControlMessagesComponent implements OnInit, OnDestroy{
     this.conSub.unsubscribe();
   }
 
-  private getMessageClass(status: MessageStatus): string {
+  public getMessageClass(status: MessageStatus): string {
     switch (status) {
       case MessageStatus.ERROR:   return 'alert-danger';
       case MessageStatus.INFO:    return 'alert-info';
       case MessageStatus.SUCCESS: return 'alert-success';
-      case MessageStatus.WARNING: return 'alert-warning'
+      case MessageStatus.WARNING: return 'alert-warning';
     }
   }
 
@@ -80,7 +81,7 @@ export class ControlMessagesComponent implements OnInit, OnDestroy{
       this.messages.push({
         messageType: statusMessage.status,
         messages: [statusMessage.message]
-      })
+      });
     }
   }
 }

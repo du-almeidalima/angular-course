@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/cooking-app",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -25,8 +26,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [
-            ],
+            "scripts": [],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -51,6 +51,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -133,5 +137,8 @@
       }
     }
   },
-  "defaultProject": "cooking-app"
+  "defaultProject": "cooking-app",
+  "cli": {
+    "analytics": "d2815209-04dd-46cb-bd27-a1b8bcb40d8c"
+  }
 }

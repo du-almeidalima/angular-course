@@ -7,12 +7,15 @@
   </div>
 </div>
 <div class="row mt-3">
-  <ng-content *ngIf="recipes.length > 0; then withRecipes; else noRecipes">
+  <ng-content *ngIf="recipes.length > 0; then withRecipes else noRecipes">
   </ng-content>
 
-  <div class="col-12" *ngFor="let recipeItem of recipes" #withRecipes>
-    <app-recipe-item [recipe]="recipeItem"></app-recipe-item>
-  </div>
+  <!-- Templates -->
+  <ng-template #withRecipes>
+    <div class="col-12" *ngFor="let recipeItem of recipes">
+      <app-recipe-item [recipe]="recipeItem"></app-recipe-item>
+    </div>
+  </ng-template>
 
   <ng-template #noRecipes>
     <section class="mt-2">
