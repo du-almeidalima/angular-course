@@ -1,5 +1,22 @@
-<app-header></app-header>
+<div class="container">
+  <div class="row mt-5">
+    <div class="col-12">
+      <ul class="list-group">
+        <li *ngFor="let server of servers" class="list-group-item" [ngClass]="getStatusClass(server.status)">
+          <b>{{server.name}}</b> | {{server.instanceType | uppercase}} | {{server.started | date: 'fullDate'}}
+          <span class="badge badge-dark float-right">{{server.status}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-<main role="main" class="container mt-5">
-  <router-outlet></router-outlet>
-</main>
+<!--
+  PIPES
+
+  Pipes are useful when we want to change how we display data without modifying it.
+  For example to make the server.instanceType to uppercase we can do as above
+
+  To pass a parameter to a pipe we can just put a colon in front of it for every parameter:
+    -- {{data | pipe: p1: p2: p3...}}
+-->
