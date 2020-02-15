@@ -3,10 +3,10 @@ import {Pipe, PipeTransform} from '@angular/core';
 @Pipe({name: 'shorten'})
 export class ShortenPipe implements PipeTransform {
 
-  transform(value: any, ...args: any[]): any {
+  transform(value: any, limit: number): any {
 
-    return value.toString().length > 15 ?
-      value.toString().substr(0, 15) + ' ...' : value;
+    return value.toString().length >= limit ?
+      value.toString().substr(0, limit) + ' ...' : value;
   }
 
 }
@@ -19,7 +19,7 @@ export class ShortenPipe implements PipeTransform {
  *        return ... ;
  *      }
  *
- * If we wanted to pass arguments, just like Java, we could assign it to a uncountable list of arguments.
+ * If we wanted to pass arguments, just like Java, we could assign it to a uncountable list of arguments or specific arguments.
  *
  * Also, just like Components, Directives ... we need to assign a Decorator to it, the @Pipe
  *

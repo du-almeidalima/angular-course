@@ -3,7 +3,7 @@
     <div class="col-12">
       <ul class="list-group">
         <li *ngFor="let server of servers" class="list-group-item" [ngClass]="getStatusClass(server.status)">
-          <b>{{server.name | shorten}}</b> - {{server.instanceType | uppercase}} | {{server.started | date: 'fullDate' | uppercase}}
+          <b>{{server.name | shorten: 15}}</b> - {{server.instanceType | uppercase}} | {{server.started | date: 'fullDate' | uppercase}}
           <span class="badge badge-dark float-right">{{server.status}}</span>
         </li>
       </ul>
