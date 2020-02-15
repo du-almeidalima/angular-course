@@ -1,10 +1,21 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col-12">
+      <div class="form-group">
+        <label for="filter">Filter Servers</label>
+        <input [(ngModel)]="filterCondition" class="form-control" type="text" id="filter">
+      </div>
+    </div>
+    <hr />
+    <div class="col-12">
       <ul class="list-group">
-        <li *ngFor="let server of servers" class="list-group-item" [ngClass]="getStatusClass(server.status)">
+        <li *ngFor="let server of servers | filter: filterCondition: 'status'"
+            [ngClass]="getStatusClass(server.status)"
+            class="list-group-item">
+
           <b>{{server.name | shorten: 15}}</b> - {{server.instanceType | uppercase}} | {{server.started | date: 'fullDate' | uppercase}}
           <span class="badge badge-dark float-right">{{server.status}}</span>
+
         </li>
       </ul>
     </div>
@@ -21,4 +32,13 @@
     -- {{data | pipe: p1: p2: p3...}}
 
   We an also chain Pipes, but be careful with the sequence, always left to right
+-->
+
+<!--
+  PIPE AS FILTERS!
+
+  Another awesome way to use Pipes is as filter, take the FilterPipe for example, it's a normal pipe, which receives a
+  array, a filter and the prop to filter from the array, and return this for us.
+
+  We can use it inside the *ngFor loop !!!!! Because in the end, Pipes receives data, transforms it and then returns it
 -->

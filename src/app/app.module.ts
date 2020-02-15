@@ -3,14 +3,18 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {ShortenPipe} from './pipes/shorten.pipe';
+import {FormsModule} from '@angular/forms';
+import {FilterPipe} from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ShortenPipe
+    ShortenPipe,
+    FilterPipe
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

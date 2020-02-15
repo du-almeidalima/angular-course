@@ -6,6 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
+
+  public filterCondition: string;
+
+  public log() {
+    console.log(this.filterCondition);
+  }
+
   public servers = [
     {
       instanceType: 'medium',
