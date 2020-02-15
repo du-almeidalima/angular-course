@@ -9,10 +9,6 @@ export class AppComponent {
 
   public filterCondition: string;
 
-  public log() {
-    console.log(this.filterCondition);
-  }
-
   public servers = [
     {
       instanceType: 'medium',
@@ -51,5 +47,14 @@ export class AppComponent {
       case 'stable': return 'list-group-item-success';
       case 'offline': return 'list-group-item-warning';
     }
+  }
+
+  public onAddServer(): void {
+    this.servers.push({
+      instanceType: 'small',
+      name: 'New Server',
+      status: 'offline',
+      started: new Date(15, 2, 2020)
+    })
   }
 }

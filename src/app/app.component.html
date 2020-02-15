@@ -1,9 +1,15 @@
 <div class="container">
   <div class="row mt-5">
-    <div class="col-12">
+    <div class="col-8">
       <div class="form-group">
         <label for="filter">Filter Servers</label>
         <input [(ngModel)]="filterCondition" class="form-control" type="text" id="filter">
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="form-group">
+        <label for="filter">Add a new Server</label>
+        <button class="btn btn-primary btn-block" (click)=onAddServer()>Add Server</button>
       </div>
     </div>
     <hr />
