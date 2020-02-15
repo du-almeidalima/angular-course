@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { resolve } from 'dns';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  public appStatus = new Promise( (resolve => {
+      setTimeout(() => {
+        resolve('Stable')
+      }, 2000);
+    })
+  )
   public filterCondition: string;
 
   public servers = [

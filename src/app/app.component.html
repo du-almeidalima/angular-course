@@ -1,31 +1,39 @@
 <div class="container">
-  <div class="row mt-5">
-    <div class="col-8">
-      <div class="form-group">
-        <label for="filter">Filter Servers</label>
-        <input [(ngModel)]="filterCondition" class="form-control" type="text" id="filter">
+
+  <header>
+    <h1>Serve Dashboard</h1>
+    <b>Status: </b> <span>{{appStatus | async}}</span>
+  </header>
+
+  <main>
+    <div class="row mt-5">
+      <div class="col-8">
+        <div class="form-group">
+          <label for="filter">Filter Servers</label>
+          <input [(ngModel)]="filterCondition" class="form-control" type="text" id="filter">
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <label for="filter">Add a new Server</label>
+          <button class="btn btn-primary btn-block" (click)=onAddServer()>Add Server</button>
+        </div>
+      </div>
+      <hr />
+      <div class="col-12">
+        <ul class="list-group">
+          <li *ngFor="let server of servers | filter: filterCondition: 'status'"
+              [ngClass]="getStatusClass(server.status)"
+              class="list-group-item">
+
+            <b>{{server.name | shorten: 15}}</b> - {{server.instanceType | uppercase}} | {{server.started | date: 'fullDate' | uppercase}}
+            <span class="badge badge-dark float-right">{{server.status}}</span>
+
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="col-4">
-      <div class="form-group">
-        <label for="filter">Add a new Server</label>
-        <button class="btn btn-primary btn-block" (click)=onAddServer()>Add Server</button>
-      </div>
-    </div>
-    <hr />
-    <div class="col-12">
-      <ul class="list-group">
-        <li *ngFor="let server of servers | filter: filterCondition: 'status'"
-            [ngClass]="getStatusClass(server.status)"
-            class="list-group-item">
-
-          <b>{{server.name | shorten: 15}}</b> - {{server.instanceType | uppercase}} | {{server.started | date: 'fullDate' | uppercase}}
-          <span class="badge badge-dark float-right">{{server.status}}</span>
-
-        </li>
-      </ul>
-    </div>
-  </div>
+  </main>
 </div>
 
 <!--
@@ -47,4 +55,11 @@
   array, a filter and the prop to filter from the array, and return this for us.
 
   We can use it inside the *ngFor loop !!!!! Because in the end, Pipes receives data, transforms it and then returns it
+-->
+
+<!--
+  ASYNC PIPE
+
+  If we wanted to output async data, we could use the async pipe! It will take a Promisse/Observable and wait for it to resolve
+  instead of displaying [object Promise]
 -->

@@ -25,6 +25,8 @@ export class FilterPipe implements PipeTransform {
  * they will not be updated by it. But Angular allows us to do it, by setting the property { pure: false } in the @Pipe decorator.
  * When pure: false, it will apply the filter for every change detection.
  *
+ * BE AWARE: THIS CAN LEAD TO PERFORMANCE ISSUES.
+ *
  * In the example we're adding a new server while the filter is applyied, you can see that there is no change if the property
  * "pure" is not defined
  */
