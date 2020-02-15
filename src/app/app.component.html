@@ -3,7 +3,7 @@
     <div class="col-12">
       <ul class="list-group">
         <li *ngFor="let server of servers" class="list-group-item" [ngClass]="getStatusClass(server.status)">
-          <b>{{server.name}}</b> | {{server.instanceType | uppercase}} | {{server.started | date: 'fullDate'}}
+          <b>{{server.name | shorten}}</b> - {{server.instanceType | uppercase}} | {{server.started | date: 'fullDate' | uppercase}}
           <span class="badge badge-dark float-right">{{server.status}}</span>
         </li>
       </ul>
@@ -19,4 +19,6 @@
 
   To pass a parameter to a pipe we can just put a colon in front of it for every parameter:
     -- {{data | pipe: p1: p2: p3...}}
+
+  We an also chain Pipes, but be careful with the sequence, always left to right
 -->
