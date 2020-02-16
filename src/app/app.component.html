@@ -1,65 +1,35 @@
 <div class="container">
-
-  <header>
-    <h1>Server Dashboard</h1>
-    <b>Status: </b> <span>{{appStatus | async}}</span>
+  <header class="">
+    <h1>Making HTTP Request | Firebase</h1>
   </header>
 
+
   <main>
-    <div class="row mt-5">
-      <div class="col-8">
-        <div class="form-group">
-          <label for="filter">Filter Servers</label>
-          <input [(ngModel)]="filterCondition" class="form-control" type="text" id="filter">
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="form-group">
-          <label for="filter">Add a new Server</label>
-          <button class="btn btn-primary btn-block" (click)=onAddServer()>Add Server</button>
-        </div>
-      </div>
-      <hr />
-      <div class="col-12">
-        <ul class="list-group">
-          <li *ngFor="let server of servers | filter: filterCondition: 'status'| sortBy: 'status'"
-              [ngClass]="getStatusClass(server.status)"
-              class="list-group-item">
+    <h3>Sample Request Form</h3>
+    <form [formGroup]="sampleForm" (ngSubmit)="onSubmitHandle()">
+      <div class="row">
 
-            <b>{{server.name | shorten: 15}}</b> - {{server.instanceType | uppercase | reverse}} | {{server.started | date: 'fullDate' | uppercase}}
-            <span class="badge badge-dark float-right">{{server.status}}</span>
+        <div class="twelve columns">
+          <label for="title">Title</label>
+          <input 
+            formControlName="title" 
+            class="u-full-width" 
+            type="text" 
+            placeholder="Capivaras são legais" 
+            id="title">
+        </div>
 
-          </li>
-        </ul>
+        <div class="twelve columns">
+          <label for="content">Content</label>
+          <textarea
+            formControlName="content"
+            class="u-full-width" 
+            id="content">
+          </textarea>
+        </div>
+        
       </div>
-    </div>
+      <input class="button-primary" type="submit" value="Send Post">
+    </form>
   </main>
 </div>
-
-<!--
-  PIPES
-
-  Pipes are useful when we want to change how we display data without modifying it.
-  For example to make the server.instanceType to uppercase we can do as above
-
-  To pass a parameter to a pipe we can just put a colon in front of it for every parameter:
-    -- {{data | pipe: p1: p2: p3...}}
-
-  We an also chain Pipes, but be careful with the sequence, always left to right
--->
-
-<!--
-  PIPE AS FILTERS!
-
-  Another awesome way to use Pipes is as filter, take the FilterPipe for example, it's a normal pipe, which receives a
-  array, a filter and the prop to filter from the array, and return this for us.
-
-  We can use it inside the *ngFor loop !!!!! Because in the end, Pipes receives data, transforms it and then returns it
--->
-
-<!--
-  ASYNC PIPE
-
-  If we wanted to output async data, we could use the async pipe! It will take a Promisse/Observable and wait for it to resolve
-  instead of displaying [object Promise]
--->

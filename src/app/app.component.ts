@@ -1,73 +1,41 @@
-import { Component } from '@angular/core';
-import {SortByPipe} from './pipes/sortBy.pipe';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
 
-  public appStatus = new Promise( (resolve => {
-      setTimeout(() => {
-        resolve('Stable');
-      }, 2000);
-    })
-  );
+export class AppComponent implements OnInit {
 
-  constructor(private orderPipe: SortByPipe) {
-  }
-  public filterCondition: string;
+  private readonly FIREBASE_URL = 'https://xenos-ng-firebase-project.firebaseio.com/';
 
-  public servers = [
-    {
-      instanceType: 'medium',
-      name: 'Production Server',
-      status: 'stable',
-      started: new Date(15, 2, 2020)
-    },
-    {
-      instanceType: 'large',
-      name: 'User Database',
-      status: 'offline',
-      started: new Date(15, 2, 2020)
-    },
-    {
-      instanceType: 'small',
-      name: 'Development Server',
-      status: 'offline',
-      started: new Date(15, 2, 2020)
-    },
-    {
-      instanceType: 'small',
-      name: 'Quality Server',
-      status: 'stable',
-      started: new Date(15, 2, 2020)
-    },
-    {
-      instanceType: 'medium',
-      name: 'Testing Environment Server',
-      status: 'offline',
-      started: new Date(15, 2, 2020)
-    }
-  ];
+  public sampleForm: FormGroup;
 
-  public getStatusClass(status: string): string {
-    switch (status) {
-      case 'stable': return 'list-group-item-success';
-      case 'offline': return 'list-group-item-warning';
-    }
-  }
+  constructor( private httpClient: HttpClient ) {}
 
-  public onAddServer(): void {
-    this.servers.push({
-      instanceType: 'small',
-      name: 'New Server',
-      status: 'offline',
-      started: new Date(15, 2, 2020)
+  ngOnInit(): void {
+    this.sampleForm = new FormGroup({
+      title: new FormControl(null),
+      content: new FormControl(null)
     });
+  }
 
-    const test = this.orderPipe.transform(this.servers, 'started');
-    console.log(test);
+  public onSubmitHandle(): void {
+
+    this.httpClient.post(this.FIREBASE_URL + '/posts.json', this.sampleForm.value)
+      .subscribe(resp => {
+        console.log(resp);
+      });
   }
 }
+
+/**
+ * To use the HttpClient we need to inject it.
+ *
+ * When doing HTTP Actions that require a "body", we would need to parse it to JSON, but HttpClient does that for us.
+ *
+ * Angular uses Observables in their HttpClient, and for it to send a request we need to subscribe to then.
+ */

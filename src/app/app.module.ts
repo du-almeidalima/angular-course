@@ -1,26 +1,24 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import {AppComponent} from './app.component';
-import {ShortenPipe} from './pipes/shorten.pipe';
-import {FormsModule} from '@angular/forms';
-import {FilterPipe} from './pipes/filter.pipe';
-import {ReversePipe} from './pipes/reverse.pipe';
-import {SortByPipe} from './pipes/sortBy.pipe';
+import { AppComponent } from './app.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ShortenPipe,
-    FilterPipe,
-    ReversePipe,
-    SortByPipe
+    AppComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+/**
+ * To use Angular HTTPClient we need to import it in the "imports" array
+ */

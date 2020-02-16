@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('using-pipes app is running!');
+    expect(page.getTitleText()).toEqual('making-http-requests18 app is running!');
   });
 
   afterEach(async () => {

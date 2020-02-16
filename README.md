@@ -1,10 +1,7 @@
-# Section 17: Assignment 8
+# Section 18: Making Http Requests
 
-This project is for the Assignment 8 of this course: Building Pipes.
-
-## Tasks
-* Create a Pipe that reverse a String
-* Create a Pipe that will sort the Servers by a property
+In this module we'll look on how Angular handles HTTP Requests to backend.
+For a Backend We're using [Firebase](https://firebase.google.com/).
 
 ## Sections
 
@@ -17,6 +14,10 @@ The Section 2: The Basics will be
   
   "[section number and name]"
 ```
+
+## Built With
+* [Angular](https://angular.io/docs) - 9
+* [Skeleton CSS](http://getskeleton.com/) - 2.0.4
 
 ## Authors
 

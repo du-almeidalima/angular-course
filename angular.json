@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "using-pipes": {
+    "making-http-requests18": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "sass"
+          "style": "scss"
         }
       },
       "root": "",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/using-pipes",
+            "outputPath": "dist/making-http-requests18",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,11 +28,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass",
-              "./node_modules/bootstrap/dist/css/bootstrap.css"
+              "src/styles.scss",
+              "node_modules/skeleton-css/css/normalize.css",
+              "node_modules/skeleton-css/css/skeleton.css"
             ],
-            "scripts": [
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "using-pipes:build"
+            "browserTarget": "making-http-requests18:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "using-pipes:build:production"
+              "browserTarget": "making-http-requests18:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "using-pipes:build"
+            "browserTarget": "making-http-requests18:build"
           }
         },
         "test": {
@@ -94,7 +94,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass"
+              "src/styles.scss"
             ],
             "scripts": []
           }
@@ -116,19 +116,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "using-pipes:serve"
+            "devServerTarget": "making-http-requests18:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "using-pipes:serve:production"
+              "devServerTarget": "making-http-requests18:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "using-pipes",
+  "defaultProject": "making-http-requests18",
   "cli": {
-    "analytics": "bce8281e-33bf-4d5d-acc9-24f6a038a8f5"
+    "analytics": "18ed7a44-d729-4556-b557-783bd9bce06b"
   }
 }
