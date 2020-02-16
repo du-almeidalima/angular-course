@@ -1,7 +1,7 @@
 <div class="container">
 
   <header>
-    <h1>Serve Dashboard</h1>
+    <h1>Server Dashboard</h1>
     <b>Status: </b> <span>{{appStatus | async}}</span>
   </header>
 
@@ -22,11 +22,11 @@
       <hr />
       <div class="col-12">
         <ul class="list-group">
-          <li *ngFor="let server of servers | filter: filterCondition: 'status'"
+          <li *ngFor="let server of servers | filter: filterCondition: 'status'| sortBy: ''"
               [ngClass]="getStatusClass(server.status)"
               class="list-group-item">
 
-            <b>{{server.name | shorten: 15}}</b> - {{server.instanceType | uppercase}} | {{server.started | date: 'fullDate' | uppercase}}
+            <b>{{server.name | shorten: 15}}</b> - {{server.instanceType | uppercase | reverse}} | {{server.started | date: 'fullDate' | uppercase}}
             <span class="badge badge-dark float-right">{{server.status}}</span>
 
           </li>

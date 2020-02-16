@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { resolve } from 'dns';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +9,11 @@ export class AppComponent {
 
   public appStatus = new Promise( (resolve => {
       setTimeout(() => {
-        resolve('Stable')
+        resolve('Stable');
       }, 2000);
     })
-  )
+  );
+
   public filterCondition: string;
 
   public servers = [
@@ -26,7 +26,7 @@ export class AppComponent {
     {
       instanceType: 'large',
       name: 'User Database',
-      status: 'stable',
+      status: 'offline',
       started: new Date(15, 2, 2020)
     },
     {
@@ -62,6 +62,6 @@ export class AppComponent {
       name: 'New Server',
       status: 'offline',
       started: new Date(15, 2, 2020)
-    })
+    });
   }
 }
