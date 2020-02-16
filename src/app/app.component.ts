@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {SortByPipe} from './pipes/sortBy.pipe';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,8 @@ export class AppComponent {
     })
   );
 
+  constructor(private orderPipe: SortByPipe) {
+  }
   public filterCondition: string;
 
   public servers = [
@@ -63,5 +66,8 @@ export class AppComponent {
       status: 'offline',
       started: new Date(15, 2, 2020)
     });
+
+    const test = this.orderPipe.transform(this.servers, 'started');
+    console.log(test);
   }
 }

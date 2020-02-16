@@ -1,6 +1,7 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import {Injectable, Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({ name : 'sortBy'})
+@Injectable({providedIn: 'root'})
+@Pipe({ name : 'sortBy', pure: false})
 export class SortByPipe implements PipeTransform {
 
   transform(value: any[], property: string): any {
