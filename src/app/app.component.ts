@@ -2,17 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
+interface Post {
+  title: string;
+  content: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-
 export class AppComponent implements OnInit {
 
   private readonly FIREBASE_URL = 'https://xenos-ng-firebase-project.firebaseio.com/';
 
   public sampleForm: FormGroup;
+  public posts: Post[];
 
   constructor( private httpClient: HttpClient ) {}
 
@@ -21,14 +26,31 @@ export class AppComponent implements OnInit {
       title: new FormControl(null),
       content: new FormControl(null)
     });
+
+    this.fetchPosts();
   }
 
   public onSubmitHandle(): void {
 
     this.httpClient.post(this.FIREBASE_URL + '/posts.json', this.sampleForm.value)
-      .subscribe(resp => {
-        console.log(resp);
+      .subscribe((resp: string) => {
+        console.log(resp.toLocaleUpperCase());
       });
+  }
+
+  public onFecthPosts(): void {
+    this.fetchPosts();
+  }
+
+  // UTILS
+  private fetchPosts(): void {
+
+    this.httpClient.get(`${this.FIREBASE_URL}/posts.json`)
+      .subscribe(
+        (data: Post[]) => {
+          console.log(data);
+        }
+      );
   }
 }
 
