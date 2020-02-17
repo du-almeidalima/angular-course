@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import {map} from 'rxjs/operators';
 
 interface Post {
   title: string;
@@ -46,9 +47,24 @@ export class AppComponent implements OnInit {
   private fetchPosts(): void {
 
     this.httpClient.get(`${this.FIREBASE_URL}/posts.json`)
+      .pipe(
+        map((respData) => {
+         const postArray: Post[] = [];
+
+         for (const key in respData) {
+           if (respData.hasOwnProperty(key)) {
+             postArray.push({...respData[key], id: key});
+           }
+         }
+
+         return postArray;
+        })
+      )
       .subscribe(
         (data: Post[]) => {
-          console.log(data);
+          this.posts = data;
+
+          console.log(this.posts);
         }
       );
   }
@@ -60,4 +76,8 @@ export class AppComponent implements OnInit {
  * When doing HTTP Actions that require a "body", we would need to parse it to JSON, but HttpClient does that for us.
  *
  * Angular uses Observables in their HttpClient, and for it to send a request we need to subscribe to then.
+ */
+
+/**
+ * To model/map our Data we could use Pipes, as seen, pipes transforms the data, and the Observables allow us to do this
  */
