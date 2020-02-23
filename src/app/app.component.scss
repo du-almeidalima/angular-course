@@ -1,0 +1,15 @@
+.post{
+  position: relative;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  padding: 5px;
+  margin-top: 10px;
+
+  .trash::after{
+    position: absolute;
+    content: '\002716';
+    cursor: pointer;
+    right: 10px;
+    top: 10px;
+  }
+}

@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   private readonly FIREBASE_URL = 'https://xenos-ng-firebase-project.firebaseio.com/';
 
   public sampleForm: FormGroup;
-  public posts: Post[];
+  public posts: Post[] = [];
 
   constructor( private httpClient: HttpClient ) {}
 

@@ -11,11 +11,11 @@
 
         <div class="twelve columns">
           <label for="title">Title</label>
-          <input 
-            formControlName="title" 
-            class="u-full-width" 
-            type="text" 
-            placeholder="Capivaras são legais" 
+          <input
+            formControlName="title"
+            class="u-full-width"
+            type="text"
+            placeholder="Capivaras são legais"
             id="title">
         </div>
 
@@ -23,13 +23,40 @@
           <label for="content">Content</label>
           <textarea
             formControlName="content"
-            class="u-full-width" 
+            class="u-full-width"
             id="content">
           </textarea>
         </div>
-        
+
       </div>
       <input class="button-primary" type="submit" value="Send Post">
     </form>
   </main>
+
+  <hr>
+  <section>
+    <h3>Fetched Posts</h3>
+    <ng-container *ngIf="posts.length > 1; then withPosts; else noPosts"></ng-container>
+
+    <!-- No Posts -->
+    <ng-template #noPosts>
+      <div>
+        <h3>Sorry, there are no posts yet!</h3>
+        <p>Try creating one!</p>
+      </div>
+    </ng-template>
+
+    <!-- With Posts-->
+    <ng-template #withPosts>
+      <div class="post row" *ngFor="let post of posts">
+        <div class="nine columns">
+          <h5>{{post.title}}</h5>
+          <p>{{post.content}}</p>
+        </div>
+        <div class="three columns u-pull-right trash"></div>
+      </div>
+    </ng-template>
+  </section>
+
 </div>
+
