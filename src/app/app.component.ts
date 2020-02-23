@@ -4,6 +4,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import {map} from 'rxjs/operators';
 
 interface Post {
+  id?: string ;
   title: string;
   content: string;
 }
@@ -33,9 +34,10 @@ export class AppComponent implements OnInit {
 
   public onSubmitHandle(): void {
 
-    this.httpClient.post(this.FIREBASE_URL + '/posts.json', this.sampleForm.value)
-      .subscribe((resp: string) => {
-        console.log(resp.toLocaleUpperCase());
+    this.httpClient
+      .post<{name: string}>(this.FIREBASE_URL + '/posts.json', this.sampleForm.value)
+      .subscribe((resp) => {
+        console.log(resp.name);
       });
   }
 
@@ -46,22 +48,21 @@ export class AppComponent implements OnInit {
   // UTILS
   private fetchPosts(): void {
 
-    this.httpClient.get(`${this.FIREBASE_URL}/posts.json`)
+    this.httpClient
+      .get<Post[]>(`${this.FIREBASE_URL}/posts.json`)
       .pipe(
         map((respData) => {
          const postArray: Post[] = [];
 
-         for (const key in respData) {
-           if (respData.hasOwnProperty(key)) {
-             postArray.push({...respData[key], id: key});
-           }
+         for (const key of Object.keys(respData)) {
+           postArray.push({id: key, ...respData[key]});
          }
 
          return postArray;
         })
       )
       .subscribe(
-        (data: Post[]) => {
+        (data) => {
           this.posts = data;
 
           console.log(this.posts);
@@ -80,4 +81,8 @@ export class AppComponent implements OnInit {
 
 /**
  * To model/map our Data we could use Pipes, as seen, pipes transforms the data, and the Observables allow us to do this
+ */
+
+/*
+ * We can define the type of our Requests by passing a Generic to it
  */
