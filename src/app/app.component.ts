@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     this.fetchPosts();
   }
 
-  public onSubmitHandle(): void {
+  public onSubmitPostHandle(): void {
     const post: Post = {...this.sampleForm.value};
     this.postsService
       .savePosts(post)
@@ -35,6 +35,14 @@ export class AppComponent implements OnInit {
       }));
 
     this.sampleForm.reset();
+  }
+
+  public onDeletePostHandle(id: string) {
+    this.postsService.deletePostById(id)
+      .subscribe((post: Post) => {
+        console.log(post);
+        this.fetchPosts();
+      });
   }
 
   public onFetchPosts(): void {

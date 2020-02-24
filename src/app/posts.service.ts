@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
 })
 export class PostsService {
 
-  private readonly FIREBASE_URL = 'https://xenos-ng-firebase-project.firebaseio.com/';
+  private readonly FIREBASE_URL = 'https://xenos-ng-firebase-project.firebaseio.com';
 
   constructor(private http: HttpClient) { }
 
@@ -26,13 +26,20 @@ export class PostsService {
         map((respData) => {
           const postArray: Post[] = [];
 
-          for (const key of Object.keys(respData)) {
-            postArray.push({id: key, ...respData[key]});
+          if (respData !== null) {
+            for (const key of Object.keys(respData)) {
+              postArray.push({id: key, ...respData[key]});
+            }
           }
 
           return postArray;
         })
       );
+  }
+
+  deletePostById(id: string): Observable<any> {
+    return this.http
+      .delete(`${this.FIREBASE_URL}/posts/${id}.json`);
   }
 }
 

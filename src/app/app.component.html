@@ -6,7 +6,7 @@
 
   <main>
     <h3>Sample Request Form</h3>
-    <form [formGroup]="sampleForm" (ngSubmit)="onSubmitHandle()">
+    <form [formGroup]="sampleForm" (ngSubmit)="onSubmitPostHandle()">
       <div class="row">
 
         <div class="twelve columns">
@@ -42,7 +42,7 @@
         <button (click)="onClearPosts()" class="button" type="button">Clear Posts</button>
       </div>
     </div>
-    <ng-container *ngIf="posts.length > 1; then withPosts; else noPosts"></ng-container>
+    <ng-container *ngIf="posts.length > 0; then withPosts; else noPosts"></ng-container>
 
     <!-- No Posts -->
     <ng-template #noPosts>
@@ -59,7 +59,7 @@
           <h5>{{!isLoading ? post.title : ''}}</h5>
           <p>{{!isLoading ? post.content : ''}}</p>
         </div>
-        <div class="trash">{{!isLoading ? '&times;' : ''}}</div>
+        <i *ngIf="!isLoading" (click)="onDeletePostHandle(post.id)" class="far fa-trash-alt trash"></i>
       </div>
     </ng-template>
   </section>
