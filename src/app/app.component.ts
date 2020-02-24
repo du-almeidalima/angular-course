@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
 
   public sampleForm: FormGroup;
   public posts: Post[] = [];
+  public isLoading = false;
 
   constructor( private httpClient: HttpClient ) {}
 
@@ -41,33 +42,44 @@ export class AppComponent implements OnInit {
       });
   }
 
-  public onFecthPosts(): void {
+  public onFetchPosts(): void {
     this.fetchPosts();
+  }
+
+  public onClearPosts(): void {
+    this.posts = [];
   }
 
   // UTILS
   private fetchPosts(): void {
 
-    this.httpClient
-      .get<Post[]>(`${this.FIREBASE_URL}/posts.json`)
-      .pipe(
-        map((respData) => {
-         const postArray: Post[] = [];
+    this.isLoading = true;
 
-         for (const key of Object.keys(respData)) {
-           postArray.push({id: key, ...respData[key]});
-         }
+    // Simulating Delay
+    setTimeout(() => {
+      this.httpClient
+        .get<Post[]>(`${this.FIREBASE_URL}/posts.json`)
+        .pipe(
+          map((respData) => {
+            const postArray: Post[] = [];
 
-         return postArray;
-        })
-      )
-      .subscribe(
-        (data) => {
-          this.posts = data;
+            for (const key of Object.keys(respData)) {
+              postArray.push({id: key, ...respData[key]});
+            }
 
-          console.log(this.posts);
-        }
-      );
+            return postArray;
+          })
+        )
+        .subscribe(
+          (data) => {
+            this.posts = data;
+
+            console.log(this.posts);
+          }
+        );
+
+      this.isLoading = false;
+    }, 2500);
   }
 }
 

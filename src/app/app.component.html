@@ -35,25 +35,31 @@
 
   <hr>
   <section>
-    <h3>Fetched Posts</h3>
+    <div class="posts-header">
+      <h3>Fetched Posts</h3>
+      <div>
+        <button (click)="onFetchPosts()" class="button-primary" type="button" style="margin-right: 5px">Fetch Posts</button>
+        <button (click)="onClearPosts()" class="button" type="button">Clear Posts</button>
+      </div>
+    </div>
     <ng-container *ngIf="posts.length > 1; then withPosts; else noPosts"></ng-container>
 
     <!-- No Posts -->
     <ng-template #noPosts>
       <div>
-        <h3>Sorry, there are no posts yet!</h3>
+        <h5>Sorry, there are no posts yet!</h5>
         <p>Try creating one!</p>
       </div>
     </ng-template>
 
     <!-- With Posts-->
     <ng-template #withPosts>
-      <div class="post row" *ngFor="let post of posts">
-        <div class="nine columns">
-          <h5>{{post.title}}</h5>
-          <p>{{post.content}}</p>
+      <div class="post row" *ngFor="let post of posts" [ngClass]="isLoading ? 'skeleton-loading' : ''">
+        <div class="eleven columns">
+          <h5>{{!isLoading ? post.title : ''}}</h5>
+          <p>{{!isLoading ? post.content : ''}}</p>
         </div>
-        <div class="three columns u-pull-right trash"></div>
+        <div class="trash">{{!isLoading ? '&times;' : ''}}</div>
       </div>
     </ng-template>
   </section>
