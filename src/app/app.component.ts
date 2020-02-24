@@ -1,13 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import {map} from 'rxjs/operators';
-
-interface Post {
-  id?: string ;
-  title: string;
-  content: string;
-}
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
+import Post from './post.model';
+import {PostsService} from './posts.service';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +10,11 @@ interface Post {
 })
 export class AppComponent implements OnInit {
 
-  private readonly FIREBASE_URL = 'https://xenos-ng-firebase-project.firebaseio.com/';
-
   public sampleForm: FormGroup;
   public posts: Post[] = [];
   public isLoading = false;
 
-  constructor( private httpClient: HttpClient ) {}
+  constructor(private postsService: PostsService) {}
 
   ngOnInit(): void {
     this.sampleForm = new FormGroup({
@@ -34,12 +26,15 @@ export class AppComponent implements OnInit {
   }
 
   public onSubmitHandle(): void {
+    const post: Post = {...this.sampleForm.value};
+    this.postsService
+      .savePosts(post)
+      .subscribe((id => {
+        console.log(id);
+        this.fetchPosts();
+      }));
 
-    this.httpClient
-      .post<{name: string}>(this.FIREBASE_URL + '/posts.json', this.sampleForm.value)
-      .subscribe((resp) => {
-        console.log(resp.name);
-      });
+    this.sampleForm.reset();
   }
 
   public onFetchPosts(): void {
@@ -54,32 +49,11 @@ export class AppComponent implements OnInit {
   private fetchPosts(): void {
 
     this.isLoading = true;
-
-    // Simulating Delay
-    setTimeout(() => {
-      this.httpClient
-        .get<Post[]>(`${this.FIREBASE_URL}/posts.json`)
-        .pipe(
-          map((respData) => {
-            const postArray: Post[] = [];
-
-            for (const key of Object.keys(respData)) {
-              postArray.push({id: key, ...respData[key]});
-            }
-
-            return postArray;
-          })
-        )
-        .subscribe(
-          (data) => {
-            this.posts = data;
-
-            console.log(this.posts);
-          }
-        );
-
-      this.isLoading = false;
-    }, 2500);
+    this.postsService.getPosts()
+      .subscribe( (posts: Post[]) => {
+        this.posts = posts;
+        this.isLoading = false;
+      });
   }
 }
 
@@ -97,4 +71,8 @@ export class AppComponent implements OnInit {
 
 /*
  * We can define the type of our Requests by passing a Generic to it
+ */
+
+/*
+ * Now that we've seen how to use HttpClient, we should go for a better architecture, we moved the data and request logic to the service
  */
