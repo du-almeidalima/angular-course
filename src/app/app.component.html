@@ -42,13 +42,19 @@
         <button (click)="onClearPosts()" class="button" type="button">Clear Posts</button>
       </div>
     </div>
+
     <ng-container *ngIf="posts.length > 0; then withPosts; else noPosts"></ng-container>
 
     <!-- No Posts -->
     <ng-template #noPosts>
-      <div>
+      <div *ngIf="!error">
         <h5>Sorry, there are no posts yet!</h5>
         <p>Try creating one!</p>
+      </div>
+
+      <div *ngIf="error" class="error">
+        <h4>Whoops, an error occurred</h4>
+        <p>{{error.message}}</p>
       </div>
     </ng-template>
 

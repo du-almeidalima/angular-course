@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   public sampleForm: FormGroup;
   public posts: Post[] = [];
   public isLoading = false;
+  public error = null;
 
   constructor(private postsService: PostsService) {}
 
@@ -58,10 +59,17 @@ export class AppComponent implements OnInit {
 
     this.isLoading = true;
     this.postsService.getPosts()
-      .subscribe( (posts: Post[]) => {
+      .subscribe(
+        // "next"
+        (posts: Post[]) => {
         this.posts = posts;
         this.isLoading = false;
-      });
+      },
+        // "error"
+        error => {
+          console.log(error);
+          this.error = error;
+        });
   }
 }
 
@@ -83,4 +91,12 @@ export class AppComponent implements OnInit {
 
 /*
  * Now that we've seen how to use HttpClient, we should go for a better architecture, we moved the data and request logic to the service
+ */
+
+/*
+ * Error handling
+ * For catching errors in our HttpClient calls we could use the "error" parameter of Observables
+ * Remember that observables have three properties:
+ *  "next, error, complete"
+ * So if one error occur, we can get it by assigning a second function as a parameter. Though this is ok, it's not the only alternative
  */
