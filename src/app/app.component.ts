@@ -1,23 +1,33 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import Post from './post.model';
 import {PostsService} from './posts.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   public sampleForm: FormGroup;
   public posts: Post[] = [];
   public isLoading = false;
+
   public error = null;
+  public errorSubscription: Subscription;
 
   constructor(private postsService: PostsService) {}
 
   ngOnInit(): void {
+    // Subscribing for Error notifications
+    this.errorSubscription = this.postsService.error.subscribe(err => {
+      console.log(err);
+      this.error = err;
+    });
+
+    // Creating the form
     this.sampleForm = new FormGroup({
       title: new FormControl(null),
       content: new FormControl(null)
@@ -26,14 +36,14 @@ export class AppComponent implements OnInit {
     this.fetchPosts();
   }
 
+  ngOnDestroy(): void {
+    this.errorSubscription.unsubscribe();
+  }
+
   public onSubmitPostHandle(): void {
     const post: Post = {...this.sampleForm.value};
-    this.postsService
-      .savePosts(post)
-      .subscribe((id => {
-        console.log(id);
-        this.fetchPosts();
-      }));
+    // Using bind here to execute this on postsService
+    this.postsService.savePosts(post, this.fetchPosts.bind(this));
 
     this.sampleForm.reset();
   }

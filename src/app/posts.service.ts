@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import Post from './post.model';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +11,28 @@ export class PostsService {
 
   private readonly FIREBASE_URL = 'https://xenos-ng-firebase-project.firebaseio.com';
 
+  // Creating Subject for error notifying
+  public error = new Subject<string>();
+
   constructor(private http: HttpClient) { }
 
-  savePosts(post: Post): Observable<{name: string}> {
-    return this.http
-      .post<{name: string}>(this.FIREBASE_URL + '/posts.json', post);
+  savePosts(post: Post, callback: any): void {
+    // HttpClient methods return a Observable, so we could use the "error" parameter to notify the error
+    this.http
+      .post<{name: string}>(this.FIREBASE_URL + '/posts.json', post)
+      .subscribe(
+        // Next
+        id => {
+          console.log(id);
+
+          if (callback) {
+            callback();
+          }
+        },
+        // Error
+        error => {
+          this.error.next(error);
+        });
   }
 
   getPosts(): Observable<Post[]> {
@@ -57,4 +74,10 @@ export class PostsService {
 
 /*
  * We can define the type of our Requests by passing a Generic to it
+ */
+
+/*
+ * Error handling with Subscribe
+ * Imagine if we wanted more things interested in the error when it happens, for example, multiple components or other services.
+ * We could use for that, a Subscribe to notify those interested in the error.
  */
