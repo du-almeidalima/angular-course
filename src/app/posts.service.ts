@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import Post from './post.model';
-import {Observable, Subject} from 'rxjs';
+import {Observable, Subject, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +50,11 @@ export class PostsService {
           }
 
           return postArray;
+        }),
+        catchError(err => {
+          // Analytic stuff or assign to a error Subject
+          console.log('Inside catchError: ' + err);
+          return throwError(err);
         })
       );
   }
@@ -80,4 +85,9 @@ export class PostsService {
  * Error handling with Subscribe
  * Imagine if we wanted more things interested in the error when it happens, for example, multiple components or other services.
  * We could use for that, a Subscribe to notify those interested in the error.
+ */
+
+/* Error handling with catchError Operator
+ * If we wanted to do some analytics with this error we could use the "catchError" operator, and at the end, since the caller function
+ * is expecting a Observable we can call the method "throwError"
  */
