@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {catchError, map} from 'rxjs/operators';
+import {HttpClient, HttpEventType, HttpHeaders, HttpParams} from '@angular/common/http';
+import {catchError, map, tap} from 'rxjs/operators';
 import Post from './post.model';
 import {Observable, Subject, throwError} from 'rxjs';
 
@@ -19,11 +19,15 @@ export class PostsService {
   savePosts(post: Post, callback: any): void {
     // HttpClient methods return a Observable, so we could use the "error" parameter to notify the error
     this.http
-      .post<{name: string}>(this.FIREBASE_URL + '/posts.json', post)
+      .post<{name: string}>(
+        this.FIREBASE_URL + '/posts.json', post,
+        {
+          observe: 'response'
+        })
       .subscribe(
         // Next
-        id => {
-          console.log(id);
+        response => {
+          console.log(response);
 
           if (callback) {
             callback();
@@ -73,7 +77,29 @@ export class PostsService {
 
   deletePostById(id: string): Observable<any> {
     return this.http
-      .delete(`${this.FIREBASE_URL}/posts/${id}.json`);
+      .delete(
+        `${this.FIREBASE_URL}/posts/${id}.json`,
+        { observe: 'events'}
+      )
+      .pipe(
+        tap( event => {
+          // Filtering the events
+          switch (event.type) {
+            case HttpEventType.Response:
+              console.log(`Type ${event.type}(response): ${event.body}`);
+              break;
+
+            case HttpEventType.Sent:
+              console.log(`Type ${event.type}(sent)`);
+              break;
+
+            default:
+              console.log('Other type');
+              break;
+          }
+        })
+      )
+    ;
   }
 }
 
@@ -106,7 +132,7 @@ export class PostsService {
 
 /*
  * == OPTIONS ==
- * Headers
+ * -- Headers
  *
  * To set a header for a HTTP method, all we need to do is pass a second/third (depends on method) parameter to the HttpClient method
  * in this object we can set lots of things, one is the header.
@@ -114,7 +140,22 @@ export class PostsService {
  *         headers: new HttpHeaders({'Custom-Header': 'Hey'})
  *    }
  *
- * Query Params
+ * -- Query Params
  *
  * Similar to Headers, we can add a Query Params in the "options" object
+ *
+ * -- Observing Different Types of Responses
+ *
+ * By default, HttpClient will parse the response to body and only give the result to us, if we need more than that, such as status code,
+ * response headers... We can pass the "observe" property into the "options" object and set what we want to receive.
+ *    {
+ *      ...
+ *      observe: 'response | body | events'
+ *    }
+ */
+
+/*
+ * TIP
+ *
+ * If we want to do something with a response from HttpClient but not alter it, we can use the "Tap" Pipe, as in delete method
  */
