@@ -51,7 +51,8 @@ export class PostsService {
         `${this.FIREBASE_URL}/posts.json`,
         {
           headers: new HttpHeaders({'Custom-Header': 'Hey'}),
-          params: queryParams
+          params: queryParams,
+          responseType: 'json'
         }
       )
       .pipe(
@@ -152,6 +153,12 @@ export class PostsService {
  *      ...
  *      observe: 'response | body | events'
  *    }
+ *
+ * -- Response Body Type
+ * The default body response type is json, but we can change to other types by passing the "responseType" property in "options" for example:
+ *  - text
+ *  - blob
+ *  - array
  */
 
 /*
