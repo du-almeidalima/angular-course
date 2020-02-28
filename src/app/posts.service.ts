@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import Post from './post.model';
 import {Observable, Subject, throwError} from 'rxjs';
@@ -36,12 +36,18 @@ export class PostsService {
   }
 
   getPosts(): Observable<Post[]> {
+    // Multiple Query Params
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append('print', 'pretty');
+    queryParams = queryParams.append('custom', 'param');
+
     // Simulating Delay
     return this.http
       .get<Post[]>(
         `${this.FIREBASE_URL}/posts.json`,
         {
-          headers: new HttpHeaders({'Custom-Header': 'Hey'})
+          headers: new HttpHeaders({'Custom-Header': 'Hey'}),
+          params: queryParams
         }
       )
       .pipe(
@@ -99,11 +105,16 @@ export class PostsService {
  */
 
 /*
+ * == OPTIONS ==
  * Headers
  *
  * To set a header for a HTTP method, all we need to do is pass a second/third (depends on method) parameter to the HttpClient method
  * in this object we can set lots of things, one is the header.
  *    {
-          headers: new HttpHeaders({'Custom-Header': 'Hey'})
-      }
+ *         headers: new HttpHeaders({'Custom-Header': 'Hey'})
+ *    }
+ *
+ * Query Params
+ *
+ * Similar to Headers, we can add a Query Params in the "options" object
  */
