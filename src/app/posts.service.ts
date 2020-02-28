@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import Post from './post.model';
 import {Observable, Subject, throwError} from 'rxjs';
@@ -38,7 +38,12 @@ export class PostsService {
   getPosts(): Observable<Post[]> {
     // Simulating Delay
     return this.http
-      .get<Post[]>(`${this.FIREBASE_URL}/posts.json`)
+      .get<Post[]>(
+        `${this.FIREBASE_URL}/posts.json`,
+        {
+          headers: new HttpHeaders({'Custom-Header': 'Hey'})
+        }
+      )
       .pipe(
         map((respData) => {
           const postArray: Post[] = [];
@@ -56,7 +61,8 @@ export class PostsService {
           console.log('Inside catchError: ' + err);
           return throwError(err);
         })
-      );
+      )
+    ;
   }
 
   deletePostById(id: string): Observable<any> {
@@ -90,4 +96,14 @@ export class PostsService {
 /* Error handling with catchError Operator
  * If we wanted to do some analytics with this error we could use the "catchError" operator, and at the end, since the caller function
  * is expecting a Observable we can call the method "throwError"
+ */
+
+/*
+ * Headers
+ *
+ * To set a header for a HTTP method, all we need to do is pass a second/third (depends on method) parameter to the HttpClient method
+ * in this object we can set lots of things, one is the header.
+ *    {
+          headers: new HttpHeaders({'Custom-Header': 'Hey'})
+      }
  */
