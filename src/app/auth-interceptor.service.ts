@@ -1,18 +1,41 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {HttpEvent, HttpEventType, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+
+const consoleCss = `
+  border: 1px solid blue;
+  border-radius: 5px;
+  padding: 3px;
+  color: black;
+  background-color: darkgray;
+`;
+
+const log = word => {
+  const parsedWord = '%c' + word;
+  console.log(parsedWord, consoleCss);
+};
 
 export default class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // In here, we can do all sort of things, like check the URL and block the request, and so on...
-    console.log('Original Request: ' + req);
-    console.log('Request is on its way');
+    log('AUTH_INTERCEPTOR >> Entered Interceotir');
 
     // Appending a new header
     const modifiedRequest = req.clone({headers: req.headers.append('Auth-Token', 'someCrazy123Value')});
 
-    // Sending the modified request
-    return next.handle(modifiedRequest);
+    // Sending the modified request and tapping the Response
+    return next.handle(modifiedRequest)
+      .pipe(
+        tap(event => {
+          log('AUTH_INTERCEPTOR >> Request Intercepted');
+
+          if (event.type === HttpEventType.Response) {
+            log('AUTH_INTERCEPTOR >> Response Intercepted: ');
+            console.log(event.body);
+          }
+        })
+      );
   }
 }
 
@@ -41,4 +64,13 @@ export default class AuthInterceptorService implements HttpInterceptor {
  * Manipulating Request Objects
  *
  * The original req is immutable, but we can clone and change the clone how we want.
+ */
+
+/*
+ * Response Interceptors
+ *
+ * If we wanted to do something with the response of this interceptor, we could actually call .pipe() on it, because in the end, the return
+ * from .handle is an Observable.
+ *
+ * No that, we'll always receive the "event" object from this request, not the "body" neither "response", so we have all the data possible.
  */
