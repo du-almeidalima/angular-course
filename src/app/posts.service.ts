@@ -162,6 +162,13 @@ export class PostsService {
  */
 
 /*
+ * == INTERCEPTORS ==
+ *
+ * Imagine that we wanted to add a certain header to all our request, a common header, for example, authentication header.
+ * For that, we use Interceptors. go to auth-interceptor.service.js.
+ */
+
+/*
  * TIP
  *
  * If we want to do something with a response from HttpClient but not alter it, we can use the "Tap" Pipe, as in delete method
