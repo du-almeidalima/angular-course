@@ -1,25 +1,13 @@
 import {HttpEvent, HttpEventType, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
-
-const consoleCss = `
-  border: 1px solid blue;
-  border-radius: 5px;
-  padding: 3px;
-  color: black;
-  background-color: darkgray;
-`;
-
-const log = word => {
-  const parsedWord = '%c' + word;
-  console.log(parsedWord, consoleCss);
-};
+import log from './common/help';
 
 export default class AuthInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // In here, we can do all sort of things, like check the URL and block the request, and so on...
-    log('AUTH_INTERCEPTOR >> Entered Interceotir');
+    log('AUTH_INTERCEPTOR >> Entered Interceptor', 'lightgray');
 
     // Appending a new header
     const modifiedRequest = req.clone({headers: req.headers.append('Auth-Token', 'someCrazy123Value')});
@@ -28,10 +16,10 @@ export default class AuthInterceptorService implements HttpInterceptor {
     return next.handle(modifiedRequest)
       .pipe(
         tap(event => {
-          log('AUTH_INTERCEPTOR >> Request Intercepted');
+          log('AUTH_INTERCEPTOR >> Request Intercepted', 'lightgray');
 
           if (event.type === HttpEventType.Response) {
-            log('AUTH_INTERCEPTOR >> Response Intercepted: ');
+            log('AUTH_INTERCEPTOR >> Response Intercepted: ', 'lightgray');
             console.log(event.body);
           }
         })
