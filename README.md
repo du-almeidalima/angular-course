@@ -1,8 +1,11 @@
-# Section 18: Making Http Requests
+# Cooking App
 
-In this module we'll look on how Angular handles HTTP Requests to backend.
-For a Backend We're using [Firebase](https://firebase.google.com/).
+This is the repository for the course project <b> Cooking App </b> from Section 3.
 
+You can check it out [here](https://xenosgrilda.github.io/angular-8-course/home).
+
+## App Planning
+![App Diagram](./app-planning.png?raw=true "App Diagram")
 ## Sections
 
 The course sections / lessons will be organized as commits, for instance:
@@ -15,9 +18,30 @@ The Section 2: The Basics will be
   "[section number and name]"
 ```
 
-## Built With
-* [Angular](https://angular.io/docs) - 9
-* [Skeleton CSS](http://getskeleton.com/) - 2.0.4
+## Bootstrap
+
+#### Installation
+Bootstrap 4.3.1 was installed in this project through npm with the command: 
+```
+npm install --save bootstrap
+```
+
+Also, for using bootstrap js utilities: 
+```
+npm install --save jquery popper.js
+```
+#### Configuration
+In order
+to Angular recognizes it, we need to specify it into 'angular.json' file:
+
+```
+"styles": [
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "src/styles.css"
+]
+```
+
+Bootstrap JS was removed so our custom JS could be implemented, for academic reasons
 
 ## Authors
 

@@ -1,0 +1,59 @@
+/* You can add global styles to this file, and also import other style files */
+.clickable{
+  background-color: initial;
+  transition: background-color 0.4s;
+}
+
+.clickable:hover{
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.05);
+
+  transition: background-color 0.4s;
+}
+
+.hover:hover{
+  transition: 200ms background-color linear;
+  background-color: rgba(213, 213, 213, 0.6);
+}
+
+.app-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.app-tooltip .app-tooltip-text {
+  visibility: hidden;
+  width: 250px;
+  background-color: #282828;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.app-tooltip .app-tooltip-text::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+
+.app-tooltip:hover > *[disabled] + .app-tooltip-text {
+  visibility: visible;
+}
+
+.app-round-btn {
+  padding: 0 !important;
+  border-radius: 50% !important;
+  height: 2rem;
+  width: 2rem;
+}
