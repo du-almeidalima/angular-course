@@ -65,9 +65,14 @@ export class RecipeService {
         this.recipes.push(recipe);
       }
 
-      this._recipesSubject.next(this.recipes);
+      this._recipesSubject.next(this.recipes.slice());
       return recipe;
     }
+  }
+
+  public saveRecipes(recipeList: RecipeModel[]) {
+    this.recipes = recipeList;
+    this._recipesSubject.next(this.recipes.slice());
   }
 
   public removeRecipeById(id: number): RecipeModel {
@@ -75,7 +80,7 @@ export class RecipeService {
 
     if (index > -1) {
       const deletedRecipe = this.recipes.splice(index, 1)[0];
-      this._recipesSubject.next(this.recipes);
+      this._recipesSubject.next(this.recipes.slice());
 
       return deletedRecipe;
     } else {

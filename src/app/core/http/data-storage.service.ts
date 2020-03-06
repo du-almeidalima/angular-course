@@ -4,7 +4,7 @@ import {RecipeService} from "../services/recipe.service";
 import {RecipeModel} from "../../recipes/recipe.model";
 
 /*
- * This class is responsible for making http calls to Firebase api
+ * This class is responsible for making http calls to Firebase API.
  */
 
 @Injectable({providedIn: "root"})
@@ -13,6 +13,10 @@ export default class DataStorageService {
 
   constructor( private http: HttpClient, private recipeService: RecipeService) {}
 
+  /**
+   * Save the Recipes from RecipeServe state int Firebase Database API using a PUT HTTP verb.
+   * This will overwrite the previous stored Recipes.
+   */
   public saveRecipes():any{
     const recipes = this.recipeService.getRecipes();
 
@@ -20,6 +24,16 @@ export default class DataStorageService {
       .subscribe((recipeList: RecipeModel[]) => {
         console.log(recipeList)
       });
+  }
+
+  /**
+   * Fetch Recipes from API and replace the them in RecipeService state.
+   */
+  public getRecipes(): any {
+    return this.http.get<RecipeModel[]>(this.MY_LISTS_URL+'.json')
+      .subscribe((recipeList:RecipeModel[]) => {
+        this.recipeService.saveRecipes(recipeList);
+      })
   }
 }
 
