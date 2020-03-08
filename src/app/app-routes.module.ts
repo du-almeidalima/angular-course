@@ -5,9 +5,9 @@ import {RecipesComponent} from "./recipes/recipes.component";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {HomeComponent} from "./home/home.component";
 import {RecipeDetailComponent} from "./recipes/recipe-detail/recipe-detail.component";
-import {RecipeResolver} from "./core/services/recipe-resolver.service";
 import {NoRecipeComponent} from "./recipes/no-recipe/no-recipe.component";
 import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
+import {RecipeListResolver} from "./core/services/recipes/recipe-list-resolver.service";
 
 // Defining our routes
 const ROUTES: Routes = [
@@ -19,10 +19,11 @@ const ROUTES: Routes = [
       { path: '', component: NoRecipeComponent },
       // We'll use the same component to create and edit a Recipe
       { path: 'create', component: RecipeEditComponent },
-      { path: ':id/edit', component: RecipeEditComponent },
+      { path: ':id/edit', component: RecipeEditComponent, resolve: [RecipeListResolver] },
       // It's important to leave the routes with dynamic values to last, otherwise Angular will try to parse other
       // paths into this value e.g. "create" would become the id
-      { path: ':id', component: RecipeDetailComponent, resolve: { recipe: RecipeResolver } }
+      // { path: ':id', component: RecipeDetailComponent, resolve: { recipe: RecipeResolver } },
+      { path: ':id', component: RecipeDetailComponent, resolve: [RecipeListResolver]}
     ]
   },
 

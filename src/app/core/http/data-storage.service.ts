@@ -1,7 +1,9 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {RecipeService} from "../services/recipe.service";
+import {RecipeService} from "../services/recipes/recipe.service";
 import {RecipeModel} from "../../recipes/recipe.model";
+import {map, tap} from "rxjs/operators";
+import {Observable} from "rxjs";
 
 /*
  * This class is responsible for making http calls to Firebase API.
@@ -29,14 +31,30 @@ export default class DataStorageService {
   /**
    * Fetch Recipes from API and replace the them in RecipeService state.
    */
-  public getRecipes(): any {
-    return this.http.get<RecipeModel[]>(this.MY_LISTS_URL+'.json')
-      .subscribe((recipeList:RecipeModel[]) => {
-        this.recipeService.saveRecipes(recipeList);
-      })
+  public getRecipes(): Observable<RecipeModel[]> {
+    return this.http
+      .get<RecipeModel[]>(this.MY_LISTS_URL+'.json')
+
+      .pipe(
+        map((recipes: RecipeModel[]) => {
+          return recipes.map(recipe => {
+            return {
+              ...recipe,
+              ingredients: recipe.ingredients ? recipe.ingredients : []
+            }
+          })
+        }),
+        tap((recipes: RecipeModel[]) => {
+          this.recipeService.saveRecipes(recipes);
+        })
+      )
   }
 }
 
 /*
  * For saving all recipes and overwrite the previous in Firebase we need to use the PUT Http verb
+ */
+/*
+ * I'm using the "pipe(map()...)" on getRecipes method in order to prevent recipes with no ingredients to don't have
+ * a "ingredients[]" property
  */

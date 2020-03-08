@@ -1,20 +1,20 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {RecipeModel} from "../recipe.model";
 import {ShoppingListService} from "../../core/services/shopping-list.service";
-import {ActivatedRoute, Data, Router} from "@angular/router";
+import {ActivatedRoute, Data, Params, Router} from "@angular/router";
 import {Subscription} from "rxjs";
-import {RecipeService} from "../../core/services/recipe.service";
+import {RecipeService} from "../../core/services/recipes/recipe.service";
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css']
 })
-export class RecipeDetailComponent implements OnInit, OnDestroy {
+export class RecipeDetailComponent implements OnInit {
 
   // Properties
   public currentRecipe: RecipeModel;
-  private recipeSubscription: Subscription;
+
   constructor(private shoppingListService: ShoppingListService,
               private recipeService: RecipeService,
               private route: ActivatedRoute,
@@ -22,16 +22,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // For changes in the current component
-    this.recipeSubscription = this.route.data.subscribe(
-      (data: Data) => {
-        this.currentRecipe = data.recipe;
-      }
-    )
-  }
-
-  ngOnDestroy(): void {
-    // This is not necessary for Angular Observables, but for custom it's
-    this.recipeSubscription.unsubscribe();
+    this.route.params
+      .subscribe((params: Params) => {
+        const recipeId = +params.id;
+        this.currentRecipe = this.recipeService.getRecipeById(recipeId)
+      })
   }
 
   // Methods

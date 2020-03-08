@@ -1,37 +1,13 @@
 import {Injectable} from '@angular/core';
-import {RecipeModel} from '../../recipes/recipe.model';
-import {Ingredient} from '../../shared/models/ingredient.model';
+import {RecipeModel} from '../../../recipes/recipe.model';
 import {Observable, Subject} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class RecipeService {
   private readonly _recipesSubject = new Subject<RecipeModel[]>();
-  private recipes: RecipeModel[] = [
+  private recipes: RecipeModel[] = [];
 
-    new RecipeModel(
-      1,
-      'Recipe 1',
-      'This is just a recipe test',
-      'https://www.bbcgoodfood.com/sites/default/files/recipe-collections/collection-image/2013/05/crab-asparagus-pappardelle.jpg',
-      [
-        new Ingredient('Macaroni', 2),
-        new Ingredient('Legume', 1),
-        new Ingredient('Peas', 3),
-        new Ingredient('Cheese', 1)]
-    ),
-
-    new RecipeModel(
-      2,
-      'Recipe 2',
-      'This is just another recipe test',
-      'https://upload.wikimedia.org/wikipedia/commons/3/39/Recipe.jpg',
-      [
-        new Ingredient('Avocado', 2),
-        new Ingredient('Pumpkin ', 1),
-        new Ingredient('Tomato', 3),
-        new Ingredient('Beans', 1)]
-    )
-  ];
+  public haveFetched = false;
 
   public get recipesObservable(): Observable<RecipeModel[]> {
     return this._recipesSubject.asObservable();

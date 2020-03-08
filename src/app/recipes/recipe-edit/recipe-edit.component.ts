@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {RecipeService} from '../../core/services/recipe.service';
+import {RecipeService} from '../../core/services/recipes/recipe.service';
 import {RecipeModel} from '../recipe.model';
 // @ts-ignore
 import FOOD_PLACEHOLDER from '../../../assets/img/food-placeholder.jpg';
@@ -101,10 +101,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   private navigateBack(id?: number): void {
-    const url: any[] = ['../'];
-
-    id ? url.push(id) : null;
-    this.router.navigate(url, {relativeTo: this.route});
+    this.router.navigate(['recipes', id])
   }
 }
 

@@ -14,6 +14,7 @@ export class HeaderComponent {
   }
 
   public onFetchData(): void {
-    console.log(this.dataStorageService.getRecipes())
+    this.dataStorageService.getRecipes()
+      .subscribe()
   }
 }
