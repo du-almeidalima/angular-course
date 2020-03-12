@@ -37,7 +37,7 @@ to Angular recognizes it, we need to specify it into 'angular.json' file:
 ```
 "styles": [
   "node_modules/bootstrap/dist/css/bootstrap.min.css",
-  "src/styles.css"
+  "src/styles.scss"
 ]
 ```
 

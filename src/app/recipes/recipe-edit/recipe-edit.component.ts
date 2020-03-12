@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RecipeService} from '../../core/services/recipes/recipe.service';
-import {RecipeModel} from '../recipe.model';
+import {RecipeModel} from '../../shared/models/recipe.model';
 // @ts-ignore
 import FOOD_PLACEHOLDER from '../../../assets/img/food-placeholder.jpg';
 import {Ingredient} from '../../shared/models/ingredient.model';
@@ -10,7 +10,7 @@ import {Ingredient} from '../../shared/models/ingredient.model';
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.css']
+  styleUrls: ['./recipe-edit.component.scss']
 })
 export class RecipeEditComponent implements OnInit {
 

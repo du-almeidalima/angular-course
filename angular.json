@@ -24,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/scss/styles.scss"
             ],
             "scripts": [],
             "es5BrowserSupport": true
@@ -85,7 +85,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
-              "src/styles.css"
+              "src/assets/scss/styles.scss"
             ],
             "scripts": [],
             "assets": [
@@ -140,5 +140,10 @@
   "defaultProject": "cooking-app",
   "cli": {
     "analytics": "d2815209-04dd-46cb-bd27-a1b8bcb40d8c"
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
   }
 }

@@ -17,10 +17,12 @@ import {NoRecipeComponent} from './recipes/no-recipe/no-recipe.component';
 import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import { ControlMessagesComponent } from './shared/components/control-messages/control-messages.component';
 import {HttpClientModule} from "@angular/common/http";
+import {AuthComponent} from "./core/auth/auth.component";
 
 @NgModule({
   declarations: [
     AppComponent,
+    AuthComponent,
     HeaderComponent,
     RecipesComponent,
     RecipesListComponent,

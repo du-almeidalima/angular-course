@@ -1,4 +1,4 @@
-import {Ingredient} from '../shared/models/ingredient.model';
+import {Ingredient} from './ingredient.model';
 
 export class RecipeModel {
 
