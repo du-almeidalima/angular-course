@@ -1,12 +1,12 @@
 import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {RecipeModel} from "../../recipe.model";
+import {RecipeModel} from '../../../shared/models/recipe.model';
 // @ts-ignore
 import FOOD_PLACEHOLDER from '../../../../assets/img/food-placeholder.jpg';
 
 @Component({
   selector: 'app-recipe-item',
   templateUrl: './recipe-item.component.html',
-  styleUrls: ['./recipe-item.component.css']
+  styleUrls: ['./recipe-item.component.scss']
 })
 export class RecipeItemComponent implements OnInit {
 

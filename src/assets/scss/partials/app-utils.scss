@@ -1,0 +1,25 @@
+@import "../theme/theme";
+
+.clickable{
+  background-color: initial;
+  transition: background-color 0.3s;
+
+  &:hover{
+    cursor: pointer;
+    background-color: $gray-200;
+
+    transition: background-color 0.3s;
+  }
+}
+
+.hover:hover{
+  transition: 0.3s background-color linear;
+  background-color: $gray-200
+}
+
+.app-round-btn {
+  padding: 0 !important;
+  border-radius: 50% !important;
+  height: 2rem;
+  width: 2rem;
+}

@@ -1,14 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {RecipeModel} from "../recipe.model";
-import {ShoppingListService} from "../../core/services/shopping-list.service";
-import {ActivatedRoute, Data, Params, Router} from "@angular/router";
-import {Subscription} from "rxjs";
-import {RecipeService} from "../../core/services/recipes/recipe.service";
+import {RecipeModel} from '../../shared/models/recipe.model';
+import {ShoppingListService} from '../../core/services/shopping-list.service';
+import {ActivatedRoute, Data, Params, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {RecipeService} from '../../core/services/recipes/recipe.service';
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
-  styleUrls: ['./recipe-detail.component.css']
+  styleUrls: ['./recipe-detail.component.scss']
 })
 export class RecipeDetailComponent implements OnInit {
 

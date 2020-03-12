@@ -1,13 +1,12 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Ingredient} from '../../shared/models/ingredient.model';
 import {ShoppingListService} from '../../core/services/shopping-list.service';
-import {NgForm} from "@angular/forms";
-import {Subscription} from "rxjs";
+import {NgForm} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-shopping-edit',
-  templateUrl: './shopping-edit.component.html',
-  styleUrls: ['./shopping-edit.component.css']
+  templateUrl: './shopping-edit.component.html'
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy {
   // Used to edit
