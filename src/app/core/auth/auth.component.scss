@@ -1,0 +1,56 @@
+@import "src/assets/scss/theme/theme";
+
+$padding-left: 5px;
+
+.app-login-form {
+  width: 90%;
+  padding: 20px 30px;
+
+  .app-input-control {
+    position: relative;
+    width: 100%;
+
+    .app-login-input {
+      display: block;
+      width: 100%;
+      outline: none;
+      padding: 8px 0 8px $padding-left;
+      border: none;
+      border-bottom: 1px solid $gray-300;
+
+      &:focus + .app-login-label {
+        transform: translateY(-35px);
+      }
+      &:not(:placeholder-shown) + .app-login-label{
+        transform: translateY(-35px);
+      }
+
+      &:focus ~ .app-login-active-line, &:active ~ .app-login-active-line{
+        width: 100%;
+      }
+    }
+
+    .app-login-label {
+      position: absolute;
+      bottom: 0;
+      left: $padding-left;
+      transition: 0.2s all ease-out;
+    }
+
+    .app-login-active-line {
+      position: absolute;
+      left: 0;
+      width: 0;
+      height: 2px;
+
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      -moz-transition: all 0.4s;
+      transition: all 0.4s;
+      background: -webkit-linear-gradient(left, $secondary);
+      background: -o-linear-gradient(left, $secondary);
+      background: -moz-linear-gradient(left, $secondary);
+      background: linear-gradient(left, $secondary);
+    }
+  }
+}
