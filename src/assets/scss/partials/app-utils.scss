@@ -17,9 +17,7 @@
   background-color: $gray-200
 }
 
-.app-round-btn {
-  padding: 0 !important;
-  border-radius: 50% !important;
-  height: 2rem;
-  width: 2rem;
+.center-content{
+  margin-left: 50%;
+  transform: translateX(-50%);
 }
