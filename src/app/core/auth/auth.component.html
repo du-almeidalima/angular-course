@@ -1,21 +1,48 @@
-<div class="app-login-form center-content shadow rounded">
-  <h1 class="text-center font-weight-bold">Welcome</h1>
-  <img class="center-content" src="assets/img/brand-icon.png" alt="logo">
-  <div class="mt-5">
-    <form>
-      <div class="app-input-control">
-        <input class="app-login-input" type="email" id="email" placeholder="&nbsp;"/>
-        <label class="app-login-label" for="email">Email</label>
-        <span class="app-login-active-line"></span>
-      </div>
+<div class="row">
+  <div class="app-login-form center-content shadow rounded col-10 col-lg-6">
+    <h1 class="text-center font-weight-bold">Welcome</h1>
+    <img class="center-content" src="./assets/img/brand-icon.png" alt="logo">
+    <div class="mt-5">
+      <form #f="ngForm" (ngSubmit)="handleFormSubmission(f)">
+        <div class="app-input-control">
+          <input
+            ngModel
+            name="email"
+            email
+            required
+            class="app-login-input"
+            type="email"
+            id="email"
+            placeholder="&nbsp;"/>
+          <label class="app-login-label" for="email">Email</label>
+          <span class="app-login-active-line"></span>
+        </div>
 
-      <div class="app-input-control mt-5">
-        <input class="app-login-input" type="password" id="password" placeholder="&nbsp;">
-        <label class="app-login-label" for="password">Password</label>
-        <span class="app-login-active-line"></span>
-      </div>
+        <div class="app-input-control mt-5">
+          <input
+            ngModel
+            name="password"
+            required
+            minlength='6'
+            class="app-login-input"
+            type="password"
+            id="password"
+            placeholder="&nbsp;">
+          <label class="app-login-label" for="password">Password</label>
+          <span class="app-login-active-line"></span>
+        </div>
 
-      <button class="btn btn-block btn-secondary mt-5">Log In</button>
-    </form>
+        <button
+          [disabled]="f.invalid"
+          [ngClass]="{'disabled': f.invalid}"
+          type="submit"
+          class="btn btn-block btn-secondary mt-5">{{this.buttonMessage}}
+        </button>
+
+        <p class="lead font-weight-lighter small mt-3">{{this.footerMessage[0]}}
+          <button class="btn btn-link font-weight-lighter font-100" (click)="changePage()">{{this.footerMessage[1]}}</button>
+        </p>
+      </form>
+    </div>
   </div>
 </div>

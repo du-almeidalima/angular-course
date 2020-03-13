@@ -3,7 +3,6 @@
 $padding-left: 5px;
 
 .app-login-form {
-  width: 90%;
   padding: 20px 30px;
 
   .app-input-control {
@@ -19,10 +18,12 @@ $padding-left: 5px;
       border-bottom: 1px solid $gray-300;
 
       &:focus + .app-login-label {
-        transform: translateY(-35px);
+        transform: translate(-0.40rem, -2.5rem) scale(0.75);
+        transform-origin: left;
       }
       &:not(:placeholder-shown) + .app-login-label{
-        transform: translateY(-35px);
+        transform: translate(-0.40rem, -2.5rem) scale(0.75);
+        transform-origin: left;
       }
 
       &:focus ~ .app-login-active-line, &:active ~ .app-login-active-line{
@@ -47,10 +48,10 @@ $padding-left: 5px;
       -o-transition: all 0.4s;
       -moz-transition: all 0.4s;
       transition: all 0.4s;
-      background: -webkit-linear-gradient(left, $secondary);
-      background: -o-linear-gradient(left, $secondary);
-      background: -moz-linear-gradient(left, $secondary);
-      background: linear-gradient(left, $secondary);
+      background: -webkit-linear-gradient($secondary);
+      background: -o-linear-gradient($secondary);
+      background: -moz-linear-gradient($secondary);
+      background: linear-gradient($secondary);
     }
   }
 }
