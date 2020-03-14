@@ -7,8 +7,6 @@ export class RecipeService {
   private readonly _recipesSubject = new Subject<RecipeModel[]>();
   private recipes: RecipeModel[] = [];
 
-  public haveFetched = false;
-
   public get recipesObservable(): Observable<RecipeModel[]> {
     return this._recipesSubject.asObservable();
   }
