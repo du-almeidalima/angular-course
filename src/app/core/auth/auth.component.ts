@@ -25,3 +25,12 @@ export class AuthComponent {
     console.log(form)
   }
 }
+
+/*
+ * == AUTHENTICATION ==
+ * This app authentication is managed by Firebase Authentication, it uses the "Email/Password" combination. When this is
+ * enabled, we can get access to Users/Authentication endpoints.
+ * More info (https://firebase.google.com/docs/reference/rest/auth)
+ *
+ *
+ */
