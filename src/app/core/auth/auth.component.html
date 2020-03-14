@@ -40,7 +40,11 @@
         </button>
 
         <p class="lead font-weight-lighter small mt-3">{{this.footerMessage[0]}}
-          <button class="btn btn-link font-weight-lighter font-100" (click)="changePage()">{{this.footerMessage[1]}}</button>
+          <button
+            (click)="changePage()"
+            type="button"
+            class="btn btn-link font-weight-lighter font-100">{{this.footerMessage[1]}}
+          </button>
         </p>
       </form>
     </div>

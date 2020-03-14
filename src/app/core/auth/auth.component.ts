@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
 import {NgForm} from "@angular/forms";
+import {AuthService} from "./auth.service";
 
 @Component({
   selector: 'app-auth',
@@ -7,22 +8,42 @@ import {NgForm} from "@angular/forms";
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent {
-  public isLoginPage = true;
+  public isLoginMode = true;
   public footerMessage: [string, string] = ['New here?', 'Create an account'];
   public buttonMessage: string = 'Log In';
 
+  constructor(private authService: AuthService) {}
+
   public changePage(): void {
-    this.isLoginPage = !this.isLoginPage;
-    this.footerMessage = this.isLoginPage ?
+    this.isLoginMode = !this.isLoginMode;
+    this.footerMessage = this.isLoginMode ?
       ['New here?', 'Create an account'] :
-      ['Already have an account?', 'Log in'];
-    this.buttonMessage = this.isLoginPage ?
-      'Sign up':
-      'Register'
+      ['Already have an account?', 'Sign in'];
+    this.buttonMessage = this.isLoginMode ?
+      'Sign in':
+      'Sign up'
   }
 
   public handleFormSubmission(form: NgForm): void {
-    console.log(form)
+    if (form.invalid) {
+      console.error('Form is invalid!');
+      return;
+    }
+    const {email, password} = form.value;
+
+    if (this.isLoginMode) {
+      //TODO: Implement Login
+    } else {
+      this.authService.signUp(email, password)
+        .subscribe(
+          data => {
+            console.log(data)
+          },
+          err => {
+            console.error(err)
+          }
+        )
+    }
   }
 }
 
