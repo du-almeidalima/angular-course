@@ -1,5 +1,9 @@
-<div class="row">
+<div class="row position-relative">
   <div class="app-login-form center-content shadow rounded col-10 col-lg-6">
+    <!-- Loading Spinner -->
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+
+    <!-- Login Form Content -->
     <h1 class="text-center font-weight-bold">Welcome</h1>
     <img class="center-content h-25" src="./assets/img/brand-icon.png" alt="logo">
     <div class="mt-4">
@@ -31,6 +35,11 @@
           <label class="app-login-label" for="password">Password</label>
           <span class="app-login-active-line"></span>
         </div>
+
+        <app-feedback-message *ngIf="feedbackMessage"
+          [message]="feedbackMessage"
+          (messageDismiss)="messageDismissHandler()">
+        </app-feedback-message>
 
         <button
           [disabled]="f.invalid"

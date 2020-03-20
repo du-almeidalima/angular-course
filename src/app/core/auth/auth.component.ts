@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "./auth.service";
+import {FeedbackMessage} from "../../shared/models/message-feedback";
+import {MessageSeverity} from "../../shared/enums/message-severity.enum";
 
 @Component({
   selector: 'app-auth',
@@ -9,8 +11,11 @@ import {AuthService} from "./auth.service";
 })
 export class AuthComponent {
   public isLoginMode = true;
+  public isLoading = false;
+
   public footerMessage: [string, string] = ['New here?', 'Create an account'];
   public buttonMessage: string = 'Log In';
+  public feedbackMessage: FeedbackMessage;
 
   constructor(private authService: AuthService) {}
 
@@ -34,16 +39,28 @@ export class AuthComponent {
     if (this.isLoginMode) {
       //TODO: Implement Login
     } else {
+      this.isLoading = true;
       this.authService.signUp(email, password)
         .subscribe(
           data => {
-            console.log(data)
+            console.log(data);
+            this.isLoading = false;
           },
           err => {
-            console.error(err)
+            console.error(err);
+
+            this.feedbackMessage = {
+              message: err.message,
+              severity: MessageSeverity.DANGER
+            };
+            this.isLoading = false;
           }
         )
     }
+  }
+
+  public messageDismissHandler(): void {
+    this.feedbackMessage = null;
   }
 }
 
