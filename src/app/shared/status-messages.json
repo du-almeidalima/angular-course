@@ -1,0 +1,7 @@
+[
+  {
+    "messageCode": "EMAIL_EXISTS",
+    "message": "This email exists already.",
+    "severity": "ERROR"
+  }
+]

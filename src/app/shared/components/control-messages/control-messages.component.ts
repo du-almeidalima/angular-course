@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import StatusMessages from '../../status-messages';
+import StatusMessage from '../../status-message';
 import {MessageStatus} from '../../enums/message-status.enum';
 import RecipeValidator from '../../recipe-validator';
 
@@ -72,7 +72,7 @@ export class ControlMessagesComponent implements OnInit, OnDestroy {
     }
   }
 
-  private mapMessage(statusMessage: StatusMessages) {
+  private mapMessage(statusMessage: StatusMessage) {
     // Checking if there is a message of this type
     if (this.messages.find( item => item.messageType === statusMessage.status )) {
       this.messages.find(item => item.messageType === statusMessage.status)

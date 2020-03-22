@@ -2,7 +2,8 @@ import {Component} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "./auth.service";
 import {FeedbackMessage} from "../../shared/models/message-feedback";
-import {MessageSeverity} from "../../shared/enums/message-severity.enum";
+import StatusMessage from "../../shared/status-message";
+import {MessageStatus} from "../../shared/enums/message-status.enum";
 
 @Component({
   selector: 'app-auth',
@@ -17,7 +18,8 @@ export class AuthComponent {
   public buttonMessage: string = 'Log In';
   public feedbackMessage: FeedbackMessage;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+  }
 
   public changePage(): void {
     this.isLoginMode = !this.isLoginMode;
@@ -25,7 +27,7 @@ export class AuthComponent {
       ['New here?', 'Create an account'] :
       ['Already have an account?', 'Sign in'];
     this.buttonMessage = this.isLoginMode ?
-      'Sign in':
+      'Sign in' :
       'Sign up'
   }
 
@@ -42,16 +44,18 @@ export class AuthComponent {
       this.isLoading = true;
       this.authService.signUp(email, password)
         .subscribe(
+          // Success
           data => {
             console.log(data);
             this.isLoading = false;
           },
-          err => {
+          // Error
+          (err: StatusMessage) => {
             console.error(err);
-
+            // Setting FeedBackMessage for FeedBackMessage component
             this.feedbackMessage = {
               message: err.message,
-              severity: MessageSeverity.DANGER
+              severity: MessageStatus.messageStatusToSeverity(err.status)
             };
             this.isLoading = false;
           }

@@ -18,6 +18,8 @@ import {RecipeEditComponent} from './recipes/recipe-edit/recipe-edit.component';
 import { ControlMessagesComponent } from './shared/components/control-messages/control-messages.component';
 import {HttpClientModule} from "@angular/common/http";
 import {AuthComponent} from "./core/auth/auth.component";
+import {SpinnerComponent} from "./shared/components/loading-spinner/loading-spinner.component";
+import {FeedbackMessageComponent} from "./shared/components/feedback-message/feedback-message.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import {AuthComponent} from "./core/auth/auth.component";
     HomeComponent,
     NoRecipeComponent,
     RecipeEditComponent,
-    ControlMessagesComponent
+    ControlMessagesComponent,
+    SpinnerComponent,
+    FeedbackMessageComponent
   ],
   imports: [
     BrowserModule,
