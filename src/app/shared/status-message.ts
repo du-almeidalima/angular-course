@@ -1,13 +1,13 @@
 import {MessageStatus} from "./enums/message-status.enum";
 
-export default class StatusMessages {
+export default class StatusMessage {
 
-  status: MessageStatus;
   message: string;
+  status: MessageStatus;
 
 
   constructor( message: string, status: MessageStatus) {
-    this.status = status;
     this.message = message;
+    this.status = status;
   }
 }
