@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import StatusMessage from "../status-message";
+import {StatusMessage} from "../status-message";
 import {MessageStatus} from "../enums/message-status.enum";
 
 // @ts-ignore

@@ -1,6 +1,6 @@
 import {MessageStatus} from "./enums/message-status.enum";
 
-export default class StatusMessage {
+export class StatusMessage {
 
   message: string;
   status: MessageStatus;

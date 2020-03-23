@@ -1,4 +1,4 @@
-import StatusMessage from "./status-message";
+import {StatusMessage} from "./status-message";
 import {MessageStatus} from "./enums/message-status.enum";
 
 export default class RecipeValidator {

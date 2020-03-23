@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "./auth.service";
 import {FeedbackMessage} from "../../shared/models/message-feedback";
-import StatusMessage from "../../shared/status-message";
+import {StatusMessage} from "../../shared/status-message";
 import {MessageStatus} from "../../shared/enums/message-status.enum";
 
 @Component({
