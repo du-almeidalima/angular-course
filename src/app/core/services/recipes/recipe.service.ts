@@ -1,29 +1,29 @@
 import {Injectable} from '@angular/core';
-import {RecipeModel} from '../../../shared/models/recipe.model';
+import {Recipe} from '../../../shared/models/recipe';
 import {Observable, Subject} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class RecipeService {
-  private readonly _recipesSubject = new Subject<RecipeModel[]>();
-  private recipes: RecipeModel[] = [];
+  private readonly _recipesSubject = new Subject<Recipe[]>();
+  private recipes: Recipe[] = [];
 
-  public get recipesObservable(): Observable<RecipeModel[]> {
+  public get recipesObservable(): Observable<Recipe[]> {
     return this._recipesSubject.asObservable();
   }
 
-  public getRecipes(): RecipeModel[] {
+  public getRecipes(): Recipe[] {
     return this.recipes.slice(); // Returning a new copy of recipes array
   }
 
-  public getRecipeById(id: number): RecipeModel | undefined {
+  public getRecipeById(id: number): Recipe | undefined {
     return this.recipes.find(
-      (recipe: RecipeModel) => {
+      (recipe: Recipe) => {
           return recipe.id === id;
       }
     );
   }
 
-  public saveRecipe(recipe: RecipeModel): RecipeModel {
+  public saveRecipe(recipe: Recipe): Recipe {
     if (recipe != null) {
       // Update
       if (recipe.id !== null && !isNaN(recipe.id)) {
@@ -44,12 +44,12 @@ export class RecipeService {
     }
   }
 
-  public saveRecipes(recipeList: RecipeModel[]) {
+  public saveRecipes(recipeList: Recipe[]) {
     this.recipes = recipeList;
     this._recipesSubject.next(this.recipes.slice());
   }
 
-  public removeRecipeById(id: number): RecipeModel {
+  public removeRecipeById(id: number): Recipe {
     const index = this.recipes.findIndex(r => r.id === id);
 
     if (index > -1) {

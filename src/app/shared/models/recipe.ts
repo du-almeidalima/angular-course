@@ -1,6 +1,6 @@
 import {Ingredient} from './ingredient.model';
 
-export class RecipeModel {
+export class Recipe {
 
   public id: number;
   public name: string;
