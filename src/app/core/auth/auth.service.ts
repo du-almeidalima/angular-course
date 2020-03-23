@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {AuthResponseData} from "../../shared/models/response-data.model";
+import {AuthResponseData} from "../../shared/models/firebase/response-data.model";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {MessageMapService} from "../../shared/services/message-map.service";
@@ -19,14 +19,19 @@ import {MessageStatus} from "../../shared/enums/message-status.enum";
  */
 @Injectable({providedIn: "root"})
 export class AuthService {
-  private readonly AUTH_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp';
+  private readonly SIGN_IN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp';
+  private readonly LOGIN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword';
   private readonly API_KEY = 'AIzaSyCpd5DSsqbLJfu6LL-7JIGzSaAGuwiVy_Y';
 
   constructor(private http: HttpClient, private messageMappingService: MessageMapService) {}
 
-  public signUp(email: string, password: string): Observable<AuthResponseData> {
+  public loginOrSignUp(email: string, password: string, isLogin: boolean): Observable<AuthResponseData> {
+    const authUrl = isLogin
+    ? `${this.LOGIN_URL}?key=${this.API_KEY}`
+    : `${this.SIGN_IN_URL}?key=${this.API_KEY}`;
+
     return this.http
-      .post<AuthResponseData>(`${this.AUTH_URL}?key=${this.API_KEY}`,
+      .post<AuthResponseData>(authUrl,
         {
           email,
           password,

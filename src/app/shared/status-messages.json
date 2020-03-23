@@ -3,5 +3,20 @@
     "messageCode": "EMAIL_EXISTS",
     "message": "This email exists already.",
     "severity": "ERROR"
+  },
+  {
+    "messageCode": "TOO_MANY_ATTEMPTS_TRY_LATER",
+    "message": "We have blocked all requests from this device due to unusual activity. Try again later.",
+    "severity": "ERROR"
+  },
+  {
+    "messageCode": "EMAIL_NOT_FOUND",
+    "message": "There is no user with this email and password, did you type the right email and password?",
+    "severity": "ERROR"
+  },
+  {
+    "messageCode": "INVALID_PASSWORD",
+    "message": "There is no user with this email and password, did you type the right email and password?",
+    "severity": "ERROR"
   }
 ]
