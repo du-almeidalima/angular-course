@@ -1,8 +1,8 @@
 [
   {
     "messageCode": "EMAIL_EXISTS",
-    "message": "This email exists already.",
-    "severity": "ERROR"
+    "message": "This email is already in use, please, try another one.",
+    "severity": "WARNING"
   },
   {
     "messageCode": "TOO_MANY_ATTEMPTS_TRY_LATER",

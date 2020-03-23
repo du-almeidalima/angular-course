@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {AuthResponseData} from "../../shared/models/firebase/response-data.model";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {AuthResponseData} from "../../shared/models/firebase/response-data.model";
 import {MessageMapService} from "../../shared/services/message-map.service";
-import StatusMessage from "../../shared/status-message";
+import {StatusMessage} from "../../shared/status-message";
 import {MessageStatus} from "../../shared/enums/message-status.enum";
 
 /**
@@ -39,15 +39,16 @@ export class AuthService {
         }
       )
       .pipe(
-        catchError(errRes => {
-          const errorCode = errRes?.error?.error?.message;
-
-          // Checking if error message follows structure from Firebase API
-          if (!errorCode) {
-            return throwError(new StatusMessage('A different error message format was received from API', MessageStatus.ERROR));
-          }
-          return throwError(this.messageMappingService.mapMessage(errorCode));
-         })
+        catchError(errRes => this.handleError(errRes))
       )
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    const errorCode = errorRes?.error?.error?.message;
+
+    // Checking if error message follows structure from Firebase API
+    return errorCode
+      ? throwError(this.messageMappingService.mapMessage(errorCode))
+      : throwError(new StatusMessage('A different error message format was received from API', MessageStatus.ERROR))
   }
 }
