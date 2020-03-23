@@ -38,34 +38,37 @@ export class AuthComponent {
     }
     const {email, password} = form.value;
 
-    if (this.isLoginMode) {
-      //TODO: Implement Login
-    } else {
-      this.isLoading = true;
-      this.authService.signUp(email, password)
-        .subscribe(
-          // Success
-          data => {
-            console.log(data);
-            this.isLoading = false;
-          },
-          // Error
-          (err: StatusMessage) => {
-            console.error(err);
-            // Setting FeedBackMessage for FeedBackMessage component
-            this.feedbackMessage = {
-              message: err.message,
-              severity: MessageStatus.messageStatusToSeverity(err.status)
-            };
-            this.isLoading = false;
-          }
-        )
-    }
+    this.loginOrSignIn(email, password)
   }
 
   public messageDismissHandler(): void {
     this.feedbackMessage = null;
   }
+
+  private loginOrSignIn(email: string, password: string): void {
+    // Setting Spinner
+    this.isLoading = true;
+
+    this.authService.loginOrSignUp(email, password, this.isLoginMode)
+      .subscribe(
+        // Success
+        (resData: any) => {
+          console.log(resData);
+          this.isLoading = false;
+        },
+        // Error
+        (errData: StatusMessage) => {
+          console.error(errData);
+          // Setting FeedBackMessage for FeedBackMessage component
+          this.feedbackMessage = {
+            message: errData.message,
+            severity: MessageStatus.messageStatusToSeverity(errData.status)
+          };
+          this.isLoading = false;
+        }
+      )
+  }
+
 }
 
 /*

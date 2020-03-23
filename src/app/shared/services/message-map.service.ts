@@ -10,10 +10,10 @@ export class MessageMapService {
   public mapMessage(messageCode: string): StatusMessage {
     const message = jsonMessages.find(m => m.messageCode === messageCode);
 
-    if (message !== null) {
+    if (message !== undefined) {
       return new StatusMessage(message.message, MessageStatus[message.severity.toString()])
     } else{
-      return new StatusMessage('Something wrong happened', MessageStatus.INFO);
+      return new StatusMessage('Something wrong happened', MessageStatus.WARNING);
     }
   }
 }
