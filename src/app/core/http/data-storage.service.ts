@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {RecipeService} from "../services/recipes/recipe.service";
-import {RecipeModel} from "../../shared/models/recipe.model";
+import {Recipe} from "../../shared/models/recipe";
 import {map, tap} from "rxjs/operators";
 import {Observable} from "rxjs";
 
@@ -23,7 +23,7 @@ export default class DataStorageService {
     const recipes = this.recipeService.getRecipes();
 
     this.http.put(this.MY_LISTS_URL+'.json', recipes)
-      .subscribe((recipeList: RecipeModel[]) => {
+      .subscribe((recipeList: Recipe[]) => {
         console.log(recipeList)
       });
   }
@@ -31,12 +31,12 @@ export default class DataStorageService {
   /**
    * Fetch Recipes from API and replace the them in RecipeService state.
    */
-  public getRecipes(): Observable<RecipeModel[]> {
+  public getRecipes(): Observable<Recipe[]> {
     return this.http
-      .get<RecipeModel[]>(this.MY_LISTS_URL+'.json')
+      .get<Recipe[]>(this.MY_LISTS_URL+'.json')
 
       .pipe(
-        map((recipes: RecipeModel[]) => {
+        map((recipes: Recipe[]) => {
           return recipes.map(recipe => {
             return {
               ...recipe,
@@ -44,7 +44,7 @@ export default class DataStorageService {
             }
           })
         }),
-        tap((recipes: RecipeModel[]) => {
+        tap((recipes: Recipe[]) => {
           this.recipeService.saveRecipes(recipes);
         })
       )

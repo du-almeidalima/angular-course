@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {RecipeModel} from '../../../shared/models/recipe.model';
+import {Recipe} from '../../../shared/models/recipe';
 // @ts-ignore
 import FOOD_PLACEHOLDER from '../../../../assets/img/food-placeholder.jpg';
 
@@ -14,7 +14,7 @@ export class RecipeItemComponent implements OnInit {
   }
 
   @Input()
-  public recipe: RecipeModel;
+  public recipe: Recipe;
 
   @ViewChild('recipeImg', {static: true})
   public recipeImg: ElementRef;

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RecipeService} from '../../core/services/recipes/recipe.service';
-import {RecipeModel} from '../../shared/models/recipe.model';
+import {Recipe} from '../../shared/models/recipe';
 // @ts-ignore
 import FOOD_PLACEHOLDER from '../../../assets/img/food-placeholder.jpg';
 import {Ingredient} from '../../shared/models/ingredient.model';
@@ -41,7 +41,7 @@ export class RecipeEditComponent implements OnInit {
         // If id exist (edit mode) then fetch it, otherwise create new
         let recipe = this.recipeService.getRecipeById(this.id);
         if (recipe == undefined) {
-          recipe = new RecipeModel( null,'', '', '', [new Ingredient('', 1)]);
+          recipe = new Recipe( null,'', '', '', [new Ingredient('', 1)]);
           this.imgPlaceholder = true;
         }
         this.initForm(recipe);
@@ -53,7 +53,7 @@ export class RecipeEditComponent implements OnInit {
     // Save or Update recipe
     // Since we're using a Generator to gen RecipeModels id we need to create a new recipe or use the last one with the id
     const {name, description, imagePath, ingredients} = this.recipeForm.value;
-    const recipe = new RecipeModel(this.id, name, description, imagePath || this.FOOD_PLACEHOLDER, ingredients);
+    const recipe = new Recipe(this.id, name, description, imagePath || this.FOOD_PLACEHOLDER, ingredients);
 
     const newRecipe = this.recipeService.saveRecipe(recipe);
 
@@ -79,7 +79,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   // Utils
-  private initForm(recipe: RecipeModel): void {
+  private initForm(recipe: Recipe): void {
 
     this.recipeForm = new FormGroup({
       name: new FormControl(recipe.name, Validators.required),

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RecipeModel} from '../../shared/models/recipe.model';
+import {Recipe} from '../../shared/models/recipe';
 import {ShoppingListService} from '../../core/services/shopping-list.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RecipeService} from '../../core/services/recipes/recipe.service';
@@ -12,7 +12,7 @@ import {RecipeService} from '../../core/services/recipes/recipe.service';
 export class RecipeDetailComponent implements OnInit {
 
   // Properties
-  public currentRecipe: RecipeModel;
+  public currentRecipe: Recipe;
 
   constructor(private shoppingListService: ShoppingListService,
               private recipeService: RecipeService,
