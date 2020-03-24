@@ -1,7 +1,7 @@
 import {StatusMessage} from "./status-message";
 import {MessageStatus} from "./enums/message-status.enum";
 
-export default class RecipeValidator {
+export class RecipeValidator {
 
   private static errorMessages = {
     required: new StatusMessage('This field is required.', MessageStatus.ERROR),
