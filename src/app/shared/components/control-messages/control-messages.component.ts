@@ -1,9 +1,9 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import StatusMessage from '../../status-message';
+import {StatusMessage} from '../../status-message';
 import {MessageStatus} from '../../enums/message-status.enum';
-import RecipeValidator from '../../recipe-validator';
+import {RecipeValidator} from '../../recipe-validator';
 
 interface statusMessagesDTO {
   messageType: MessageStatus;

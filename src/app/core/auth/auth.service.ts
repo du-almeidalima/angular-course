@@ -24,7 +24,12 @@ export class AuthService {
   private readonly LOGIN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword';
   private readonly API_KEY = 'AIzaSyCpd5DSsqbLJfu6LL-7JIGzSaAGuwiVy_Y';
 
-  private userSubject = new Subject<User>();
+  private _userSubject = new Subject<User>();
+
+  get userAuthObservable(): Observable<User> {
+    return this._userSubject.asObservable();
+  }
+
   constructor(private http: HttpClient, private messageMappingService: MessageMapService) {}
 
   public loginOrSignUp(email: string, password: string, isLogin: boolean): Observable<AuthResponseData> {
@@ -68,6 +73,6 @@ export class AuthService {
       token,
       new Date(expirationDate)
     );
-    this.userSubject.next(user);
+    this._userSubject.next(user);
   }
 }

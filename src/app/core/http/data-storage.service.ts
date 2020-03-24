@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {RecipeService} from "../services/recipes/recipe.service";
-import {Recipe} from "../../shared/models/recipe";
+import {Recipe} from "../../shared/models/recipe.model";
 import {map, tap} from "rxjs/operators";
 import {Observable} from "rxjs";
 
@@ -10,7 +10,7 @@ import {Observable} from "rxjs";
  */
 
 @Injectable({providedIn: "root"})
-export default class DataStorageService {
+export class DataStorageService {
   private readonly MY_LISTS_URL = 'https://my-lists-api.firebaseio.com/';
 
   constructor( private http: HttpClient, private recipeService: RecipeService) {}

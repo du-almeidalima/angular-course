@@ -4,6 +4,7 @@ import {AuthService} from "./auth.service";
 import {FeedbackMessage} from "../../shared/models/message-feedback";
 import {StatusMessage} from "../../shared/status-message";
 import {MessageStatus} from "../../shared/enums/message-status.enum";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-auth',
@@ -18,8 +19,7 @@ export class AuthComponent {
   public buttonMessage: string = 'Log In';
   public feedbackMessage: FeedbackMessage;
 
-  constructor(private authService: AuthService) {
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   public changePage(): void {
     this.isLoginMode = !this.isLoginMode;
@@ -36,9 +36,7 @@ export class AuthComponent {
       console.error('Form is invalid!');
       return;
     }
-    const {email, password} = form.value;
-
-    this.loginOrSignIn(email, password)
+    this.loginOrSignIn(form.value.email, form.value.password)
   }
 
   public messageDismissHandler(): void {
@@ -55,6 +53,7 @@ export class AuthComponent {
         (resData: any) => {
           console.log(resData);
           this.isLoading = false;
+          this.router.navigate(['/recipes'])
         },
         // Error
         (errData: StatusMessage) => {

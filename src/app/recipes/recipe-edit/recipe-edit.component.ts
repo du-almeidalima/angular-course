@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RecipeService} from '../../core/services/recipes/recipe.service';
-import {Recipe} from '../../shared/models/recipe';
+import {Recipe} from '../../shared/models/recipe.model';
 // @ts-ignore
 import FOOD_PLACEHOLDER from '../../../assets/img/food-placeholder.jpg';
 import {Ingredient} from '../../shared/models/ingredient.model';
