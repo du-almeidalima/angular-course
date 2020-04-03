@@ -1,11 +1,9 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {RecipeService} from "../services/recipes/recipe.service";
 import {Recipe} from "../../shared/models/recipe.model";
-import {exhaustMap, map, take, tap} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 import {Observable} from "rxjs";
-import {AuthService} from "../auth/auth.service";
-import {User} from "../../shared/models/user.model";
 
 /*
  * This class is responsible for making http calls to Firebase API.
@@ -15,7 +13,7 @@ import {User} from "../../shared/models/user.model";
 export class DataStorageService {
   private readonly MY_LISTS_URL = 'https://my-lists-api.firebaseio.com/';
 
-  constructor( private http: HttpClient, private recipeService: RecipeService, private authService: AuthService) {}
+  constructor( private http: HttpClient, private recipeService: RecipeService) {}
 
   /**
    * Save the Recipes from RecipeServe state int Firebase Database API using a PUT HTTP verb.
@@ -34,18 +32,9 @@ export class DataStorageService {
    * Fetch Recipes from API and replace the them in RecipeService state.
    */
   public getRecipes(): Observable<Recipe[]> {
-    return this.authService.userAuthObservable
+    return this.http
+      .get<Recipe[]>(this.MY_LISTS_URL+'.json')
       .pipe(
-        // Subscribing only to one event
-        take(1),
-        // Replacing the "userAuthObservable" with the observable inside it
-        exhaustMap((userObservableResp: User) => {
-          return this.http
-            .get<Recipe[]>(this.MY_LISTS_URL+'.json', {
-              params: new HttpParams().set('auth', userObservableResp.token)
-            })
-        }),
-        // Since we're already on the map operator, we can just take the result from exhaustMap use operators on it.
         map((recipes: Recipe[]) => {
           return recipes.map(recipe => {
             return {

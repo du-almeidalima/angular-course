@@ -1,18 +1,29 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
-import {OnInit} from "@angular/core";
+import {Injectable} from "@angular/core";
+import {exhaustMap, take} from "rxjs/operators";
 
-export class AuthInterceptor implements HttpInterceptor, OnInit {
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.
-  }
-
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    req.headers.append('', '');
-    return next.handle(req);
+    return this.authService.userAuthObservable
+      .pipe(
+        take(1),
+        // Swapping the userAuthObservable for the request Observable
+        exhaustMap(user => {
+          // Checking the user has already logged in
+          if (!user){
+            return next.handle(req);
+          }
+          const requestWithToken = req.clone({
+            params: new HttpParams().set('auth', user.token)
+          });
+          return next.handle(requestWithToken);
+        })
+      );
   }
 }
