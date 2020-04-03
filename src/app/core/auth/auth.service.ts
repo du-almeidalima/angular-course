@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Observable, Subject, throwError} from "rxjs";
+import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
+import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
 import {AuthResponseData} from "../../shared/models/firebase/response-data.model";
 import {MessageMapService} from "../../shared/services/message-map.service";
@@ -24,7 +24,7 @@ export class AuthService {
   private readonly LOGIN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword';
   private readonly API_KEY = 'AIzaSyCpd5DSsqbLJfu6LL-7JIGzSaAGuwiVy_Y';
 
-  private _userSubject = new Subject<User>();
+  private _userSubject = new BehaviorSubject<User>(null);
 
   get userAuthObservable(): Observable<User> {
     return this._userSubject.asObservable();
@@ -33,9 +33,7 @@ export class AuthService {
   constructor(private http: HttpClient, private messageMappingService: MessageMapService) {}
 
   public loginOrSignUp(email: string, password: string, isLogin: boolean): Observable<AuthResponseData> {
-    const authUrl = isLogin
-    ? `${this.LOGIN_URL}?key=${this.API_KEY}`
-    : `${this.SIGN_IN_URL}?key=${this.API_KEY}`;
+    const authUrl = isLogin ? `${this.LOGIN_URL}` : `${this.SIGN_IN_URL}`;
 
     return this.http
       .post<AuthResponseData>(authUrl,
@@ -43,6 +41,9 @@ export class AuthService {
           email,
           password,
           returnSecureToken: true
+        },
+        {
+          params: new HttpParams().set('key', this.API_KEY)
         }
       )
       .pipe(
@@ -58,6 +59,7 @@ export class AuthService {
 
   private handleError(errorRes: HttpErrorResponse) {
     const errorCode = errorRes?.error?.error?.message;
+    console.error(errorRes);
 
     // Checking if error message follows structure from Firebase API
     return errorCode
@@ -65,7 +67,7 @@ export class AuthService {
       : throwError(new StatusMessage('A different error message format was received from API', MessageStatus.ERROR))
   }
 
-  private handleAuthentication(email: string, id:string, token: string, expiresIn: number) {
+  private handleAuthentication(email: string, id: string, token: string, expiresIn: number) {
     const expirationDate = new Date().getTime() + (expiresIn * 1000);
     const user = new User(
       email,
@@ -76,3 +78,13 @@ export class AuthService {
     this._userSubject.next(user);
   }
 }
+
+/*
+ * The
+ *  - private _userSubject = new Subject<User>();
+ * was changed to
+ *  - private _userSubject = new BehaviorSubject()<User>();
+ *
+ * Because in AuthInterceptor we would required the token whenever we want, and not when the value of the subject chan-
+ * ged. Hence, we use the BehaviourSubject which allows that.
+ */

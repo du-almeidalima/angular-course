@@ -1,9 +1,11 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {RecipeService} from "../services/recipes/recipe.service";
 import {Recipe} from "../../shared/models/recipe.model";
-import {map, tap} from "rxjs/operators";
+import {exhaustMap, map, take, tap} from "rxjs/operators";
 import {Observable} from "rxjs";
+import {AuthService} from "../auth/auth.service";
+import {User} from "../../shared/models/user.model";
 
 /*
  * This class is responsible for making http calls to Firebase API.
@@ -13,7 +15,7 @@ import {Observable} from "rxjs";
 export class DataStorageService {
   private readonly MY_LISTS_URL = 'https://my-lists-api.firebaseio.com/';
 
-  constructor( private http: HttpClient, private recipeService: RecipeService) {}
+  constructor( private http: HttpClient, private recipeService: RecipeService, private authService: AuthService) {}
 
   /**
    * Save the Recipes from RecipeServe state int Firebase Database API using a PUT HTTP verb.
@@ -32,10 +34,18 @@ export class DataStorageService {
    * Fetch Recipes from API and replace the them in RecipeService state.
    */
   public getRecipes(): Observable<Recipe[]> {
-    return this.http
-      .get<Recipe[]>(this.MY_LISTS_URL+'.json')
-
+    return this.authService.userAuthObservable
       .pipe(
+        // Subscribing only to one event
+        take(1),
+        // Replacing the "userAuthObservable" with the observable inside it
+        exhaustMap((userObservableResp: User) => {
+          return this.http
+            .get<Recipe[]>(this.MY_LISTS_URL+'.json', {
+              params: new HttpParams().set('auth', userObservableResp.token)
+            })
+        }),
+        // Since we're already on the map operator, we can just take the result from exhaustMap use operators on it.
         map((recipes: Recipe[]) => {
           return recipes.map(recipe => {
             return {
@@ -57,4 +67,15 @@ export class DataStorageService {
 /*
  * I'm using the "pipe(map()...)" on getRecipes method in order to prevent recipes with no ingredients to don't have
  * a "ingredients[]" property
+ */
+
+/*
+ * Since the Firebase was changed to only accept requests authenticated, I've included the User token on the requests.
+ * For that I'll use the authService.userAuthObservable: BehaviorSubject and pipe it into the "Take" operator.
+ * in "take()" we can chose how many values we take from a Subject until unsubscribe from it. Since I just wanted to
+ * get the UserToken...
+ *
+ * The problem is, we cannot return another Observable from a "subscribe()", for that I'll use "exhaustMap" operator,
+ * which will wait for the first Observable to complete (userAuthObservable) which will happen after the "take" finishes
+ * and replace this Observable with another one
  */

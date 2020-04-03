@@ -57,7 +57,6 @@ export class AuthComponent {
         },
         // Error
         (errData: StatusMessage) => {
-          console.error(errData);
           // Setting FeedBackMessage for FeedBackMessage component
           this.feedbackMessage = {
             message: errData.message,
