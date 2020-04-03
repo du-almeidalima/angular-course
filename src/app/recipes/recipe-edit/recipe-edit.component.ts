@@ -101,7 +101,11 @@ export class RecipeEditComponent implements OnInit {
   }
 
   private navigateBack(id?: number): void {
-    this.router.navigate(['recipes', id])
+    if(id) {
+      this.router.navigate(['recipes', id])
+    } else {
+      this.router.navigate(['recipes'])
+    }
   }
 }
 

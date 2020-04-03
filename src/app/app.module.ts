@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppComponent} from './app.component';
 import {AuthComponent} from "./core/auth/auth.component";
 import {HeaderComponent} from "./header/header.component";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HomeComponent} from "./home/home.component";
 import {RecipesComponent} from "./recipes/recipes.component";
 import {RecipesListComponent} from "./recipes/recipes-list/recipes-list.component";
@@ -20,6 +20,7 @@ import {SpinnerComponent} from "./shared/components/loading-spinner/loading-spin
 import {DropdownDirective} from "./shared/directives/dropdown.directive";
 import {RecipeItemComponent} from "./recipes/recipes-list/recipe-item/recipe-item.component";
 import {AppRoutesModule} from "./app-routes.module";
+import {AuthInterceptor} from "./core/auth/auth.interceptor";
 
 @NgModule({
   declarations: [
@@ -47,7 +48,13 @@ import {AppRoutesModule} from "./app-routes.module";
     AppRoutesModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }
