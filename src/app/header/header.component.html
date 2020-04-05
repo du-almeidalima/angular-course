@@ -30,7 +30,7 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" [routerLink]="['/login']" *ngIf="!isUserAuthenticated">Log In</a>
-        <a class="nav-link" [routerLink]="['/logout']" *ngIf="isUserAuthenticated">Log Out</a>
+        <button class="btn btn-link nav-link" (click)="onLogOut()" *ngIf="isUserAuthenticated">Log Out</button>
       </li>
     </ul>
   </div>
