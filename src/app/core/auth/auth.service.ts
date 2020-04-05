@@ -1,12 +1,16 @@
 import {Injectable} from "@angular/core";
+import {Router} from "@angular/router";
+
 import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
 import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
+
 import {AuthResponseData} from "../../shared/models/firebase/response-data.model";
-import {MessageMapService} from "../../shared/services/message-map.service";
 import {StatusMessage} from "../../shared/status-message";
 import {MessageStatus} from "../../shared/enums/message-status.enum";
+import {MessageMapService} from "../../shared/services/message-map.service";
 import {User} from "../../shared/models/user.model";
+
 
 /**
  * @author Eduardo Lima
@@ -30,7 +34,10 @@ export class AuthService {
     return this._userSubject.asObservable();
   }
 
-  constructor(private http: HttpClient, private messageMappingService: MessageMapService) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private messageMapService: MessageMapService) {}
 
   public loginOrSignUp(email: string, password: string, isLogin: boolean): Observable<AuthResponseData> {
     const authUrl = isLogin ? `${this.LOGIN_URL}` : `${this.SIGN_IN_URL}`;
@@ -57,13 +64,19 @@ export class AuthService {
       )
   }
 
+  public logOut() {
+    this._userSubject.next(null);
+    this.router.navigate([''])
+      .then(() => console.log(`User logged out at: ${new Date().getDate()}`));
+  }
+
   private handleError(errorRes: HttpErrorResponse) {
     const errorCode = errorRes?.error?.error?.message;
     console.error(errorRes);
 
     // Checking if error message follows structure from Firebase API
     return errorCode
-      ? throwError(this.messageMappingService.mapMessage(errorCode))
+      ? throwError(this.messageMapService.mapMessage(errorCode))
       : throwError(new StatusMessage('A different error message format was received from API', MessageStatus.ERROR))
   }
 
