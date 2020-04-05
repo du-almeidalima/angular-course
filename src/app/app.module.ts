@@ -21,6 +21,7 @@ import {DropdownDirective} from "./shared/directives/dropdown.directive";
 import {RecipeItemComponent} from "./recipes/recipes-list/recipe-item/recipe-item.component";
 import {AppRoutesModule} from "./app-routes.module";
 import {AuthInterceptor} from "./core/auth/auth.interceptor";
+import {MessageMapService} from "./shared/services/message-map.service";
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {AuthInterceptor} from "./core/auth/auth.interceptor";
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    MessageMapService
   ],
   bootstrap: [ AppComponent ]
 })

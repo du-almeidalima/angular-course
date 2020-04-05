@@ -54,7 +54,9 @@ export class AuthService {
         }
       )
       .pipe(
-        catchError(this.handleError),
+        catchError(err => {
+          return this.handleError(err)
+        }),
         tap(resData => this.handleAuthentication(
           resData.email,
           resData.localId,
@@ -67,7 +69,7 @@ export class AuthService {
   public logOut() {
     this._userSubject.next(null);
     this.router.navigate([''])
-      .then(() => console.log(`User logged out at: ${new Date().getDate()}`));
+      .then(() => console.log(`User logged out at: ${new Date().toLocaleString()}`));
   }
 
   private handleError(errorRes: HttpErrorResponse) {
