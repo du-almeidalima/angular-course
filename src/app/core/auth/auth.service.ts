@@ -29,7 +29,7 @@ export class AuthService {
   private readonly API_KEY = 'AIzaSyCpd5DSsqbLJfu6LL-7JIGzSaAGuwiVy_Y';
 
   private _userSubject = new BehaviorSubject<User>(null);
-
+  private tokenExpirationTimer: any;
   get userAuthObservable(): Observable<User> {
     return this._userSubject.asObservable();
   }
@@ -66,10 +66,44 @@ export class AuthService {
       )
   }
 
+  public autoLogin(): void {
+   const restoredUser = JSON.parse(localStorage.getItem('userData'));
+
+    if (restoredUser){
+      const {email, id, _token, _tokenExpirationDate} = restoredUser;
+      const user = new User(email, id, _token, new Date(_tokenExpirationDate));
+
+      // Checking if token is still valid (check User class)
+      if (user.token){
+        this._userSubject.next(restoredUser);
+        // Starting Session countdown
+        this.autoLogout(new Date(_tokenExpirationDate).getTime() - new Date().getTime())
+      } else {
+        console.info(`User token has expired.`);
+      }
+    } else {
+      console.info(`Couldn't find any user to auto login.`);
+    }
+  }
+
+  public autoLogout(expirationDuration: number): void {
+    console.info(`Session expires in: ${((expirationDuration / 1000) / 60).toFixed(0)} minutes`);
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logOut();
+    }, expirationDuration);
+  }
+
   public logOut() {
     this._userSubject.next(null);
     this.router.navigate([''])
-      .then(() => console.log(`User logged out at: ${new Date().toLocaleString()}`));
+      .then(() => {
+        localStorage.removeItem('userData');
+        if (this.tokenExpirationTimer) {
+          clearTimeout(this.tokenExpirationTimer)
+        }
+        this.tokenExpirationTimer = null;
+        console.log(`User logged out at: ${new Date().toLocaleString()}`)
+      });
   }
 
   private handleError(errorRes: HttpErrorResponse) {
@@ -91,6 +125,11 @@ export class AuthService {
       new Date(expirationDate)
     );
     this._userSubject.next(user);
+
+    // Storing in localStorage so the user can access it when the page refreshes.
+    localStorage.setItem('userData', JSON.stringify(user));
+    // Starting Session countdown
+    this.autoLogout(expiresIn * 1000)
   }
 }
 

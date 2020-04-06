@@ -9,6 +9,7 @@ import {NoRecipeComponent} from "./recipes/no-recipe/no-recipe.component";
 import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
 import {RecipeListResolver} from "./core/services/recipes/recipe-list-resolver.service";
 import {AuthComponent} from "./core/auth/auth.component";
+import {AuthGuard} from "./core/auth/auth.guard";
 
 // Defining our routes
 const ROUTES: Routes = [
@@ -16,7 +17,7 @@ const ROUTES: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full'}, // This is used to only redirect if it's the full path
   // Recipes Routes
-  { path: 'recipes', component: RecipesComponent, children: [
+  { path: 'recipes', component: RecipesComponent, canActivate: [AuthGuard], children: [
       { path: '', component: NoRecipeComponent },
       // We'll use the same component to create and edit a Recipe
       { path: 'create', component: RecipeEditComponent },
