@@ -36,11 +36,7 @@
           <span class="app-login-active-line"></span>
         </div>
 
-        <app-feedback-message *ngIf="feedbackMessage"
-          [message]="feedbackMessage"
-          (messageDismiss)="messageDismissHandler()">
-        </app-feedback-message>
-
+        <ng-template app-placeholder></ng-template>
         <button
           [disabled]="f.invalid"
           [ngClass]="{'disabled': f.invalid}"
