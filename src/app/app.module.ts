@@ -22,6 +22,7 @@ import {RecipeItemComponent} from "./recipes/recipes-list/recipe-item/recipe-ite
 import {AppRoutesModule} from "./app-routes.module";
 import {AuthInterceptor} from "./core/auth/auth.interceptor";
 import {MessageMapService} from "./shared/services/message-map.service";
+import {PlaceholderDirective} from "./shared/directives/placeholder.directive";
 
 @NgModule({
   declarations: [
@@ -34,13 +35,14 @@ import {MessageMapService} from "./shared/services/message-map.service";
     RecipeItemComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
-    DropdownDirective,
     HomeComponent,
     NoRecipeComponent,
     RecipeEditComponent,
     ControlMessagesComponent,
     SpinnerComponent,
-    FeedbackMessageComponent
+    FeedbackMessageComponent,
+    DropdownDirective,
+    PlaceholderDirective
   ],
   imports: [
     BrowserModule,
