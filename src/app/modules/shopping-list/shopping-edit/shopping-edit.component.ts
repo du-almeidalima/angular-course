@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {Ingredient} from '../../shared/models/ingredient.model';
-import {ShoppingListService} from '../../core/services/shopping-list.service';
+import {Ingredient} from '../../../shared/models/ingredient.model';
+import {ShoppingListService} from '../shopping-list.service';
 import {NgForm} from '@angular/forms';
 import {Subscription} from 'rxjs';
 

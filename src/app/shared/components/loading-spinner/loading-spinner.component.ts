@@ -13,4 +13,4 @@ import {Component} from "@angular/core";
     </div>
   `
 })
-export class SpinnerComponent {}
+export class LoadingSpinnerComponent {}

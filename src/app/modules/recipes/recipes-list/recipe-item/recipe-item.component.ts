@@ -1,7 +1,7 @@
 import {Component, ElementRef, Input, OnInit, Renderer2, ViewChild} from '@angular/core';
-import {Recipe} from '../../../shared/models/recipe.model';
+import {Recipe} from '../../../../shared/models/recipe.model';
 // @ts-ignore
-import FOOD_PLACEHOLDER from '../../../../assets/img/food-placeholder.jpg';
+import FOOD_PLACEHOLDER from '../../../../../assets/img/food-placeholder.jpg';
 
 @Component({
   selector: 'app-recipe-item',
