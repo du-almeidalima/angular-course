@@ -18,7 +18,6 @@ The Section 2: The Basics will be
   "[section number and name]"
 ```
 
-## Bootstrap
 
 #### Installation
 Bootstrap 4.3.1 was installed in this project through npm with the command: 

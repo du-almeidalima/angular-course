@@ -1,5 +1,4 @@
 import {NgModule} from "@angular/core";
-import {ControlMessagesComponent} from "./components/control-messages/control-messages.component";
 import {FeedbackMessageComponent} from "./components/feedback-message/feedback-message.component";
 import {LoadingSpinnerComponent} from "./components/loading-spinner/loading-spinner.component";
 import {DropdownDirective} from "./directives/dropdown.directive";
@@ -8,7 +7,6 @@ import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
-    ControlMessagesComponent,
     FeedbackMessageComponent,
     LoadingSpinnerComponent,
     DropdownDirective,
@@ -18,7 +16,6 @@ import {CommonModule} from "@angular/common";
     CommonModule
   ],
   exports: [
-    ControlMessagesComponent,
     FeedbackMessageComponent,
     LoadingSpinnerComponent,
     DropdownDirective,
