@@ -1,8 +1,8 @@
 # Cooking App
 
-This is the repository for the course project <b> Cooking App </b> from Section 3.
+This is the repository for the course project <b> Cooking App </b> from Section 22.
 
-You can check it out [here](https://xenosgrilda.github.io/angular-8-course/home).
+You can check the live version [here](https://xenosgrilda.github.io/angular-8-course/home).
 
 ## App Planning
 ![App Diagram](./app-planning.png?raw=true "App Diagram")
@@ -40,7 +40,7 @@ to Angular recognizes it, we need to specify it into 'angular.json' file:
 ]
 ```
 
-Bootstrap JS was removed so our custom JS could be implemented, for academic reasons
+Bootstrap JS has been removed, so our custom JS could be implemented, for academic reasons
 
 ## Authors
 
