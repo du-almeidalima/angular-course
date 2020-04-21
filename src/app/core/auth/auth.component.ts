@@ -1,11 +1,10 @@
 import {Component, ComponentFactoryResolver, OnDestroy, ViewChild} from "@angular/core";
 import {NgForm} from "@angular/forms";
 import {AuthService} from "./auth.service";
-import {StatusMessage} from "../../shared/status-message";
+import {ResponseMessage} from "../../shared/models/response-message.model";
 import {Router} from "@angular/router";
 import {FeedbackMessageComponent} from "../../shared/components/feedback-message/feedback-message.component";
 import {PlaceholderDirective} from "../../shared/directives/placeholder.directive";
-import {MessageStatus} from "../../shared/enums/message-status.enum";
 import {Subscription} from "rxjs";
 
 @Component({
@@ -22,15 +21,15 @@ export class AuthComponent implements OnDestroy{
 
   @ViewChild(PlaceholderDirective)
   public messageFeedbackHost: PlaceholderDirective;
-  private messageFeedabckSubscription: Subscription;
+  private messageFeedbackSubscription: Subscription;
 
   constructor(private authService: AuthService,
               private router: Router,
               private componentFactoryResolver: ComponentFactoryResolver) {}
 
   ngOnDestroy(): void {
-    if (this.messageFeedabckSubscription) {
-      this.messageFeedabckSubscription.unsubscribe();
+    if (this.messageFeedbackSubscription) {
+      this.messageFeedbackSubscription.unsubscribe();
     }
   }
 
@@ -65,7 +64,7 @@ export class AuthComponent implements OnDestroy{
           this.router.navigate(['/recipes'])
         },
         // Error
-        (errData: StatusMessage) => {
+        (errData: ResponseMessage) => {
           // Setting FeedBackMessage for FeedBackMessage component
           this.showErrorFeedBackMessage(errData);
           this.isLoading = false;
@@ -73,7 +72,7 @@ export class AuthComponent implements OnDestroy{
       )
   }
 
-  private showErrorFeedBackMessage(errData: StatusMessage) {
+  private showErrorFeedBackMessage(errData: ResponseMessage) {
     // Firstly we need to inject ComponentFactoryResolver to create a componentFactory of a given Component
     // With the ComponentFactory we can then start to create components
     const feedbackMessageComponentFactory = this.componentFactoryResolver
@@ -86,15 +85,12 @@ export class AuthComponent implements OnDestroy{
     const feedBackMessageCompRef = hostViewContainerRef.createComponent(feedbackMessageComponentFactory);
 
     // Adding the @Inputs
-    feedBackMessageCompRef.instance.message = {
-      message: errData.message,
-      severity: MessageStatus.messageStatusToSeverity(errData.status)
-    };
+    feedBackMessageCompRef.instance.message = errData;
 
     // Subscribing to @Output manually
-    this.messageFeedabckSubscription = feedBackMessageCompRef.instance.messageDismiss
+    this.messageFeedbackSubscription = feedBackMessageCompRef.instance.messageDismiss
       .subscribe(() => {
-        this.messageFeedabckSubscription.unsubscribe();
+        this.messageFeedbackSubscription.unsubscribe();
         hostViewContainerRef.clear();
       })
   }

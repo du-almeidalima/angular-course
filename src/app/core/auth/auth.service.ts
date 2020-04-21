@@ -6,9 +6,8 @@ import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
 
 import {AuthResponseData} from "../../shared/models/firebase/response-data.model";
-import {StatusMessage} from "../../shared/status-message";
 import {MessageStatus} from "../../shared/enums/message-status.enum";
-import {MessageMapService} from "../../shared/services/message-map.service";
+import {MessageMapper} from "../../shared/utils/message-mapper";
 import {User} from "../../shared/models/user.model";
 
 
@@ -16,8 +15,8 @@ import {User} from "../../shared/models/user.model";
  * @author Eduardo Lima
  *
  * @description Class responsible for doing User Authentication. it communicates with FireBase Authentication API.
- * It uses the MessageMapService to parse the message code form Firebase into User friendly message.
- * @see @link {MessageMapService}
+ * It uses the MessageMapper to parse the message code form Firebase into User friendly message.
+ * @see @link {MessageMapper}
  *
  * [Firebase REST Authentication API]{@link https://firebase.google.com/docs/reference/rest/auth#section-create-email-password}
  *
@@ -30,14 +29,12 @@ export class AuthService {
 
   private _userSubject = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
+
   get userAuthObservable(): Observable<User> {
     return this._userSubject.asObservable();
   }
 
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private messageMapService: MessageMapService) {}
+  constructor (private http: HttpClient, private router: Router) {}
 
   public loginOrSignUp(email: string, password: string, isLogin: boolean): Observable<AuthResponseData> {
     const authUrl = isLogin ? `${this.LOGIN_URL}` : `${this.SIGN_IN_URL}`;
@@ -112,8 +109,11 @@ export class AuthService {
 
     // Checking if error message follows structure from Firebase API
     return errorCode
-      ? throwError(this.messageMapService.mapMessage(errorCode))
-      : throwError(new StatusMessage('A different error message format was received from API', MessageStatus.ERROR))
+      ? throwError(MessageMapper.mapMessage(errorCode))
+      : throwError({
+        message: 'A different error message format was received from API',
+        status: MessageStatus.ERROR
+      })
   }
 
   private handleAuthentication(email: string, id: string, token: string, expiresIn: number) {
