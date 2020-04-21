@@ -8,7 +8,7 @@ import {RecipeDetailComponent} from "./recipe-detail/recipe-detail.component";
 import {RouterModule, Routes} from "@angular/router";
 
 const RECIPES_ROUTES: Routes = [
-  { path: 'recipes', component: RecipesComponent, canActivate: [AuthGuard], children: [
+  { path: '', component: RecipesComponent, canActivate: [AuthGuard], children: [
       { path: '', component: NoRecipeComponent },
       // We'll use the same component to create and edit a Recipe
       { path: 'create', component: RecipeEditComponent },
@@ -34,4 +34,16 @@ export class RecipesRoutesModule {
  * the module own routes.
  * To do so, in our recipe.module.ts we use the RouterModule.forChild
  * OBS: The .forRoot is used essentially once and for every feature module we want to import we use the .forChild
+ */
+
+/*
+ * Lazing Loading
+ * The first step to implement Lazy Loading, is to split our App into Feature Modules.
+ * Once it's done, we can take the root path, in this case was 'recipes':
+ *  - { path: 'recipes', component: RecipesComponent, canActivate: [AuthGuard], children: [ ... ] }
+ * And change to
+ *  - { path: '', component: RecipesComponent, canActivate: [AuthGuard], children: [ ... ] }
+ * This was done because the 'recipe' path is now included in the app.routes-module
+ *
+ * The rest of implementation goes into the main routing module (RoutesModule.forRoot()), in this case app.routes-module
  */
