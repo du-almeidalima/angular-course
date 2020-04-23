@@ -1,14 +1,18 @@
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {HomeComponent} from "./core/home/home.component";
 
 // Defining our routes
 const ROUTES: Routes = [
-  // Home Route
-  { path: 'home', component: HomeComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full'}, // This is used to only redirect if it's the full path
+  // The Home, Auth and other Routes are declared in the core.module
   // { path: 'recipes', loadChildren: './modules/recipes/recipes.module#RecipesModule'} // <- This is the OLD Syntax
-  { path: 'recipes', loadChildren: () => import('./modules/recipes/recipes.module').then(m => m.RecipesModule) }
+  {
+    path: 'recipes',
+    loadChildren: () => import('./modules/recipes/recipes.module').then(m => m.RecipesModule)
+  },
+  {
+    path: 'shopping-list',
+    loadChildren: () => import('./modules/shopping-list/shopping-list.module').then(m => m.ShoppingListModule)
+  }
 ];
 
 @NgModule({
