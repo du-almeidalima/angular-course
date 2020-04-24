@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {RouterModule, Routes} from "@angular/router";
+import {PreloadAllModules, RouterModule, Routes} from "@angular/router";
 
 // Defining our routes
 const ROUTES: Routes = [
@@ -17,7 +17,7 @@ const ROUTES: Routes = [
 
 @NgModule({
   // Importing the RouterModule and configuring it with our routes
-  imports: [ RouterModule.forRoot(ROUTES) ],
+  imports: [ RouterModule.forRoot(ROUTES, { preloadingStrategy: PreloadAllModules })],
   // Exporting it to the main module
   exports: [ RouterModule ]
 })
@@ -41,4 +41,14 @@ export class AppRoutesModule {}
  * IMPORTANT: We need to remove the RecipesModule from the imports in the app.module.ts
  * https://angular.io/api/router/LoadChildren
  * https://angular.io/api/router/LoadChildrenCallback
+ */
+
+/*
+ * Preloading Lazy-Modules
+ * The downside of lazy-modules is that, whenever we navigate to a route that needs to download them it takes a little
+ * while. But we could circumvent this by implementing a preloadingStrategy of PreloadAllModules.
+ * With this, the app will still be tiny to download the first time, and after it's ready, it'll automatically download
+ * the remaining bundles.
+ *
+ * OBS: You can also implement your own preloading strategy, configuring it to just download certain modules.
  */
