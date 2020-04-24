@@ -4,6 +4,7 @@ import {RecipeService} from "../../modules/recipes/recipe.service";
 import {Recipe} from "../../shared/models/recipe.model";
 import {map, tap} from "rxjs/operators";
 import {Observable} from "rxjs";
+import {environment as env} from "../../../environments/environment";
 
 /*
  * This class is responsible for making http calls to Firebase API.
@@ -11,7 +12,6 @@ import {Observable} from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class DataStorageService {
-  private readonly MY_LISTS_URL = 'https://my-lists-api.firebaseio.com/';
 
   constructor( private http: HttpClient, private recipeService: RecipeService) {}
 
@@ -22,7 +22,7 @@ export class DataStorageService {
   public saveRecipes():any{
     const recipes = this.recipeService.getRecipes();
 
-    this.http.put(this.MY_LISTS_URL+'.json', recipes)
+    this.http.put(env.firebaseAPI + '.json', recipes)
       .subscribe((recipeList: Recipe[]) => {
         console.log(recipeList)
       });
@@ -33,7 +33,7 @@ export class DataStorageService {
    */
   public getRecipes(): Observable<Recipe[]> {
     return this.http
-      .get<Recipe[]>(this.MY_LISTS_URL+'.json')
+      .get<Recipe[]>(env.firebaseAPI + '.json')
       .pipe(
         map((recipes: Recipe[]) => {
           return recipes.map(recipe => {

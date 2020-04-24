@@ -10,6 +10,8 @@ import {MessageStatus} from "../../shared/enums/message-status.enum";
 import {MessageMapper} from "../../shared/utils/message-mapper";
 import {User} from "../../shared/models/user.model";
 
+import {environment as env} from "../../../environments/environment";
+
 
 /**
  * @author Eduardo Lima
@@ -25,7 +27,6 @@ import {User} from "../../shared/models/user.model";
 export class AuthService {
   private readonly SIGN_IN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp';
   private readonly LOGIN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword';
-  private readonly API_KEY = 'AIzaSyCpd5DSsqbLJfu6LL-7JIGzSaAGuwiVy_Y';
 
   private _userSubject = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
@@ -47,12 +48,12 @@ export class AuthService {
           returnSecureToken: true
         },
         {
-          params: new HttpParams().set('key', this.API_KEY)
+          params: new HttpParams().set('key', env.firebaseAPIKey)
         }
       )
       .pipe(
         catchError(err => {
-          return this.handleError(err)
+          return AuthService.handleError(err)
         }),
         tap(resData => this.handleAuthentication(
           resData.email,
@@ -103,7 +104,7 @@ export class AuthService {
       });
   }
 
-  private handleError(errorRes: HttpErrorResponse) {
+  private static handleError(errorRes: HttpErrorResponse): Observable<AuthResponseData> {
     const errorCode = errorRes?.error?.error?.message;
     console.error(errorRes);
 
