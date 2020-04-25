@@ -1,11 +1,19 @@
 # Cooking App
 
-This is the repository for the course project <b> Cooking App </b> from Section 22.
+This is the repository for the course project <b> Cooking App </b> from Section 24.
 
-You can check the live version [here](https://xenosgrilda.github.io/angular-8-course/home).
+You can check the live version [here](https://my-lists-api.web.app/home).
 
 ## App Planning
-![App Diagram](./app-planning.png?raw=true "App Diagram")
+![App Diagram](src/assets/readme/app-planning.png?raw=true "App Diagram")
+
+## State Management Approach
+The initial approach was to use Services with Observables for managing the app state. This was a fine solution, but for scalability purposes
+I decided to change the pattern to the [Redux](https://redux.js.org/) approach by using [NgRx](https://ngrx.io/) which is inspired by the
+Redux pattern by with some advantages for Angular apps.
+
+![NgRx State Management](src/assets/readme/state-management-ngrx.png?raw=true "NgRx State Management")
+
 ## Sections
 
 The course sections / lessons will be organized as commits, for instance:
