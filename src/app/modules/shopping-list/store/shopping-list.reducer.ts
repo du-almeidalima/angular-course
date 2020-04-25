@@ -1,7 +1,7 @@
 import { Action } from "@ngrx/store";
 
 import { Ingredient } from "../../../shared/models/ingredient.model";
-import { ADD_INGREDIENT } from "./shopping-list.actions";
+import * as ShoppingListActions from "./shopping-list.actions";
 
 /* The initial state of this feature */
 const initState = {
@@ -16,20 +16,20 @@ const initState = {
  * @param state Current State
  * @param {Action} action The action type and the payload
  */
-const shoppingListReducer = (state = initState, action: Action) => {
+const shoppingListReducer = (state = initState, action: ShoppingListActions.AddIngredient) => {
   switch (action.type) {
-    case ADD_INGREDIENT:
+    case ShoppingListActions.ADD_INGREDIENT:
       return {
         ...state,
         ingredients: [
           ...state.ingredients,
-          action
+          action.payload
         ]
       }
   }
 };
 
-export default { shoppingListReducer };
+export { shoppingListReducer };
 
 /*
  * The reducer is a function that will take the state and the action to perform the change on the application state.
