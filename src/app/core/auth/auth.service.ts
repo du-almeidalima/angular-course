@@ -8,7 +8,7 @@ import {catchError, tap} from "rxjs/operators";
 import {AuthResponseData} from "../../shared/models/firebase/response-data.model";
 import {MessageStatus} from "../../shared/enums/message-status.enum";
 import {MessageMapper} from "../../shared/utils/message-mapper";
-import {User} from "../../shared/models/user.model";
+import {User} from "./user.model";
 
 import {environment as env} from "../../../environments/environment";
 
@@ -73,7 +73,7 @@ export class AuthService {
 
       // Checking if token is still valid (check User class)
       if (user.token){
-        this._userSubject.next(restoredUser);
+        this._userSubject.next(user);
         // Starting Session countdown
         this.autoLogout(new Date(_tokenExpirationDate).getTime() - new Date().getTime())
       } else {

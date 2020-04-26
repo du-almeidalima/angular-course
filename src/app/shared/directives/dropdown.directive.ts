@@ -6,18 +6,14 @@ export class DropdownDirective {
   @Input()
   public dropdownMenu: HTMLDivElement;
 
-  private show = false;
-
   constructor( private elRef: ElementRef, private renderer: Renderer2 ) {}
 
   @HostListener('click')
   public onClick(){
-    if (!this.show) {
+    if (!this.dropdownMenu.classList.contains('show')) {
       this.renderer.addClass(this.dropdownMenu, 'show');
-      this.show = !this.show;
     } else {
       this.renderer.removeClass(this.dropdownMenu, 'show');
-      this.show = !this.show;
     }
   }
 
@@ -28,7 +24,6 @@ export class DropdownDirective {
     if (! this.elRef.nativeElement.contains(event.target)){
       this.renderer.removeClass(this.dropdownMenu, 'show');
     }
-    this.show = false;
   }
 
 }

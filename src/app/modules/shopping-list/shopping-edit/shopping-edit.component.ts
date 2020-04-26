@@ -5,7 +5,7 @@ import {Subscription} from 'rxjs';
 
 import {Ingredient} from '../../../shared/models/ingredient.model';
 import {ShoppingListService} from '../shopping-list.service';
-import * as shoppingList from '../store/shopping-list.actions';
+import * as shoppingListActions from '../store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -53,7 +53,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       this.shoppingListService.updateIngredient(ingredient, this.ingredientIndex);
     } else {
       // Creating the AddIngredient Action
-      this.store.dispatch(new shoppingList.AddIngredient(ingredient))
+      const action = new shoppingListActions.AddIngredient(ingredient);
+      this.store.dispatch(action);
     }
     this.clearForm();
   }

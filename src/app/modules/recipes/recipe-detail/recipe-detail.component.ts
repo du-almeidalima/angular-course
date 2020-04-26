@@ -1,8 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {Recipe} from '../../../shared/models/recipe.model';
-import {ShoppingListService} from '../../shopping-list/shopping-list.service';
+import {Store} from "@ngrx/store";
 import {ActivatedRoute, Params, Router} from '@angular/router';
+
+import {Recipe} from '../../../shared/models/recipe.model';
 import {RecipeService} from '../recipe.service';
+import {Ingredient} from "../../../shared/models/ingredient.model";
+import {ShoppingListService} from '../../shopping-list/shopping-list.service';
+import * as shoppingListActions from '../../shopping-list/store/shopping-list.actions';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -16,6 +20,7 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(private shoppingListService: ShoppingListService,
               private recipeService: RecipeService,
+              private store: Store<{ shoppingList: { ingredients: Ingredient[]} }>,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -30,7 +35,9 @@ export class RecipeDetailComponent implements OnInit {
 
   // Methods
   public onSendToShoppingList(): void {
-    this.shoppingListService.addIngredients(this.currentRecipe.ingredients);
+    // this.shoppingListService.addIngredients(this.currentRecipe.ingredients);
+    const action = new shoppingListActions.AddIngredients(this.currentRecipe.ingredients);
+    this.store.dispatch(action);
   }
 
   // This method is just for demonstrating the approach for navigating programmatically, usually you'd use:

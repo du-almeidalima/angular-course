@@ -16,14 +16,18 @@ const initState = {
  * @param state Current State
  * @param {Action} action The action type and the payload
  */
-const shoppingListReducer = (state = initState, action: ShoppingListActions.AddIngredient) => {
+const shoppingListReducer = (state = initState, action: ShoppingListActions.ShoppingListActions) => {
   switch (action.type) {
     case ShoppingListActions.ADD_INGREDIENT:
       return {
         ...state,
         ingredients: [ ...state.ingredients, action.payload ]
       }
-
+    case ShoppingListActions.ADD_INGREDIENTS:
+      return {
+        ...state,
+        ingredients: [...state.ingredients, ...action.payload]
+      }
     /**
      * For the initial state, we need to use the "default" clause, because NgRx will emit this action at first set up
      */
