@@ -26,6 +26,12 @@ const shoppingListReducer = (state = initState, action: ShoppingListActions.AddI
           action.payload
         ]
       }
+
+    /**
+     * For the initial state, we need to use the "default" clause, because NgRx will emit this action at first set up
+     */
+    default:
+      return state;
   }
 };
 
