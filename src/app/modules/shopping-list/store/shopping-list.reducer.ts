@@ -21,10 +21,7 @@ const shoppingListReducer = (state = initState, action: ShoppingListActions.AddI
     case ShoppingListActions.ADD_INGREDIENT:
       return {
         ...state,
-        ingredients: [
-          ...state.ingredients,
-          action.payload
-        ]
+        ingredients: [ ...state.ingredients, action.payload ]
       }
 
     /**
