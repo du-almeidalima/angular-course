@@ -26,8 +26,23 @@ const shoppingListReducer = (state = initState, action: ShoppingListActions.Shop
     case ShoppingListActions.ADD_INGREDIENTS:
       return {
         ...state,
-        ingredients: [...state.ingredients, ...action.payload]
+        ingredients: [ ...state.ingredients, ...action.payload ]
       }
+    case ShoppingListActions.UPDATE_INGREDIENT:
+      const updatedIngredients = [ ...state.ingredients ];
+      updatedIngredients[action.payload.index] = action.payload.updatedIngredient;
+
+      return {
+        ...state,
+        ingredients: updatedIngredients
+      }
+
+    case ShoppingListActions.REMOVE_INGREDIENT:
+      return {
+        ...state,
+        ingredients: [ ...state.ingredients.filter((ig, igIndex) => igIndex !== action.payload)]
+      }
+
     /**
      * For the initial state, we need to use the "default" clause, because NgRx will emit this action at first set up
      */
