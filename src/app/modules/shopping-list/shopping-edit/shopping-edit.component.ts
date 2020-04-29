@@ -5,7 +5,10 @@ import {Subscription} from 'rxjs';
 
 import {Ingredient} from '../../../shared/models/ingredient.model';
 import {ShoppingListService} from '../shopping-list.service';
-import * as shoppingListActions from '../store/shopping-list.actions';
+
+/* This is the convention for importing the reducer file */
+import * as fromShoppingList from '../store/shopping-list.reducer';
+import * as ShoppingListActions from '../store/shopping-list.actions';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -23,24 +26,22 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private shoppingListService: ShoppingListService,
-    private store: Store<{ shoppingList: { ingredients: Ingredient[] } }>
+    private store: Store<fromShoppingList.AppState>
   ){}
 
   ngOnInit(): void {
-    this.selectIngredientSubscription = this.shoppingListService.selectedIngredient
-      .subscribe((index: number) => {
-
-        this.ingredientIndex = index;
-        this.editMode = true;
-        // Update the form for the selected Ingredient
-        // const editedIngredient = this.shoppingListService.getIngredientByIndex(index);
-        this.store.select(state => state.shoppingList.ingredients[index])
-          .subscribe(ingredient => {
-            this.ingredientForm.setValue({
-              name: ingredient.name,
-              amount: ingredient.amount
-            })
+    this.selectIngredientSubscription = this.store.select('shoppingList')
+      .subscribe(stateData => {
+        if (stateData.editedIngredientIndex > -1) {
+          this.editMode = true;
+          this.ingredientIndex = stateData.editedIngredientIndex;
+          this.ingredientForm.setValue({
+            name: stateData.editedIngredient.name,
+            amount: stateData.editedIngredient.amount
           })
+        } else {
+          this.editMode = false;
+        }
       })
   }
 
@@ -57,11 +58,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         index: this.ingredientIndex,
         updatedIngredient: ingredient
       }
-      const action = new shoppingListActions.UpdateIngredient(payload);
+      const action = new ShoppingListActions.UpdateIngredient(payload);
       this.store.dispatch(action);
     } else {
       // Creating the AddIngredient Action
-      const action = new shoppingListActions.AddIngredient(ingredient);
+      const action = new ShoppingListActions.AddIngredient(ingredient);
       this.store.dispatch(action);
     }
     this.clearForm();
@@ -72,14 +73,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   public onDelete(): void {
-    try {
-      this.shoppingListService.deleteIngredient(this.ingredientIndex);
-    } catch (e) {
-      if (e instanceof RangeError) {
-        console.error(e.name, e.message, e.stack);
-      }
-    }
-
+    this.store.dispatch(new ShoppingListActions.RemoveIngredient(this.ingredientIndex))
     this.clearForm();
   }
 
