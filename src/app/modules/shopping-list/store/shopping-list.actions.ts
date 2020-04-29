@@ -25,23 +25,18 @@ export class AddIngredients implements Action{
 export class UpdateIngredient implements Action{
   readonly type = UPDATE_INGREDIENT;
 
-  constructor(public payload: {index: number, updatedIngredient: Ingredient}) {}
+  constructor(public payload: Ingredient) {}
 }
 
 export class RemoveIngredient implements Action{
   readonly type = REMOVE_INGREDIENT;
-
-  /**
-   * @param payload Ingredient index
-   */
-  constructor(public payload: number) {}
 }
 
 export class StartEdit implements Action {
   readonly type = START_EDIT
 
   /**
-   * @param payload Ingredient index
+   * @param payload Ingredient index, this will be used to Updated and Delete an Ingredient afterwards
    */
   constructor(public payload: number) {}
 }

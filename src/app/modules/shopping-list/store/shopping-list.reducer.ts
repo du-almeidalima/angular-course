@@ -41,7 +41,7 @@ const shoppingListReducer = (state: ShoppingListState = initState, action: Shopp
       }
     case ShoppingListActions.UPDATE_INGREDIENT:
       const updatedIngredients = [ ...state.ingredients ];
-      updatedIngredients[action.payload.index] = action.payload.updatedIngredient;
+      updatedIngredients[state.editedIngredientIndex] = action.payload;
 
       return {
         ...state,
@@ -51,7 +51,7 @@ const shoppingListReducer = (state: ShoppingListState = initState, action: Shopp
     case ShoppingListActions.REMOVE_INGREDIENT:
       return {
         ...state,
-        ingredients: [ ...state.ingredients.filter((ig, igIndex) => igIndex !== action.payload)]
+        ingredients: [ ...state.ingredients.filter((ig, igIndex) => igIndex !== state.editedIngredientIndex)]
       }
 
     case ShoppingListActions.START_EDIT:

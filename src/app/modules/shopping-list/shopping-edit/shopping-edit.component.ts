@@ -16,13 +16,9 @@ import * as ShoppingListActions from '../store/shopping-list.actions';
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy {
   // Used to edit
-  public ingredientIndex: number;
   public editMode = false;
-
   private selectIngredientSubscription: Subscription;
-
-  @ViewChild('f')
-  private ingredientForm: NgForm;
+  @ViewChild('f') private ingredientForm: NgForm;
 
   constructor(
     private shoppingListService: ShoppingListService,
@@ -34,7 +30,6 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       .subscribe(stateData => {
         if (stateData.editedIngredientIndex > -1) {
           this.editMode = true;
-          this.ingredientIndex = stateData.editedIngredientIndex;
           this.ingredientForm.setValue({
             name: stateData.editedIngredient.name,
             amount: stateData.editedIngredient.amount
@@ -54,14 +49,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     const ingredient = new Ingredient(name, amount);
 
     if (this.editMode) {
-      const payload = {
-        index: this.ingredientIndex,
-        updatedIngredient: ingredient
-      }
-      const action = new ShoppingListActions.UpdateIngredient(payload);
+      // The index of selected item is already on State
+      const action = new ShoppingListActions.UpdateIngredient(ingredient);
       this.store.dispatch(action);
     } else {
-      // Creating the AddIngredient Action
       const action = new ShoppingListActions.AddIngredient(ingredient);
       this.store.dispatch(action);
     }
@@ -73,15 +64,14 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   public onDelete(): void {
-    this.store.dispatch(new ShoppingListActions.RemoveIngredient(this.ingredientIndex))
+    // The index of selected item is already on State
+    this.store.dispatch(new ShoppingListActions.RemoveIngredient());
     this.clearForm();
   }
 
   // Utils
   private clearForm(): void{
     this.editMode = false;
-    this.ingredientIndex = null;
-
     this.ingredientForm.reset()
   }
 }
