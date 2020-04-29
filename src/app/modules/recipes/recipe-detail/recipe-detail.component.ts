@@ -5,7 +5,6 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Recipe} from '../../../shared/models/recipe.model';
 import {RecipeService} from '../recipe.service';
 import {Ingredient} from "../../../shared/models/ingredient.model";
-import {ShoppingListService} from '../../shopping-list/shopping-list.service';
 import * as shoppingListActions from '../../shopping-list/store/shopping-list.actions';
 
 @Component({
@@ -18,8 +17,7 @@ export class RecipeDetailComponent implements OnInit {
   // Properties
   public currentRecipe: Recipe;
 
-  constructor(private shoppingListService: ShoppingListService,
-              private recipeService: RecipeService,
+  constructor(private recipeService: RecipeService,
               private store: Store<{ shoppingList: { ingredients: Ingredient[]} }>,
               private route: ActivatedRoute,
               private router: Router) { }

@@ -4,8 +4,6 @@ import {Store} from "@ngrx/store";
 import {Subscription} from 'rxjs';
 
 import {Ingredient} from '../../../shared/models/ingredient.model';
-import {ShoppingListService} from '../shopping-list.service';
-
 /* This is the convention for importing the reducer file */
 import * as fromShoppingList from '../store/shopping-list.reducer';
 import * as ShoppingListActions from '../store/shopping-list.actions';
@@ -20,10 +18,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   private selectIngredientSubscription: Subscription;
   @ViewChild('f') private ingredientForm: NgForm;
 
-  constructor(
-    private shoppingListService: ShoppingListService,
-    private store: Store<fromShoppingList.AppState>
-  ){}
+  constructor(private store: Store<fromShoppingList.AppState>){}
 
   ngOnInit(): void {
     this.selectIngredientSubscription = this.store.select('shoppingList')
@@ -37,10 +32,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         } else {
           this.editMode = false;
         }
-      })
+      });
   }
 
   ngOnDestroy(): void {
+    this.store.dispatch(new ShoppingListActions.StopEdit());
     this.selectIngredientSubscription.unsubscribe();
   }
 

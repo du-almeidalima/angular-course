@@ -51,7 +51,9 @@ const shoppingListReducer = (state: ShoppingListState = initState, action: Shopp
     case ShoppingListActions.REMOVE_INGREDIENT:
       return {
         ...state,
-        ingredients: [ ...state.ingredients.filter((ig, igIndex) => igIndex !== state.editedIngredientIndex)]
+        ingredients: [ ...state.ingredients.filter((ig, igIndex) => igIndex !== state.editedIngredientIndex)],
+        editedIngredientIndex: -1,
+        editedIngredient: null
       }
 
     case ShoppingListActions.START_EDIT:
