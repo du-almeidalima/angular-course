@@ -1,16 +1,19 @@
 import {Injectable} from "@angular/core";
 import {Router} from "@angular/router";
-
 import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
+import {Store} from "@ngrx/store";
+
 import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
 
 import {AuthResponseData} from "../../shared/models/firebase/response-data.model";
 import {MessageStatus} from "../../shared/enums/message-status.enum";
 import {MessageMapper} from "../../shared/utils/message-mapper";
-import {User} from "./user.model";
 
+import {User} from "./user.model";
 import {environment as env} from "../../../environments/environment";
+import * as fromApp from '../../store/app.reducer';
+import * as AuthActions from '../auth/store/auth.actions'
 
 
 /**
@@ -35,7 +38,10 @@ export class AuthService {
     return this._userSubject.asObservable();
   }
 
-  constructor (private http: HttpClient, private router: Router) {}
+  constructor (
+    private http: HttpClient,
+    private router: Router,
+    private store: Store<fromApp.AppState> ) {}
 
   public loginOrSignUp(email: string, password: string, isLogin: boolean): Observable<AuthResponseData> {
     const authUrl = isLogin ? `${this.LOGIN_URL}` : `${this.SIGN_IN_URL}`;
@@ -119,14 +125,8 @@ export class AuthService {
 
   private handleAuthentication(email: string, id: string, token: string, expiresIn: number) {
     const expirationDate = new Date().getTime() + (expiresIn * 1000);
-    const user = new User(
-      email,
-      id,
-      token,
-      new Date(expirationDate)
-    );
-    this._userSubject.next(user);
-
+    const user = new User(email, id, token, new Date(expirationDate));
+    this.store.dispatch(new AuthActions.LogIn(user));
     // Storing in localStorage so the user can access it when the page refreshes.
     localStorage.setItem('userData', JSON.stringify(user));
     // Starting Session countdown
