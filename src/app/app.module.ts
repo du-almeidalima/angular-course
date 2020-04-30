@@ -1,17 +1,14 @@
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserModule} from '@angular/platform-browser';
-import {Action, ActionReducerMap, StoreModule} from "@ngrx/store";
+import {StoreModule} from "@ngrx/store";
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {CoreModule} from "./core/core.module";
 import {SharedModule} from "./shared/shared.module";
 import {AppRoutesModule} from "./app-routes.module";
-import {shoppingListReducer} from "./modules/shopping-list/store/shopping-list.reducer";
 
-const REDUCERS: ActionReducerMap<any, Action> = {
-  shoppingList: shoppingListReducer
-}
+import * as fromApp from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -21,7 +18,7 @@ const REDUCERS: ActionReducerMap<any, Action> = {
     BrowserModule,
     AppRoutesModule,
     HttpClientModule,
-    StoreModule.forRoot(REDUCERS),
+    StoreModule.forRoot(fromApp.reducers),
     CoreModule,
     SharedModule,
   ],
