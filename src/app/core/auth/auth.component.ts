@@ -20,7 +20,6 @@ import * as AuthActions from '../auth/store/auth.actions';
 export class AuthComponent implements OnDestroy, OnInit{
   public isLoginMode = true;
   public isLoading = false;
-  public error: string = null;
 
   public footerMessage: [string, string] = ['New here?', 'Create an account'];
   public buttonMessage: string = 'Log In';
@@ -37,7 +36,9 @@ export class AuthComponent implements OnDestroy, OnInit{
   ngOnInit(): void {
     this.store.select('auth').subscribe(authState => {
       this.isLoading = authState.isLoading;
-      this.error = authState.authError;
+      if (authState.authError) {
+        this.showErrorFeedBackMessage(authState.authError)
+      }
     })
   }
 

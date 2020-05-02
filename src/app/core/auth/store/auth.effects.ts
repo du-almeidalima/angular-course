@@ -1,20 +1,23 @@
-import {HttpClient, HttpParams} from "@angular/common/http";
-import {catchError, map, switchMap} from "rxjs/operators";
+import {Injectable} from "@angular/core";
+import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {catchError, map, switchMap, tap} from "rxjs/operators";
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {of} from "rxjs";
-import { Actions, ofType, Effect } from '@ngrx/effects';
 
 import * as AuthActions from './auth.actions';
-import {AuthResponseData} from "../../../shared/models/firebase/response-data.model";
-import {environment as env} from "../../../../environments/environment";
 import {User} from "../user.model";
-import {Injectable} from "@angular/core";
+import {environment as env} from "../../../../environments/environment";
+import {AuthResponseData} from "../../../shared/models/firebase/response-data.model";
+import {MessageMapper} from "../../../shared/utils/message-mapper";
+import {MessageStatus} from "../../../shared/enums/message-status.enum";
 
 @Injectable()
 export class AuthEffects {
   private readonly SIGN_IN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp';
   private readonly LOGIN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword';
 
-  constructor( private actions$: Actions, private http: HttpClient ) {}
+  constructor( private actions$: Actions, private http: HttpClient, private router: Router ) {}
 
   @Effect()
   authLoginStart = this.actions$.pipe(
@@ -37,16 +40,29 @@ export class AuthEffects {
             const expirationDate = new Date().getTime() + (+resData.expiresIn * 1000);
             const user = new User(resData.email, resData.localId, resData.idToken, new Date(expirationDate));
 
-            console.log(user);
             return new AuthActions.LogInSuccess(user);
           }),
-          catchError(err => {
-            return of();
+          catchError((errorRes: HttpErrorResponse) => {
+            const errorCode = errorRes?.error?.error?.message;
+            const responseMessage = errorCode
+            ? MessageMapper.mapMessage(errorCode)
+            : { message: 'A different error message format was received from API', status: MessageStatus.ERROR }
+
+            return of(new AuthActions.LogInFail(responseMessage))
           })
         )
     })
     // Creating a new action based on the return from the last Observable
   );
+
+  @Effect({dispatch: false})
+  authLoginSuccess = this.actions$.pipe(
+    ofType(AuthActions.LOGIN_SUCCESS),
+    tap(() => {
+
+      this.router.navigate(['/'])
+    })
+  )
 }
 
 /*
@@ -65,6 +81,7 @@ export class AuthEffects {
  * makes it different from the reduce is that we don't change the State, so an action is something we need to do in our
  * app, HTTP Calls, Websocket... But it doesn't interfere the state. After this code is done, we can dispatch a new
  * Action.
+ * Also, the effect for AuthActions.LOGIN_SUCCESS is firstly captured in AuthReducer and then in AuthEffects.
  * OBS: It's not needed to call subscribe on a Action, NgRx does it already.
  */
 

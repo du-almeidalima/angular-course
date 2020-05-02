@@ -1,5 +1,6 @@
 import {Action} from "@ngrx/store";
 import {User} from "../user.model";
+import {ResponseMessage} from "../../../shared/models/response-message.model";
 
 export const LOGIN_START = '[Auth] Login Started';
 export const LOGIN_SUCCESS = '[Auth] Login Success';
@@ -22,7 +23,7 @@ export class LogOut implements Action {
 
 export class LogInFail implements Action{
   readonly type = LOGIN_FAIL;
-  constructor(public payload: string) {}
+  constructor(public payload: ResponseMessage) {}
 }
 
 export type AuthActions = LoginStart | LogInSuccess | LogInFail | LogOut;

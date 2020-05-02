@@ -1,9 +1,10 @@
 import { User } from '../user.model';
+import { ResponseMessage } from "../../../shared/models/response-message.model";
 import  * as AuthActions from './auth.actions';
 
 export interface AuthState {
   user: User,
-  authError: string,
+  authError: ResponseMessage,
   isLoading: boolean
 }
 
@@ -24,6 +25,7 @@ const authReducer = (state: AuthState = initialState, action: AuthActions.AuthAc
       }
 
     case AuthActions.LOGIN_SUCCESS:
+      console.log('In AuthReducer: LOGIN_SUCCESS')
       return {
         ...state,
         user: action.payload,
