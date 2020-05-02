@@ -1,20 +1,26 @@
-import {Component, ComponentFactoryResolver, OnDestroy, ViewChild} from "@angular/core";
+import {Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {NgForm} from "@angular/forms";
+import {Router} from "@angular/router";
+import {Store} from "@ngrx/store";
+import {Subscription} from "rxjs";
+
 import {AuthService} from "./auth.service";
 import {ResponseMessage} from "../../shared/models/response-message.model";
-import {Router} from "@angular/router";
 import {FeedbackMessageComponent} from "../../shared/components/feedback-message/feedback-message.component";
 import {PlaceholderDirective} from "../../shared/directives/placeholder.directive";
-import {Subscription} from "rxjs";
+import * as fromApp from '../../store/app.reducer';
+import * as AuthActions from '../auth/store/auth.actions';
+
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements OnDestroy{
+export class AuthComponent implements OnDestroy, OnInit{
   public isLoginMode = true;
   public isLoading = false;
+  public error: string = null;
 
   public footerMessage: [string, string] = ['New here?', 'Create an account'];
   public buttonMessage: string = 'Log In';
@@ -25,7 +31,15 @@ export class AuthComponent implements OnDestroy{
 
   constructor(private authService: AuthService,
               private router: Router,
-              private componentFactoryResolver: ComponentFactoryResolver) {}
+              private componentFactoryResolver: ComponentFactoryResolver,
+              private store: Store<fromApp.AppState>) {}
+
+  ngOnInit(): void {
+    this.store.select('auth').subscribe(authState => {
+      this.isLoading = authState.isLoading;
+      this.error = authState.authError;
+    })
+  }
 
   ngOnDestroy(): void {
     if (this.messageFeedbackSubscription) {
@@ -48,6 +62,7 @@ export class AuthComponent implements OnDestroy{
       console.error('Form is invalid!');
       return;
     }
+
     this.loginOrSignIn(form.value.email, form.value.password)
   }
 
@@ -55,21 +70,26 @@ export class AuthComponent implements OnDestroy{
     // Setting Spinner
     this.isLoading = true;
 
-    this.authService.loginOrSignUp(email, password, this.isLoginMode)
-      .subscribe(
-        // Success
-        (resData: any) => {
-          console.log(resData);
-          this.isLoading = false;
-          this.router.navigate(['/recipes'])
-        },
-        // Error
-        (errData: ResponseMessage) => {
-          // Setting FeedBackMessage for FeedBackMessage component
-          this.showErrorFeedBackMessage(errData);
-          this.isLoading = false;
-        }
-      )
+    if (this.isLoginMode) {
+      this.store.dispatch(new AuthActions.LoginStart({email, password}))
+    }
+    else {
+      // this.authService.loginOrSignUp(email, password, this.isLoginMode)
+      //   .subscribe(
+      //     // Success
+      //     (resData: any) => {
+      //       console.log(resData);
+      //       this.isLoading = false;
+      //       this.router.navigate(['/recipes'])
+      //     },
+      //     // Error
+      //     (errData: ResponseMessage) => {
+      //       // Setting FeedBackMessage for FeedBackMessage component
+      //       this.showErrorFeedBackMessage(errData);
+      //       this.isLoading = false;
+      //     }
+      //   )
+    }
   }
 
   private showErrorFeedBackMessage(errData: ResponseMessage) {
