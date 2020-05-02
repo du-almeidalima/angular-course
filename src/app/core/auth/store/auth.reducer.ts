@@ -11,13 +11,13 @@ const initialState: AuthState = {
 
 const authReducer = (state: AuthState = initialState, action: AuthActions.AuthActions) => {
   switch (action.type) {
-    case "LOG_IN":
+    case AuthActions.LOG_IN:
       return {
         ...state,
         user: action.payload
       };
 
-    case "LOG_OUT":
+    case AuthActions.LOG_OUT:
       return {
         user: null
       };
