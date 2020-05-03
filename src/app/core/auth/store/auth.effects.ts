@@ -11,14 +11,30 @@ import {MessageMapper} from "../../../shared/utils/message-mapper";
 import {MessageStatus} from "../../../shared/enums/message-status.enum";
 import {AuthResponseData} from "../../../shared/models/firebase/response-data.model";
 import * as AuthActions from './auth.actions';
+import {AuthService} from "../auth.service";
 
+/**
+ * @author Eduardo Lima
+ *
+ * @description NgRx Effect Class responsible for mapping effects from User Authentication actions.
+ * it communicates with FireBase Authentication API and uses the {@link MessageMapper} to parse the message code
+ * form Firebase into User friendly message.
+ *
+ * @see {@link MessageMapper}
+ * @see [Firebase REST Authentication API]{@link https://firebase.google.com/docs/reference/rest/auth#section-create-email-password}
+ */
 @Injectable()
 export class AuthEffects {
   private readonly SIGN_IN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp';
   private readonly LOGIN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword';
   private readonly LS_USER_KEY = 'userData';
 
-  constructor( private actions$: Actions, private http: HttpClient, private router: Router ) {}
+  constructor (
+    private actions$: Actions,
+    private http: HttpClient,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   @Effect()
   authLoginStart = this.actions$.pipe(
@@ -39,6 +55,7 @@ export class AuthEffects {
         ).pipe(
           map((resData: AuthResponseData) => {
             // Creating a new action based on the return from the last Observable
+            this.authService.setLogoutTimer(+resData.expiresIn * 1000);
             return handleAuthentication.call(this, resData);
           }),
           catchError((errData: HttpErrorResponse) => {
@@ -65,6 +82,7 @@ export class AuthEffects {
           }
         ).pipe(
           map((resData: AuthResponseData) => {
+            this.authService.setLogoutTimer(+resData.expiresIn * 1000);
             return handleAuthentication.call(this, resData);
           }),
           catchError((errData: HttpErrorResponse) => {
@@ -86,6 +104,7 @@ export class AuthEffects {
   authLogout = this.actions$.pipe(
     ofType(AuthActions.LOGOUT),
     tap(() => {
+      this.authService.clearLogoutTimer();
       localStorage.removeItem(this.LS_USER_KEY)
     })
   )
@@ -95,13 +114,13 @@ export class AuthEffects {
     ofType(AuthActions.AUTO_LOGIN),
     map(() => {
       const restoredUser = JSON.parse(localStorage.getItem('userData'));
-
       if (restoredUser){
         const {email, id, _token, _tokenExpirationDate} = restoredUser;
         const user = new User(email, id, _token, new Date(_tokenExpirationDate));
 
         // Checking if token is still valid (check User class)
         if (user.token){
+          this.authService.setLogoutTimer(_tokenExpirationDate * 1000);
           return new AuthActions.AuthenticateSuccess(user);
           // Starting Session countdown
           // this.autoLogout(new Date(_tokenExpirationDate).getTime() - new Date().getTime())
