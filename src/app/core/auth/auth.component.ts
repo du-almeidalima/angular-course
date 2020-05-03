@@ -1,10 +1,8 @@
 import {Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {NgForm} from "@angular/forms";
-import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {Subscription} from "rxjs";
 
-import {AuthService} from "./auth.service";
 import {ResponseMessage} from "../../shared/models/response-message.model";
 import {FeedbackMessageComponent} from "../../shared/components/feedback-message/feedback-message.component";
 import {PlaceholderDirective} from "../../shared/directives/placeholder.directive";
@@ -27,10 +25,7 @@ export class AuthComponent implements OnDestroy, OnInit{
   @ViewChild(PlaceholderDirective)
   public messageFeedbackHost: PlaceholderDirective;
 
-  constructor(private authService: AuthService,
-              private router: Router,
-              private componentFactoryResolver: ComponentFactoryResolver,
-              private store: Store<fromApp.AppState>) {}
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private store: Store<fromApp.AppState>) {}
 
   // ANGULAR HOOKS
   ngOnInit(): void {
