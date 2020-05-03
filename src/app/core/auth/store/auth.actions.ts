@@ -3,27 +3,42 @@ import {User} from "../user.model";
 import {ResponseMessage} from "../../../shared/models/response-message.model";
 
 export const LOGIN_START = '[Auth] Login Started';
-export const LOGIN_SUCCESS = '[Auth] Login Success';
-export const LOGIN_FAIL = '[Auth] Login Fail';
+export const SIGN_UP_START = '[Auth] Sign up Started';
+export const AUTHENTICATE_SUCCESS = '[Auth] Authenticate Success';
+export const AUTHENTICATE_FAIL = '[Auth] Authenticate Fail';
 export const LOGOUT = '[Auth] Logout';
+export const CLEAR_ERROR = '[Auth] Clear Error';
 
 export class LoginStart implements Action {
   readonly type = LOGIN_START;
   constructor(public payload: { email: string, password: string }) {}
 }
 
-export class LogInSuccess implements Action {
-  readonly type = LOGIN_SUCCESS;
+export class AuthenticateSuccess implements Action {
+  readonly type = AUTHENTICATE_SUCCESS;
   constructor(public payload: User) {}
+}
+
+export class AuthenticateFail implements Action{
+  readonly type = AUTHENTICATE_FAIL;
+  constructor(public payload: ResponseMessage) {}
 }
 
 export class LogOut implements Action {
   readonly type = LOGOUT;
 }
 
-export class LogInFail implements Action{
-  readonly type = LOGIN_FAIL;
-  constructor(public payload: ResponseMessage) {}
+export class SignUpStart implements Action {
+  readonly type = SIGN_UP_START;
+  constructor(public payload: { email: string, password: string }) {}
 }
 
-export type AuthActions = LoginStart | LogInSuccess | LogInFail | LogOut;
+export class ClearError implements Action{
+  readonly type = CLEAR_ERROR;
+}
+
+export type AuthActions = LoginStart | AuthenticateSuccess | AuthenticateFail | LogOut | SignUpStart | ClearError;
+
+/*
+ * The AUTHENTICATE_SUCCESS and AUTHENTICATE_FAIL actions are being used for both Sign in and Login process.
+ */

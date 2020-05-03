@@ -5,17 +5,18 @@ import {catchError, map, switchMap, tap} from "rxjs/operators";
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {of} from "rxjs";
 
-import * as AuthActions from './auth.actions';
-import {User} from "../user.model";
 import {environment as env} from "../../../../environments/environment";
-import {AuthResponseData} from "../../../shared/models/firebase/response-data.model";
+import {User} from "../user.model";
 import {MessageMapper} from "../../../shared/utils/message-mapper";
 import {MessageStatus} from "../../../shared/enums/message-status.enum";
+import {AuthResponseData} from "../../../shared/models/firebase/response-data.model";
+import * as AuthActions from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
   private readonly SIGN_IN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp';
   private readonly LOGIN_URL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword';
+  private readonly LS_USER_KEY = 'userData';
 
   constructor( private actions$: Actions, private http: HttpClient, private router: Router ) {}
 
@@ -37,33 +38,84 @@ export class AuthEffects {
           }
         ).pipe(
           map((resData: AuthResponseData) => {
-            const expirationDate = new Date().getTime() + (+resData.expiresIn * 1000);
-            const user = new User(resData.email, resData.localId, resData.idToken, new Date(expirationDate));
-
-            return new AuthActions.LogInSuccess(user);
+            // Creating a new action based on the return from the last Observable
+            return handleAuthentication(resData);
           }),
-          catchError((errorRes: HttpErrorResponse) => {
-            const errorCode = errorRes?.error?.error?.message;
-            const responseMessage = errorCode
-            ? MessageMapper.mapMessage(errorCode)
-            : { message: 'A different error message format was received from API', status: MessageStatus.ERROR }
-
-            return of(new AuthActions.LogInFail(responseMessage))
+          catchError((errData: HttpErrorResponse) => {
+            // Creating a new action based on the return from the last Observable
+            return of(handleErrorAuthentication(errData));
           })
         )
     })
-    // Creating a new action based on the return from the last Observable
   );
 
-  @Effect({dispatch: false})
-  authLoginSuccess = this.actions$.pipe(
-    ofType(AuthActions.LOGIN_SUCCESS),
-    tap(() => {
+  @Effect()
+  authSignUpStart = this.actions$.pipe(
+    ofType(AuthActions.SIGN_UP_START),
+    switchMap((authData: AuthActions.SignUpStart) => {
+      return this.http
+        .post<AuthResponseData>(this.SIGN_IN_URL,
+          {
+            email: authData.payload.email,
+            password: authData.payload.password,
+            returnSecureToken: true
+          },
+          {
+            params: new HttpParams().set('key', env.firebaseAPIKey)
+          }
+        ).pipe(
+          map((resData: AuthResponseData) => {
+            return handleAuthentication(resData);
+          }),
+          catchError((errData: HttpErrorResponse) => {
+            return of(handleErrorAuthentication(errData));
+          })
+        )
+    })
+  )
 
+  @Effect({dispatch: false})
+  authRedirect = this.actions$.pipe(
+    ofType(AuthActions.AUTHENTICATE_SUCCESS, AuthActions.LOGOUT),
+    tap(() => {
       this.router.navigate(['/'])
     })
   )
+
+  @Effect({ dispatch: false })
+  authLogout = this.actions$.pipe(
+    ofType(AuthActions.LOGOUT),
+    tap(() => {
+      localStorage.removeItem(this.LS_USER_KEY)
+    })
+  )
+
 }
+
+
+
+  /* HELPER FUNCTIONS */
+
+const handleAuthentication = (resData: AuthResponseData): AuthActions.AuthActions => {
+    const expirationDate = new Date().getTime() + (+resData.expiresIn * 1000);
+    const user = new User(resData.email, resData.localId, resData.idToken, new Date(expirationDate));
+    // Storing user for Auto login feature
+    localStorage.setItem(this.LS_USER_KEY, JSON.stringify(user));
+
+    return new AuthActions.AuthenticateSuccess(user);
+  }
+
+const handleErrorAuthentication = ((errData: HttpErrorResponse): AuthActions.AuthActions => {
+  const errorCode = errData?.error?.error?.message;
+  const responseMessage = errorCode
+    ? MessageMapper.mapMessage(errorCode)
+    : { message: 'A different error message format was received from API', status: MessageStatus.ERROR }
+
+  return new AuthActions.AuthenticateFail(responseMessage)
+})
+
+
+
 
 /*
  * Effects are an RxJS powered side effect model for Store. Effects use streams to provide new sources of actions to reduce
@@ -81,7 +133,7 @@ export class AuthEffects {
  * makes it different from the reduce is that we don't change the State, so an action is something we need to do in our
  * app, HTTP Calls, Websocket... But it doesn't interfere the state. After this code is done, we can dispatch a new
  * Action.
- * Also, the effect for AuthActions.LOGIN_SUCCESS is firstly captured in AuthReducer and then in AuthEffects.
+ * Also, the effect for AuthActions.AUTHENTICATE_SUCCESS is firstly captured in AuthReducer and then in AuthEffects.
  * OBS: It's not needed to call subscribe on a Action, NgRx does it already.
  */
 

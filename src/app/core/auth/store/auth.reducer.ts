@@ -17,6 +17,7 @@ const initialState: AuthState = {
 const authReducer = (state: AuthState = initialState, action: AuthActions.AuthActions) => {
   switch (action.type) {
     case AuthActions.LOGIN_START:
+    case AuthActions.SIGN_UP_START:
       return {
         ...state,
         user: null,
@@ -24,8 +25,7 @@ const authReducer = (state: AuthState = initialState, action: AuthActions.AuthAc
         isLoading: true
       }
 
-    case AuthActions.LOGIN_SUCCESS:
-      console.log('In AuthReducer: LOGIN_SUCCESS')
+    case AuthActions.AUTHENTICATE_SUCCESS:
       return {
         ...state,
         user: action.payload,
@@ -33,7 +33,7 @@ const authReducer = (state: AuthState = initialState, action: AuthActions.AuthAc
         isLoading: false
       };
 
-    case AuthActions.LOGIN_FAIL:
+    case AuthActions.AUTHENTICATE_FAIL:
       return {
         ...state,
         user: null,
@@ -47,6 +47,12 @@ const authReducer = (state: AuthState = initialState, action: AuthActions.AuthAc
         user: null,
         authError: null,
       };
+
+    case AuthActions.CLEAR_ERROR:
+      return {
+        ...state,
+        authError: null
+      }
 
     default:
       return state;

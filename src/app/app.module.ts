@@ -14,11 +14,14 @@ import {environment as env} from "../environments/environment";
 import * as fromApp from './store/app.reducer';
 import {AuthEffects} from "./core/auth/store/auth.effects";
 
-export function logger(reducer: ActionReducer<fromApp.AppState>): any {
-  return storeLogger()(reducer);
+function logger(reducer: ActionReducer<fromApp.AppState>): any {
+  return storeLogger({
+    timestamp: false,
+    duration: false
+  })(reducer);
 }
 
-export const metaReducers = env.production ? [] : [logger];
+const metaReducers = env.production ? [] : [logger];
 
 @NgModule({
   declarations: [

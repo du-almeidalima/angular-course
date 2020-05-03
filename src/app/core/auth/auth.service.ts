@@ -126,7 +126,7 @@ export class AuthService {
   private handleAuthentication(email: string, id: string, token: string, expiresIn: number) {
     const expirationDate = new Date().getTime() + (expiresIn * 1000);
     const user = new User(email, id, token, new Date(expirationDate));
-    this.store.dispatch(new AuthActions.LogInSuccess(user));
+    this.store.dispatch(new AuthActions.AuthenticateSuccess(user));
     // Storing in localStorage so the user can access it when the page refreshes.
     localStorage.setItem('userData', JSON.stringify(user));
     // Starting Session countdown

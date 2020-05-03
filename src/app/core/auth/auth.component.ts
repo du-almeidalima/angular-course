@@ -20,21 +20,21 @@ import * as AuthActions from '../auth/store/auth.actions';
 export class AuthComponent implements OnDestroy, OnInit{
   public isLoginMode = true;
   public isLoading = false;
-
   public footerMessage: [string, string] = ['New here?', 'Create an account'];
   public buttonMessage: string = 'Log In';
-
+  private messageFeedbackSubscription: Subscription;
+  private storeSubscription: Subscription;
   @ViewChild(PlaceholderDirective)
   public messageFeedbackHost: PlaceholderDirective;
-  private messageFeedbackSubscription: Subscription;
 
   constructor(private authService: AuthService,
               private router: Router,
               private componentFactoryResolver: ComponentFactoryResolver,
               private store: Store<fromApp.AppState>) {}
 
+  // ANGULAR HOOKS
   ngOnInit(): void {
-    this.store.select('auth').subscribe(authState => {
+    this.storeSubscription = this.store.select('auth').subscribe(authState => {
       this.isLoading = authState.isLoading;
       if (authState.authError) {
         this.showErrorFeedBackMessage(authState.authError)
@@ -46,8 +46,12 @@ export class AuthComponent implements OnDestroy, OnInit{
     if (this.messageFeedbackSubscription) {
       this.messageFeedbackSubscription.unsubscribe();
     }
+    if (this.storeSubscription) {
+      this.storeSubscription.unsubscribe();
+    }
   }
 
+  // COMPONENTS METHODS
   public changePage(): void {
     this.isLoginMode = !this.isLoginMode;
     this.footerMessage = this.isLoginMode ?
@@ -64,32 +68,12 @@ export class AuthComponent implements OnDestroy, OnInit{
       return;
     }
 
-    this.loginOrSignIn(form.value.email, form.value.password)
-  }
-
-  private loginOrSignIn(email: string, password: string): void {
-    // Setting Spinner
-    this.isLoading = true;
+    const {email, password} = form.value;
 
     if (this.isLoginMode) {
-      this.store.dispatch(new AuthActions.LoginStart({email, password}))
-    }
-    else {
-      // this.authService.loginOrSignUp(email, password, this.isLoginMode)
-      //   .subscribe(
-      //     // Success
-      //     (resData: any) => {
-      //       console.log(resData);
-      //       this.isLoading = false;
-      //       this.router.navigate(['/recipes'])
-      //     },
-      //     // Error
-      //     (errData: ResponseMessage) => {
-      //       // Setting FeedBackMessage for FeedBackMessage component
-      //       this.showErrorFeedBackMessage(errData);
-      //       this.isLoading = false;
-      //     }
-      //   )
+      this.store.dispatch(new AuthActions.LoginStart({ email, password }));
+    } else {
+      this.store.dispatch(new AuthActions.SignUpStart({ email, password }));
     }
   }
 
@@ -112,6 +96,7 @@ export class AuthComponent implements OnDestroy, OnInit{
     this.messageFeedbackSubscription = feedBackMessageCompRef.instance.messageDismiss
       .subscribe(() => {
         this.messageFeedbackSubscription.unsubscribe();
+        this.store.dispatch(new AuthActions.ClearError());
         hostViewContainerRef.clear();
       })
   }
