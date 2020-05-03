@@ -39,7 +39,7 @@ export class AuthEffects {
         ).pipe(
           map((resData: AuthResponseData) => {
             // Creating a new action based on the return from the last Observable
-            return handleAuthentication(resData);
+            return handleAuthentication.call(this, resData);
           }),
           catchError((errData: HttpErrorResponse) => {
             // Creating a new action based on the return from the last Observable
@@ -65,7 +65,7 @@ export class AuthEffects {
           }
         ).pipe(
           map((resData: AuthResponseData) => {
-            return handleAuthentication(resData);
+            return handleAuthentication.call(this, resData);
           }),
           catchError((errData: HttpErrorResponse) => {
             return of(handleErrorAuthentication(errData));
@@ -90,13 +90,36 @@ export class AuthEffects {
     })
   )
 
+  @Effect()
+  autoLogin = this.actions$.pipe(
+    ofType(AuthActions.AUTO_LOGIN),
+    map(() => {
+      const restoredUser = JSON.parse(localStorage.getItem('userData'));
+
+      if (restoredUser){
+        const {email, id, _token, _tokenExpirationDate} = restoredUser;
+        const user = new User(email, id, _token, new Date(_tokenExpirationDate));
+
+        // Checking if token is still valid (check User class)
+        if (user.token){
+          return new AuthActions.AuthenticateSuccess(user);
+          // Starting Session countdown
+          // this.autoLogout(new Date(_tokenExpirationDate).getTime() - new Date().getTime())
+        } else {
+          console.info(`User token has expired.`);
+          return { type: 'NULL' }
+        }
+      } else {
+        console.info(`Couldn't find any user to auto login.`);
+        return { type: 'NULL' }
+      }
+    })
+  )
 }
 
+/* HELPER FUNCTIONS */
 
-
-  /* HELPER FUNCTIONS */
-
-const handleAuthentication = (resData: AuthResponseData): AuthActions.AuthActions => {
+function handleAuthentication(resData: AuthResponseData): AuthActions.AuthActions {
     const expirationDate = new Date().getTime() + (+resData.expiresIn * 1000);
     const user = new User(resData.email, resData.localId, resData.idToken, new Date(expirationDate));
     // Storing user for Auto login feature
@@ -105,14 +128,14 @@ const handleAuthentication = (resData: AuthResponseData): AuthActions.AuthAction
     return new AuthActions.AuthenticateSuccess(user);
   }
 
-const handleErrorAuthentication = ((errData: HttpErrorResponse): AuthActions.AuthActions => {
+function handleErrorAuthentication(errData: HttpErrorResponse): AuthActions.AuthActions {
   const errorCode = errData?.error?.error?.message;
   const responseMessage = errorCode
     ? MessageMapper.mapMessage(errorCode)
     : { message: 'A different error message format was received from API', status: MessageStatus.ERROR }
 
   return new AuthActions.AuthenticateFail(responseMessage)
-})
+}
 
 
 

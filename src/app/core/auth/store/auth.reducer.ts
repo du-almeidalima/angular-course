@@ -1,6 +1,6 @@
-import { User } from '../user.model';
-import { ResponseMessage } from "../../../shared/models/response-message.model";
-import  * as AuthActions from './auth.actions';
+import {User} from '../user.model';
+import {ResponseMessage} from "../../../shared/models/response-message.model";
+import * as AuthActions from './auth.actions';
 
 export interface AuthState {
   user: User,
@@ -47,7 +47,6 @@ const authReducer = (state: AuthState = initialState, action: AuthActions.AuthAc
         user: null,
         authError: null,
       };
-
     case AuthActions.CLEAR_ERROR:
       return {
         ...state,

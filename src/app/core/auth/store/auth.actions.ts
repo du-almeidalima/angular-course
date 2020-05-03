@@ -7,6 +7,7 @@ export const SIGN_UP_START = '[Auth] Sign up Started';
 export const AUTHENTICATE_SUCCESS = '[Auth] Authenticate Success';
 export const AUTHENTICATE_FAIL = '[Auth] Authenticate Fail';
 export const LOGOUT = '[Auth] Logout';
+export const AUTO_LOGIN = '[Auth] Auto Login'
 export const CLEAR_ERROR = '[Auth] Clear Error';
 
 export class LoginStart implements Action {
@@ -19,7 +20,7 @@ export class AuthenticateSuccess implements Action {
   constructor(public payload: User) {}
 }
 
-export class AuthenticateFail implements Action{
+export class AuthenticateFail implements Action {
   readonly type = AUTHENTICATE_FAIL;
   constructor(public payload: ResponseMessage) {}
 }
@@ -33,11 +34,22 @@ export class SignUpStart implements Action {
   constructor(public payload: { email: string, password: string }) {}
 }
 
-export class ClearError implements Action{
+export class ClearError implements Action {
   readonly type = CLEAR_ERROR;
 }
 
-export type AuthActions = LoginStart | AuthenticateSuccess | AuthenticateFail | LogOut | SignUpStart | ClearError;
+export class AutoLogin implements Action {
+  readonly type = AUTO_LOGIN;
+}
+
+export type AuthActions =
+  | LoginStart
+  | AuthenticateSuccess
+  | AuthenticateFail
+  | LogOut
+  | SignUpStart
+  | ClearError
+  | AutoLogin
 
 /*
  * The AUTHENTICATE_SUCCESS and AUTHENTICATE_FAIL actions are being used for both Sign in and Login process.
