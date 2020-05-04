@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Store} from "@ngrx/store";
+import {map, switchMap} from "rxjs/operators";
 
 import {Recipe} from '../../../shared/models/recipe.model';
 import {RecipeService} from '../recipe.service';
-
-import * as fromApp from '../../../store/app.reducer'
+import * as fromApp from '../../../store/app.reducer';
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
+
 
 @Component({
   selector: 'app-recipe-detail',
@@ -16,7 +17,7 @@ import * as ShoppingListActions from '../../shopping-list/store/shopping-list.ac
 export class RecipeDetailComponent implements OnInit {
 
   // Properties
-  public currentRecipe: Recipe;
+  public selectedRecipe: Recipe;
 
   constructor(private recipeService: RecipeService,
               private store: Store<fromApp.AppState>,
@@ -26,16 +27,26 @@ export class RecipeDetailComponent implements OnInit {
   ngOnInit() {
     // For changes in the current component
     this.route.params
-      .subscribe((params: Params) => {
-        const recipeId = +params.id;
-        this.currentRecipe = this.recipeService.getRecipeById(recipeId)
+      .pipe(
+        map((params: Params) => {
+          return +params.id
+        }),
+        switchMap(id => {
+          return this.store.select('recipes')
+            .pipe(
+              map(recipesState => recipesState.recipes.find(r => r.id === id))
+            )
+        })
+      )
+      .subscribe(recipe => {
+        this.selectedRecipe = recipe
       })
   }
 
   // Methods
   public onSendToShoppingList(): void {
-    // this.shoppingListService.addIngredients(this.currentRecipe.ingredients);
-    const action = new ShoppingListActions.AddIngredients(this.currentRecipe.ingredients);
+    // this.shoppingListService.addIngredients(this.selectedRecipe.ingredients);
+    const action = new ShoppingListActions.AddIngredients(this.selectedRecipe.ingredients);
     this.store.dispatch(action);
   }
 
@@ -45,11 +56,11 @@ export class RecipeDetailComponent implements OnInit {
   // - resolvers to fetch data that te component being loaded will need
   public onEditRecipe(): void {
     // this.route = <domain>/recipes/edit/2
-    this.router.navigate(['../', this.currentRecipe.id, 'edit'], {relativeTo: this.route});
+    this.router.navigate(['../', this.selectedRecipe.id, 'edit'], {relativeTo: this.route});
   }
 
   public onRemoveRecipe(): void {
-    this.recipeService.removeRecipeById(this.currentRecipe.id);
+    this.recipeService.removeRecipeById(this.selectedRecipe.id);
     this.router.navigate(['recipes']);
   }
 

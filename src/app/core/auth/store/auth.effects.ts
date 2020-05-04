@@ -95,8 +95,10 @@ export class AuthEffects {
   @Effect({dispatch: false})
   authRedirect = this.actions$.pipe(
     ofType(AuthActions.AUTHENTICATE_SUCCESS, AuthActions.LOGOUT),
-    tap(() => {
-      this.router.navigate(['/'])
+    tap((authData: AuthActions.AuthActions) => {
+      if ((authData instanceof AuthActions.AuthenticateSuccess) && (authData.payload.redirect)) {
+        this.router.navigate(['/home']);
+      }
     })
   )
 
@@ -120,10 +122,11 @@ export class AuthEffects {
 
         // Checking if token is still valid (check User class)
         if (user.token){
-          this.authService.setLogoutTimer(_tokenExpirationDate * 1000);
-          return new AuthActions.AuthenticateSuccess(user);
+          const expirationDuration = (new Date(_tokenExpirationDate).getTime() - new Date().getTime());
           // Starting Session countdown
-          // this.autoLogout(new Date(_tokenExpirationDate).getTime() - new Date().getTime())
+          this.authService.setLogoutTimer(expirationDuration);
+
+          return new AuthActions.AuthenticateSuccess({ user, redirect: false });
         } else {
           console.info(`User token has expired.`);
           return { type: 'NULL' }
@@ -144,7 +147,7 @@ function handleAuthentication(resData: AuthResponseData): AuthActions.AuthAction
     // Storing user for Auto login feature
     localStorage.setItem(this.LS_USER_KEY, JSON.stringify(user));
 
-    return new AuthActions.AuthenticateSuccess(user);
+    return new AuthActions.AuthenticateSuccess({ user, redirect: true });
   }
 
 function handleErrorAuthentication(errData: HttpErrorResponse): AuthActions.AuthActions {

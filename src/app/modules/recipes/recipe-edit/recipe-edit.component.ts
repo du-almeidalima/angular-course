@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {RecipeService} from '../recipe.service';
@@ -6,15 +6,19 @@ import {RecipeService} from '../recipe.service';
 import FOOD_PLACEHOLDER from '../../../../assets/img/food-placeholder.jpg';
 import {Ingredient} from '../../../shared/models/ingredient.model';
 import {Recipe} from "../../../shared/models/recipe.model";
+import * as fromApp from '../../../store/app.reducer';
+import {Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.scss']
 })
-export class RecipeEditComponent implements OnInit {
-
+export class RecipeEditComponent implements OnInit, OnDestroy {
   private id: number;
+  private storeSubscription: Subscription;
 
   public recipeForm: FormGroup;
   public imgPlaceholder = false;
@@ -29,24 +33,36 @@ export class RecipeEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private recipeService: RecipeService) { }
+              private recipeService: RecipeService,
+              private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
-    // Adding to observable to react to changes
     this.route.params.subscribe(
       (params:Params) => {
 
         this.id = +params.id;
-
-        // If id exist (edit mode) then fetch it, otherwise create new
-        let recipe = this.recipeService.getRecipeById(this.id);
-        if (recipe == undefined) {
-          recipe = new Recipe( null,'', '', '', [new Ingredient('', 1)]);
-          this.imgPlaceholder = true;
-        }
-        this.initForm(recipe);
+        this.store.select('recipes')
+          .pipe(
+            map(recipesState => {
+              return recipesState.recipes.find(r => r.id === this.id)
+            })
+          )
+          .subscribe(recipe => {
+            // If id exist (edit mode) then fetch it, otherwise create new
+            if (recipe == undefined) {
+              recipe = new Recipe( null,'', '', '', [new Ingredient('', 1)]);
+              this.imgPlaceholder = true;
+            }
+            this.initForm(recipe);
+          })
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.storeSubscription) {
+      this.storeSubscription.unsubscribe();
+    }
   }
 
   public onSubmit(): void {

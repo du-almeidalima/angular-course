@@ -1,6 +1,6 @@
 <div class="row justify-content-between">
   <div class="col-12 col-lg-6">
-    <h4> {{currentRecipe.name}} </h4>
+    <h4> {{selectedRecipe.name}} </h4>
   </div>
   <div class="col-12 col-lg-6 float-right">
     <div class="dropdown" appDropdown [dropdownMenu]="dropdownMenu">
@@ -22,12 +22,12 @@
     <hr />
     <div class="row">
       <div class="col-12 col-md-12 col-lg-8">
-        <p> {{currentRecipe.description}} </p>
+        <p> {{selectedRecipe.description}} </p>
       </div>
       <div class="col-12 col-md-12 col-lg-4">
         <img
           class="float-image"
-          [src]="currentRecipe.imagePath"
+          [src]="selectedRecipe.imagePath"
           alt=""
         >
       </div>
@@ -43,7 +43,7 @@
   </div>
   <div class="col-12">
     <ul class="two-columns">
-      <li *ngFor="let ingredient of currentRecipe.ingredients">{{ingredient.name}} &times; {{ingredient.amount}}</li>
+      <li *ngFor="let ingredient of selectedRecipe.ingredients">{{ingredient.name}} &times; {{ingredient.amount}}</li>
     </ul>
   </div>
 </div>
