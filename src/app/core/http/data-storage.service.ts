@@ -1,10 +1,12 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {RecipeService} from "../../modules/recipes/recipe.service";
-import {Recipe} from "../../shared/models/recipe.model";
+import {Store} from "@ngrx/store";
 import {map, tap} from "rxjs/operators";
 import {Observable} from "rxjs";
+import {RecipeService} from "../../modules/recipes/recipe.service";
+import {Recipe} from "../../shared/models/recipe.model";
 import {environment as env} from "../../../environments/environment";
+import * as RecipesActions from '../../modules/recipes/store/recipes.actions'
 
 /*
  * This class is responsible for making http calls to Firebase API.
@@ -13,7 +15,10 @@ import {environment as env} from "../../../environments/environment";
 @Injectable({providedIn: "root"})
 export class DataStorageService {
 
-  constructor( private http: HttpClient, private recipeService: RecipeService) {}
+  constructor(
+    private http: HttpClient,
+    private recipeService: RecipeService,
+    private store: Store) {}
 
   /**
    * Save the Recipes from RecipeServe state int Firebase Database API using a PUT HTTP verb.
@@ -44,7 +49,8 @@ export class DataStorageService {
           })
         }),
         tap((recipes: Recipe[]) => {
-          this.recipeService.saveRecipes(recipes);
+          // this.recipeService.saveRecipes(recipes);
+          this.store.dispatch(new RecipesActions.SetRecipes(recipes))
         })
       )
   }

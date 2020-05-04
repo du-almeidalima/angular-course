@@ -13,6 +13,7 @@ import {environment as env} from "../environments/environment";
 
 import * as fromApp from './store/app.reducer';
 import {AuthEffects} from "./core/auth/store/auth.effects";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 
 function logger(reducer: ActionReducer<fromApp.AppState>): any {
   return storeLogger({
@@ -31,10 +32,13 @@ const metaReducers = env.production ? [] : [logger];
     BrowserModule,
     AppRoutesModule,
     HttpClientModule,
-    StoreModule.forRoot(fromApp.reducers, {metaReducers}),
-    EffectsModule.forRoot([ AuthEffects ]),
     CoreModule,
     SharedModule,
+    StoreModule.forRoot(fromApp.reducers, {metaReducers}),
+    EffectsModule.forRoot([ AuthEffects ]),
+    StoreDevtoolsModule.instrument(
+      {logOnly: env.production}
+    )
   ],
   bootstrap: [ AppComponent ]
 })
