@@ -126,7 +126,7 @@ export class AuthEffects {
           // Starting Session countdown
           this.authService.setLogoutTimer(expirationDuration);
 
-          return new AuthActions.AuthenticateSuccess({ user, redirect: false });
+          return new AuthActions.AuthenticateSuccess({ user: user, redirect: false });
         } else {
           console.info(`User token has expired.`);
           return { type: 'NULL' }
@@ -147,7 +147,7 @@ function handleAuthentication(resData: AuthResponseData): AuthActions.AuthAction
     // Storing user for Auto login feature
     localStorage.setItem(this.LS_USER_KEY, JSON.stringify(user));
 
-    return new AuthActions.AuthenticateSuccess({ user, redirect: true });
+    return new AuthActions.AuthenticateSuccess({ user: user, redirect: true });
   }
 
 function handleErrorAuthentication(errData: HttpErrorResponse): AuthActions.AuthActions {

@@ -14,6 +14,7 @@ import {environment as env} from "../environments/environment";
 import * as fromApp from './store/app.reducer';
 import {AuthEffects} from "./core/auth/store/auth.effects";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
+import {RecipesEffects} from "./modules/recipes/store/recipes.effects";
 
 function logger(reducer: ActionReducer<fromApp.AppState>): any {
   return storeLogger({
@@ -35,7 +36,7 @@ const metaReducers = env.production ? [] : [logger];
     CoreModule,
     SharedModule,
     StoreModule.forRoot(fromApp.reducers, {metaReducers}),
-    EffectsModule.forRoot([ AuthEffects ]),
+    EffectsModule.forRoot([ AuthEffects,  RecipesEffects ]),
     StoreDevtoolsModule.instrument(
       {logOnly: env.production}
     )
