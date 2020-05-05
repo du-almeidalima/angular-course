@@ -22,7 +22,11 @@ export class RecipesListComponent implements OnInit, OnDestroy {
       .pipe( map(recipesState => recipesState.recipes))
       .subscribe(
       (recipes: Recipe[]) => {
-        this.recipes = recipes;
+        if (recipes) {
+          this.recipes = recipes;
+        } else {
+          console.log(`You don't have any recipe yet!`);
+        }
       }
     );
   }

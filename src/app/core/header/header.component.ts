@@ -23,11 +23,11 @@ export class HeaderComponent implements OnInit, OnDestroy{
     private store: Store<fromApp.AppState>) {}
 
   public onSaveData(): void {
-    this.dataStorageService.saveRecipes();
+    this.store.dispatch(new RecipesActions.StoreRecipes());
   }
 
   public onFetchData(): void {
-    this.store.dispatch(new RecipesActions.FetchRecipes())
+    this.store.dispatch(new RecipesActions.FetchRecipes());
   }
 
   public onLogOut(): void {

@@ -1,15 +1,15 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AbstractControl, FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {RecipeService} from '../recipe.service';
+import {Subscription} from "rxjs";
+import {Store} from "@ngrx/store";
 // @ts-ignore
 import FOOD_PLACEHOLDER from '../../../../assets/img/food-placeholder.jpg';
 import {Ingredient} from '../../../shared/models/ingredient.model';
 import {Recipe} from "../../../shared/models/recipe.model";
+import {RecipeService} from '../recipe.service';
 import * as fromApp from '../../../store/app.reducer';
-import {Subscription} from "rxjs";
-import {Store} from "@ngrx/store";
-import {map} from "rxjs/operators";
+import * as RecipeActions from '../store/recipes.actions';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -18,7 +18,9 @@ import {map} from "rxjs/operators";
 })
 export class RecipeEditComponent implements OnInit, OnDestroy {
   private id: number;
+  private isEditMode: boolean;
   private storeSubscription: Subscription;
+  private currentRecipe: Recipe;
 
   public recipeForm: FormGroup;
   public imgPlaceholder = false;
@@ -39,21 +41,20 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.subscribe(
       (params:Params) => {
-
         this.id = +params.id;
-        this.store.select('recipes')
-          .pipe(
-            map(recipesState => {
-              return recipesState.recipes.find(r => r.id === this.id)
-            })
-          )
-          .subscribe(recipe => {
-            // If id exist (edit mode) then fetch it, otherwise create new
-            if (recipe == undefined) {
-              recipe = new Recipe( null,'', '', '', [new Ingredient('', 1)]);
+        this.storeSubscription = this.store.select('recipes')
+          .subscribe(recipesState => {
+            // If the URL contains the id then it's editing, otherwise it's a new recipe
+            if (this.id) {
+              this.isEditMode = true
+              this.currentRecipe = recipesState.recipes.find(r => r.id === this.id)
+            } else {
+              this.isEditMode = false;
+              this.currentRecipe = new Recipe( null,'', '', this.FOOD_PLACEHOLDER, [new Ingredient('', 0)]);
               this.imgPlaceholder = true;
             }
-            this.initForm(recipe);
+
+            this.initForm(this.currentRecipe);
           })
       }
     );
@@ -66,18 +67,21 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    // Save or Update recipe
-    // Since we're using a Generator to gen RecipeModels id we need to create a new recipe or use the last one with the id
-    const {name, description, imagePath, ingredients} = this.recipeForm.value;
-    const recipe = new Recipe(this.id, name, description, imagePath || this.FOOD_PLACEHOLDER, ingredients);
 
-    const newRecipe = this.recipeService.saveRecipe(recipe);
+    const { name, description, imagePath, ingredients } = this.recipeForm.value;
+    const recipe = new Recipe(this.id, name, description, imagePath, ingredients);
 
-    this.navigateBack(newRecipe.id);
+    if (this.isEditMode){
+      this.store.dispatch(new RecipeActions.UpdateRecipe(recipe))
+    } else {
+      this.store.dispatch(new RecipeActions.AddRecipe(recipe))
+    }
+
+    this.router.navigate(['recipes']);
   }
 
   public onCancel(): void {
-    this.navigateBack();
+    this.router.navigate(['recipes'])
   }
 
   public onAddIngredient(): void {
@@ -114,14 +118,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.imgPath.valueChanges.subscribe(data => {
       this.imgPlaceholder = data === null || data.trim() === '';
     })
-  }
-
-  private navigateBack(id?: number): void {
-    if(id) {
-      this.router.navigate(['recipes', id])
-    } else {
-      this.router.navigate(['recipes'])
-    }
   }
 }
 

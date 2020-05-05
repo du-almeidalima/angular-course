@@ -7,6 +7,7 @@ import {Recipe} from '../../../shared/models/recipe.model';
 import {RecipeService} from '../recipe.service';
 import * as fromApp from '../../../store/app.reducer';
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
+import * as RecipeActions from '../store/recipes.actions';
 
 
 @Component({
@@ -56,11 +57,12 @@ export class RecipeDetailComponent implements OnInit {
   // - resolvers to fetch data that te component being loaded will need
   public onEditRecipe(): void {
     // this.route = <domain>/recipes/edit/2
+    // this.store.dispatch()
     this.router.navigate(['../', this.selectedRecipe.id, 'edit'], {relativeTo: this.route});
   }
 
   public onRemoveRecipe(): void {
-    this.recipeService.removeRecipeById(this.selectedRecipe.id);
+    this.store.dispatch(new RecipeActions.DeleteRecipe(this.selectedRecipe.id))
     this.router.navigate(['recipes']);
   }
 
