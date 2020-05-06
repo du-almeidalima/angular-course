@@ -35,7 +35,7 @@ const metaReducers = env.production ? [] : [logger];
     HttpClientModule,
     CoreModule,
     SharedModule,
-    StoreModule.forRoot(fromApp.reducers, {metaReducers}),
+    StoreModule.forRoot(fromApp.reducers, { metaReducers }),
     EffectsModule.forRoot([ AuthEffects,  RecipesEffects ]),
     StoreDevtoolsModule.instrument(
       {logOnly: env.production}

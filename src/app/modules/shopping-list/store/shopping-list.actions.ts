@@ -1,5 +1,5 @@
-import { Action } from "@ngrx/store";
-import { Ingredient } from "../../../shared/models/ingredient.model";
+import {createAction, props} from "@ngrx/store";
+import {Ingredient} from "../../../shared/models/ingredient.model";
 
 // ACTIONS CONSTANTS
 export const ADD_INGREDIENT = '[Shopping List] Add Ingredient';
@@ -10,47 +10,9 @@ export const START_EDIT = '[Shopping List] Start Edit';
 export const STOP_EDIT = '[Shopping List] Stop Edit';
 
 // ACTIONS CREATORS
-export class AddIngredient implements Action{
-  readonly type = ADD_INGREDIENT;
-
-  constructor(public payload: Ingredient) {}
-}
-
-export class AddIngredients implements Action{
-  readonly type = ADD_INGREDIENTS;
-
-  constructor(public payload: Ingredient[]) {}
-}
-
-export class UpdateIngredient implements Action{
-  readonly type = UPDATE_INGREDIENT;
-
-  constructor(public payload: Ingredient) {}
-}
-
-export class RemoveIngredient implements Action{
-  readonly type = REMOVE_INGREDIENT;
-}
-
-export class StartEdit implements Action {
-  readonly type = START_EDIT
-
-  /**
-   * @param payload Ingredient index, this will be used to Updated and Delete an Ingredient afterwards
-   */
-  constructor(public payload: number) {}
-}
-
-export class StopEdit implements Action {
-  readonly type = STOP_EDIT
-}
-
-
-// ACTIONS TYPES
-export type ShoppingListActions =
-  | AddIngredient
-  | AddIngredients
-  | UpdateIngredient
-  | RemoveIngredient
-  | StopEdit
-  | StartEdit;
+export const addIngredient = createAction(ADD_INGREDIENT, props<{ ingredient: Ingredient }>());
+export const addIngredients = createAction(ADD_INGREDIENTS, props<{ ingredients: Ingredient[] }>());
+export const updateIngredient = createAction(UPDATE_INGREDIENT, props<{ ingredient: Ingredient }>());
+export const removeIngredient = createAction(REMOVE_INGREDIENT);
+export const startEdit = createAction(START_EDIT, props<{ index: number }>());
+export const stopEdit = createAction(STOP_EDIT);

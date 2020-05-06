@@ -1,4 +1,4 @@
-import { Action } from "@ngrx/store";
+import {Action, createReducer, on} from "@ngrx/store";
 
 import { Ingredient } from "../../../shared/models/ingredient.model";
 import * as ShoppingListActions from "./shopping-list.actions";
@@ -10,7 +10,7 @@ export interface ShoppingListState {
   editedIngredientIndex: number
 }
 /* The initial state of this feature */
-const initState: ShoppingListState = {
+const initialState: ShoppingListState = {
   ingredients: [
     new Ingredient('Tomato', 4),
     new Ingredient('Onion', 10)
@@ -21,59 +21,46 @@ const initState: ShoppingListState = {
 
 /**
  * The reducer will map the action.type and return a new copy of the state with the action specific alterations.
+ * each "on" function will be the "case" of the old logic with switch statements. They will accept the same, the state
+ * and the action coming from the "createAction".
  * @param state Current State
  * @param {Action} action The action type and the payload
+ * @see {@link ShoppingListActions}
  */
-const shoppingListReducer = (state: ShoppingListState = initState, action: ShoppingListActions.ShoppingListActions) => {
-  switch (action.type) {
-    case ShoppingListActions.ADD_INGREDIENT:
-      return {
-        ...state,
-        ingredients: [ ...state.ingredients, action.payload ]
-      }
-    case ShoppingListActions.ADD_INGREDIENTS:
-      return {
-        ...state,
-        ingredients: [ ...state.ingredients, ...action.payload ]
-      }
-    case ShoppingListActions.UPDATE_INGREDIENT:
+
+const shoppingListReducer = createReducer<ShoppingListState, Action>(
+  initialState,
+  on(ShoppingListActions.addIngredient, (state, { ingredient }) =>
+    ({...state, ingredients: [...state.ingredients, ingredient]})
+  ),
+  on(ShoppingListActions.addIngredients, (state, { ingredients }) =>
+    ({...state, ingredients: [...state.ingredients, ...ingredients]})
+  ),
+  on(ShoppingListActions.updateIngredient, (state, { ingredient }) => {
       const updatedIngredients = [ ...state.ingredients ];
-      updatedIngredients[state.editedIngredientIndex] = action.payload;
+      updatedIngredients[state.editedIngredientIndex] = ingredient;
 
-      return {
-        ...state,
-        ingredients: updatedIngredients
-      }
+      return { ...state, ingredients: updatedIngredients }
+    }
+  ),
+  on(ShoppingListActions.removeIngredient, state => {
+    return {
+      ...state,
+      ingredients: [ ...state.ingredients.filter((ig, igIndex) => igIndex !== state.editedIngredientIndex)],
+      editedIngredientIndex: -1,
+      editedIngredient: null
+    }
+  }),
+  on(ShoppingListActions.startEdit, (state, { index }) => {
+    return {
+      ...state,
+      editedIngredient: { ...state.ingredients[index] },
+      editedIngredientIndex: index
+    }
+  }),
+  on(ShoppingListActions.stopEdit, state => ({ ...state, editedIngredient: null, editedIngredientIndex: -1}))
+)
 
-    case ShoppingListActions.REMOVE_INGREDIENT:
-      return {
-        ...state,
-        ingredients: [ ...state.ingredients.filter((ig, igIndex) => igIndex !== state.editedIngredientIndex)],
-        editedIngredientIndex: -1,
-        editedIngredient: null
-      }
-
-    case ShoppingListActions.START_EDIT:
-      return {
-        ...state,
-        editedIngredient: { ...state.ingredients[action.payload] },
-        editedIngredientIndex: action.payload
-      }
-
-    case ShoppingListActions.STOP_EDIT:
-      return {
-        ...state,
-        editedIngredient: null,
-        editedIngredientIndex: -1
-      }
-
-    /**
-     * For the initial state, we need to use the "default" clause, because NgRx will emit this action at first set up
-     */
-    default:
-      return state;
-  }
-};
 
 export { shoppingListReducer };
 
