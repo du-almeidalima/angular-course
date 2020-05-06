@@ -1,8 +1,32 @@
 # Cooking App
 
-This is the repository for the course project <b> Cooking App </b> from Section 24.
+This is the repository for the course project <b> Cooking App </b> from Section 25.
+In this section we'll look into the Angular Universal, which is rendering Angular in NodeJS (Server Side) Environments.
 
-You can check the live version [here](https://my-lists-api.web.app/home).
+To transform the app into a Angular Universal, run this command:
+
+```
+  ng add @nguniversal/express-engine
+```
+
+Also, for this project, two files needed to be adjusted:
+
+tsconfig.server.json
+```json
+{
+  ...
+  "files": [
+    "./main.server.ts",
+    "../server.ts"
+  ]
+  ...
+}
+```
+
+server.ts
+```ts
+  import express from 'express';
+```
 
 ## App Planning
 ![App Diagram](src/assets/readme/app-planning.png?raw=true "App Diagram")

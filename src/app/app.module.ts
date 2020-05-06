@@ -30,7 +30,7 @@ const metaReducers = env.production ? [] : [logger];
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutesModule,
     HttpClientModule,
     CoreModule,
