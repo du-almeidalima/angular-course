@@ -7,7 +7,6 @@ import {Store} from "@ngrx/store";
 import FOOD_PLACEHOLDER from '../../../../assets/img/food-placeholder.jpg';
 import {Ingredient} from '../../../shared/models/ingredient.model';
 import {Recipe} from "../../../shared/models/recipe.model";
-import {RecipeService} from '../recipe.service';
 import * as fromApp from '../../../store/app.reducer';
 import * as RecipeActions from '../store/recipes.actions';
 
@@ -35,7 +34,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private recipeService: RecipeService,
               private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
