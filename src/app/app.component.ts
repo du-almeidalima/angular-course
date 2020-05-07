@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -64,11 +64,47 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
       ),
       transition('* => void', [
         // Initial State is taken from what is already, in this case the 'in'
-        animate(300, style({
-          opacity: 0
+        animate(400, style({
+          opacity: 0,
+          transform: 'translateX(500px)'
         }))
       ])
     ]),
+    trigger('secondList', [
+      state('in', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      transition('void => *', [
+        animate(1000, keyframes([
+          // Steps
+          style({
+            opacity: 0,
+            transform: 'translateX(-150px)',
+            // Time offset
+            offset: 0
+          }),
+          style({
+            opacity: 0.2,
+            transform: 'translateX(-100px)',
+            // Time offset
+            offset: 0.3
+          }),
+          style({
+            opacity: 0.7,
+            transform: 'translateX(-50px)',
+            // Time offset
+            offset: 0.7
+          }),
+          style({
+            opacity: 1,
+            transform: 'translateX(0)',
+            // Time offset
+            offset: 1
+          })
+        ]))
+      ])
+    ])
   ]
 })
 export class AppComponent {
