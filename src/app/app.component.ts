@@ -7,6 +7,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   animations: [
+    // First Box
     trigger('divState', [
       state('initial', style({
         backgroundColor: 'pink',
@@ -16,14 +17,32 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
         backgroundColor: 'blue',
         transform: 'translateX(100px)'
       })),
+      transition('initial <=> final', animate(300))
+    ]),
+    // Wild Box
+    trigger('wildState', [
+      state('initial', style({
+        backgroundColor: 'pink',
+        transform: 'translateX(0) scale(1)'
+      })),
+      state('shrunken', style({
+        backgroundColor: 'green',
+        transform: 'translateX(0) scale(0.5)'
+      })),
+      state('final', style({
+        backgroundColor: 'blue',
+        transform: 'translateX(100px) scale(1)'
+      })),
       transition('initial => final', animate(300)),
-      transition('final => initial', animate(600))
+      transition('final => initial', animate(600)),
+      transition('shrunken <=> *', animate(500)),
     ])
   ]
 })
 export class AppComponent {
   public itemsArr: string[] = [];
   public boxState = 'initial';
+  public wildBoxState = 'initial';
   @ViewChild('f')
   public form: NgForm;
 
@@ -35,6 +54,11 @@ export class AppComponent {
 
   onAnimate() {
     this.boxState = this.boxState === 'initial' ? 'final' : 'initial';
+    this.wildBoxState = this.wildBoxState === 'initial' ? 'final' : 'initial';
+  }
+
+  onShrink() {
+    this.wildBoxState = 'shrunken';
   }
 }
 

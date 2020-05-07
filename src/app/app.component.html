@@ -5,7 +5,7 @@
     </div>
     <div class="col s12">
       <button (click)="onAnimate()" class="waves-effect waves-light btn purple" style="margin-right: 10px;">Animate!</button>
-      <button class="waves-effect waves-light btn blue">Shrink!</button>
+      <button (click)="onShrink()" class="waves-effect waves-light btn blue">Shrink!</button>
     </div>
   </div>
   <!-- Separator -->
@@ -14,8 +14,9 @@
       <hr>
     </div>
   </div>
-  <!-- Div Animated -->
+  <!-- Divs Animated -->
   <div [@divState]="boxState" style="height: 100px; width: 100px"></div>
+  <div [@wildState]="wildBoxState" style="height: 100px; width: 100px; margin-top: 10px"></div>
   <!-- Separator -->
   <div class="row">
     <div class="col s12">
