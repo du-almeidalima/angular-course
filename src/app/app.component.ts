@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {state, style, trigger} from '@angular/animations';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,9 @@ import {state, style, trigger} from '@angular/animations';
       state('final', style({
         backgroundColor: 'blue',
         transform: 'translateX(100px)'
-      }))
+      })),
+      transition('initial => final', animate(300)),
+      transition('final => initial', animate(600))
     ])
   ]
 })
@@ -49,4 +51,12 @@ export class AppComponent {
  *
  * Now with the Trigger created, each state of this trigger and each state styles, we can switch between those states by changing their
  * condition/variable etc...
+ */
+
+/*
+ * The State Transition
+ *
+ * With the Trigger, State and Styles we already can switch, but there's another property of the Trigger function, the "transition". This
+ * property tells how the transition should occur.
+ * In the transition function we can specify the 'from' and 'to' states and how the should happen, in this case, the time length
  */
