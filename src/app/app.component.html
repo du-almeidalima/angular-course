@@ -15,7 +15,11 @@
     </div>
   </div>
   <!-- Divs Animated -->
-  <div [@divState]="boxState" style="height: 100px; width: 100px"></div>
+  <div [@divState]="boxState"
+       (@divState.start)="animationStarted($event)"
+       (@divState.done)="animationEnded($event)"
+       style="height: 100px; width: 100px"
+  ></div>
   <div [@wildState]="wildBoxState" style="height: 100px; width: 100px; margin-top: 10px"></div>
   <!-- Separator -->
   <div class="row">

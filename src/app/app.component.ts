@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {animate, group, keyframes, state, style, transition, trigger} from '@angular/animations';
+import {animate, AnimationEvent, group, keyframes, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -137,6 +137,14 @@ export class AppComponent {
 
   onItemClick(i: number) {
     this.itemsArr.splice(i, 1);
+  }
+
+  animationStarted(e: AnimationEvent) {
+    console.log(e);
+  }
+
+  animationEnded(e: AnimationEvent) {
+    console.log(e);
   }
 }
 
