@@ -41,11 +41,38 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
         animate(500, style( { borderRadius: '50px' })),
         animate(500)
       ]),
-    ])
+    ]),
+    // List Trigger
+    trigger('firstList', [
+      // State set by Angular
+      state('in', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      /* This will make the transition from when the element don't exist to when it's on the DOM, and actually the state name 'in' doesn't
+      Matter.*/
+      transition('void => *',
+        [
+          // Initial Style
+          style({
+            opacity: 0,
+            transform: 'translateX(-150px)'
+          }),
+          // Final Style (When don't provided it just take the state:in style)
+          animate(300)
+        ]
+      ),
+      transition('* => void', [
+        // Initial State is taken from what is already, in this case the 'in'
+        animate(300, style({
+          opacity: 0
+        }))
+      ])
+    ]),
   ]
 })
 export class AppComponent {
-  public itemsArr: string[] = [];
+  public itemsArr: string[] = ['Piolho', 'Molho de Chave', 'Paralelepipedo'];
   public boxState = 'initial';
   public wildBoxState = 'initial';
   @ViewChild('f')
@@ -64,6 +91,10 @@ export class AppComponent {
 
   onShrink() {
     this.wildBoxState = 'shrunken';
+  }
+
+  onItemClick(i: number) {
+    this.itemsArr.splice(i, 1);
   }
 }
 
@@ -92,4 +123,12 @@ export class AppComponent {
  * Also in the transition function we can specify styles during the transition, in the same way as in the state function.
  *
  * EVEN FURTHER! We can specify states during the transition function, by passing an array of animate or style functions
+ */
+
+/*
+ * List Triggers and State
+ * For some cases, angular provides an state for us, this come OOTB just by placing the identifier/name of the trigger into the DOM:
+ * - void: The initial state of the pre existing element
+ *
+ * So for styling those list items, we can just specify the transitions between before void and after void.
  */

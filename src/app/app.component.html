@@ -39,14 +39,23 @@
   <div class="row">
     <ul class="collection with-header">
       <li class="collection-header"><h5>Animate!</h5></li>
-      <li class="collection-item" *ngFor="let item of itemsArr">{{ item }}</li>
+      <li
+        (click)="onItemClick(i)"
+        [@firstList]
+        *ngFor="let item of itemsArr let i = index"
+        class="collection-item">
+        {{ item }}</li>
     </ul>
   </div>
   <!-- Shrink -->
   <div class="row">
     <ul class="collection with-header">
       <li class="collection-header"><h5>Shrink!</h5></li>
-      <li class="collection-item" *ngFor="let item of itemsArr">{{ item }}</li>
+      <li (click)="onItemClick(i)"
+        *ngFor="let item of itemsArr; let i = index"
+        class="collection-item">
+        {{ item }}
+      </li>
     </ul>
   </div>
 </div>
