@@ -35,7 +35,12 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
       })),
       transition('initial => final', animate(300)),
       transition('final => initial', animate(600)),
-      transition('shrunken <=> *', animate(500)),
+      transition('shrunken <=> *', [
+        // Steps of the animation
+        style({ backgroundColor: 'red', borderRadius: 0}),
+        animate(500, style( { borderRadius: '50px' })),
+        animate(500)
+      ]),
     ])
   ]
 })
@@ -82,5 +87,9 @@ export class AppComponent {
  *
  * With the Trigger, State and Styles we already can switch, but there's another property of the Trigger function, the "transition". This
  * property tells how the transition should occur.
- * In the transition function we can specify the 'from' and 'to' states and how the should happen, in this case, the time length
+ * In the transition function we can specify the 'from' and 'to' states and how the should happen, in this case, the time length.
+ *
+ * Also in the transition function we can specify styles during the transition, in the same way as in the state function.
+ *
+ * EVEN FURTHER! We can specify states during the transition function, by passing an array of animate or style functions
  */
