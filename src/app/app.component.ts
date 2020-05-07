@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
+import {animate, group, keyframes, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -47,6 +47,7 @@ import {animate, keyframes, state, style, transition, trigger} from '@angular/an
       // State set by Angular
       state('in', style({
         opacity: 1,
+        color: 'blue',
         transform: 'translateX(0)'
       })),
       /* This will make the transition from when the element don't exist to when it's on the DOM, and actually the state name 'in' doesn't
@@ -63,11 +64,16 @@ import {animate, keyframes, state, style, transition, trigger} from '@angular/an
         ]
       ),
       transition('* => void', [
-        // Initial State is taken from what is already, in this case the 'in'
-        animate(400, style({
-          opacity: 0,
-          transform: 'translateX(500px)'
-        }))
+        // To make 2 animations start at the same time. Useful for different durations
+        group([
+          animate(800, style({
+            opacity: 0,
+            transform: 'translateX(500px)'
+          })),
+          animate(400, style({
+            color: 'red'
+          }))
+        ])
       ])
     ]),
     trigger('secondList', [
