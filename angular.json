@@ -1,9 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
+  "version": 1, 
   "newProjectRoot": "projects",
   "projects": {
-    "service-workers": {
+    "unit-testing": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/service-workers",
+            "outputPath": "dist/unit-testing",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -21,12 +21,10 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/manifest.webmanifest"
+              "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/bulma/css/bulma.css"
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -57,27 +55,25 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              ]
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "service-workers:build"
+            "browserTarget": "unit-testing:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "service-workers:build:production"
+              "browserTarget": "unit-testing:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "service-workers:build"
+            "browserTarget": "unit-testing:build"
           }
         },
         "test": {
@@ -89,8 +85,7 @@
             "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/manifest.webmanifest"
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
@@ -115,15 +110,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "service-workers:serve"
+            "devServerTarget": "unit-testing:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "service-workers:serve:production"
+              "devServerTarget": "unit-testing:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "service-workers"
+  "defaultProject": "unit-testing"
 }

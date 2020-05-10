@@ -1,5 +1,5 @@
 {
-  "name": "service-workers",
+  "name": "unit-testing",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -19,8 +19,6 @@
     "@angular/platform-browser": "~9.0.0",
     "@angular/platform-browser-dynamic": "~9.0.0",
     "@angular/router": "~9.0.0",
-    "@angular/service-worker": "~9.0.0",
-    "bulma": "^0.8.2",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
